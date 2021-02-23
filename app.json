@@ -1,5 +1,5 @@
 {
-  "name": "Start on Heroku: Java",
-  "description": "A barebones Java app, which can easily be deployed to Heroku.",
+  "name": "ludo-web",
+  "description": "A web interface to visualize LudoPret Data",
   "addons": [ "heroku-postgresql" ]
 }
