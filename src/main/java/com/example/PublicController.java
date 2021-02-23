@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class TutoController {
+public class PublicController {
 
 	@Autowired
 	TickDAO tickDao;
@@ -17,16 +17,6 @@ public class TutoController {
 	@RequestMapping("/")
 	String index() {
 		return "index";
-	}
-
-	@RequestMapping("/ok")
-	String test() {
-		return "test";
-	}
-
-	@RequestMapping("/protected")
-	String protectedTest() {
-		return "test";
 	}
 
 	@RequestMapping("/db")

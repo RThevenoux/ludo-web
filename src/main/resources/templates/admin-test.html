@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+
+	<div class="jumbotron text-center">
+		<div class="container">
+			<a href="/" class="lang-logo"> <img src="/lang-logo.png">
+			</a>
+			<h1>Admin</h1>
+		</div>
+	</div>
+	<div class="container">
+		<div class="alert alert-info text-center" role="alert">Ca va ?</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-6">
+				<p>
+					<a href="/admin/logout">log-out</a>
+				<p>
+			</div>
+			<div class="col-md-6">
+				<p>Droite
+				<p>
+			</div>
+		</div>
+		<!-- row -->
+		<div class="alert alert-info text-center" role="alert">alert</div>
+	</div>
+
+</body>
+</html>
