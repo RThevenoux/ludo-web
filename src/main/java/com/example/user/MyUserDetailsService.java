@@ -15,7 +15,6 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		UserEntity user = userRepository.findByUsername(username);
-		System.out.println("load user:" + user + " for username:" + username);
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}

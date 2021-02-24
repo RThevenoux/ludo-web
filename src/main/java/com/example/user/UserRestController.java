@@ -2,6 +2,8 @@ package com.example.user;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +27,17 @@ public class UserRestController {
 	}
 
 	@PostMapping
-	public UserInput create(@RequestBody UserInput data) {
+	public UserInput create(@RequestBody @Valid UserInput data) {
 		return service.create(data);
 	}
 
 	@PutMapping
-	public UserInput update(@RequestBody UserInput data) {
+	public UserInput update(@RequestBody @Valid UserInput data) {
 		return service.updateUserData(data);
 	}
 
 	@PutMapping("{username}/password")
-	public UserInput updatePassword(@PathVariable String username, @RequestBody PasswordWrapper passwordWrapper) {
+	public UserInput updatePassword(@PathVariable String username, @RequestBody @Valid PasswordWrapper passwordWrapper) {
 		return service.updateUserPassword(username, passwordWrapper.getPassword());
 	}
 

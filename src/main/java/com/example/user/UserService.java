@@ -35,6 +35,10 @@ public class UserService {
 	}
 
 	public UserInput create(UserInput data) {
+		if (repo.existsByUsername(data.getUsername())) {
+			return null;
+		}
+
 		UserEntity entity = new UserEntity();
 		entity.setMail(data.getMail());
 		entity.setPassword(null);
