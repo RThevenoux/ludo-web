@@ -11,4 +11,5 @@ public class UserController {
 	String test() {
 		return "user-test";
 	}
+
 }

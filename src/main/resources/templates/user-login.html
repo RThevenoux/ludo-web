@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout-login :: layout (~{::body},'index')}">
+
+<body>
+
+	<div class="container">
+		<h3>Connection "Membre"</h3>
+		<form name="f" action="/user/login" method="POST">
+			<table>
+				<tr>
+					<td>Numéro membre</td>
+					<td><input type="text" name="username" value=""></td>
+				</tr>
+				<tr>
+					<td>Mot de passe</td>
+					<td><input type="password" name="password" /></td>
+				</tr>
+				<tr>
+					<td><input name="submit" type="submit" value="Connecter" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

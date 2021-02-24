@@ -9,11 +9,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.PublicController;
+
 @Configuration
 @EnableWebSecurity
 @Order(1)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
 	@Autowired
 	PasswordEncoder encoder;
 	
@@ -26,9 +29,9 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
          
          .and()
          .formLogin()
-         .loginPage("/loginAdmin.html")
+         .loginPage(PublicController.ADMIN_LOGIN_PAGE)
          .loginProcessingUrl("/admin/login")
-         .failureUrl("/loginAdmin.html?error=loginError")
+         .failureUrl(PublicController.ADMIN_LOGIN_PAGE+"?error=loginError")
          .defaultSuccessUrl("/admin/test")
          
          .and()
@@ -39,7 +42,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
          
          .and()
          .exceptionHandling()
-         .accessDeniedPage("/403")
+         .accessDeniedPage(PublicController.ADMIN_LOGIN_PAGE+"?accessDenied=true")
          
          .and()
          .csrf().disable();
