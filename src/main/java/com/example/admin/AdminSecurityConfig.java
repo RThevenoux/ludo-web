@@ -16,7 +16,6 @@ import com.example.PublicController;
 @Order(1)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	
 	@Autowired
 	PasswordEncoder encoder;
 	

@@ -20,12 +20,12 @@ public class PublicController {
 	TickService tickDao;
 
 	@RequestMapping(ADMIN_LOGIN_PAGE)
-	String adminLoginPage() {
+	public String adminLoginPage() {
 		return "admin-login";
 	}
 
 	@RequestMapping("/db")
-	String db(Map<String, Object> model) {
+	public String db(Map<String, Object> model) {
 
 		try {
 			List<String> output = tickDao.loadTicks().stream()//
@@ -43,12 +43,12 @@ public class PublicController {
 	}
 
 	@RequestMapping("/")
-	String index() {
+	public String index() {
 		return "index";
 	}
 
 	@RequestMapping(USER_LOGIN_PAGE)
-	String userLoginPage() {
+	public String userLoginPage() {
 		return "user-login";
 	}
 

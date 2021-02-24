@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
 	@RequestMapping("test")
-	String test() {
+	public String test() {
 		return "user-test";
 	}
 

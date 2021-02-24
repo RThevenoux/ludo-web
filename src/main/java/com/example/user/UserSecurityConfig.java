@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.PublicController;
 
@@ -17,7 +16,7 @@ import com.example.PublicController;
 public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	PasswordEncoder encoder;
+	MyUserDetailsService userDetailsService;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -48,12 +47,8 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	 @Override
-	    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	        auth.inMemoryAuthentication()
-	          .withUser("user")
-	          .password(encoder.encode("password"))
-	          .roles("USER");
-	        
-	    }
+	 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	     auth.userDetailsService(userDetailsService);
+	 }
 
 }

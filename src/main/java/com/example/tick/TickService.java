@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TickService {
 
 	@Autowired
-	private TickRepository repo;
+	TickRepository repo;
 
 	public List<TickEntity> loadTicks() {
 

@@ -16,7 +16,6 @@
 
 package com.example;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -26,12 +25,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class Application {
 
-	@Value("${spring.datasource.password}")
-	String password;
-
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Application.class, args);
-
 	}
 
 	@Bean
