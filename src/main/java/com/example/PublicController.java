@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.tick.TickService;
+
 @Controller
 public class PublicController {
 
@@ -15,7 +17,7 @@ public class PublicController {
 	public static final String USER_LOGIN_PAGE = "/user-login";
 
 	@Autowired
-	TickDAO tickDao;
+	TickService tickDao;
 
 	@RequestMapping(ADMIN_LOGIN_PAGE)
 	String adminLoginPage() {
@@ -26,7 +28,8 @@ public class PublicController {
 	String db(Map<String, Object> model) {
 
 		try {
-			List<String> output = tickDao.loadTick().stream().map(tick -> "Read from DB: " + tick)
+			List<String> output = tickDao.loadTicks().stream()//
+					.map(tick -> "Read from DB: " + tick.getTimestamp())//
 					.collect(Collectors.toList());
 
 			model.put("records", output);
