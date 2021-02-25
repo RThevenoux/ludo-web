@@ -45,7 +45,7 @@ public class UserService {
 		entity.setOtherMembers(data.getOtherMembers());
 		entity.setPhone(data.getPhone());
 		entity.setPlan(data.getPlan());
-		entity.setSubscriptionPaid(data.isSubscriptionPaid());
+		entity.setSubscriptionPaid(data.getSubscriptionPaid());
 		entity.setType(data.getType());
 	}
 
