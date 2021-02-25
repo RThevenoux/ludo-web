@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout-admin :: layout (~{::body},'index')}">
+
+<body>
+
+	<div class="jumbotron text-center">
+		<div class="container">
+			<h1>Liste des inscriptions</h1>
+		</div>
+	</div>
+	<div class="container">
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nom</th>
+					<th>Prénom</th>
+					<th>Email</th>
+					<th>Type</th>
+					<th>Forfait</th>
+				</tr>
+			</thead>
+			<tr th:each="user : ${users}">
+				<td th:text="${user.username}">1026</td>
+				<td th:text="${user.firstName}">Jean</td>
+				<td th:text="${user.lastName}">Dupond</td>
+				<td th:text="${user.mail}">mail@mail.com</td>
+				<td th:text="${user.type}">Ass. Mat.</td>
+				<td th:text="${user.plan}">Famille</td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+</html>

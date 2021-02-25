@@ -17,38 +17,34 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	MyUserDetailsService userDetailsService;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/user/**")
-        .authorizeRequests()
-        .anyRequest()
-        .hasRole("USER")
-        
-        .and()
-        .formLogin()
-        .loginPage(PublicController.USER_LOGIN_PAGE)
-        .loginProcessingUrl("/user/login")
-        .failureUrl(PublicController.USER_LOGIN_PAGE+"?error=loginError")
-        .defaultSuccessUrl("/user/test")
-        
-        .and()
-        .logout()
-        .logoutUrl("/user/logout")
-        .logoutSuccessUrl("/")
-        .deleteCookies("JSESSIONID")
-        
-        .and()
-        .exceptionHandling()
-        .accessDeniedPage(PublicController.USER_LOGIN_PAGE+"?accessDenied=true")
-        
-        .and()
-        .csrf().disable();
+		http.antMatcher("/user/**")//
+				.authorizeRequests()//
+				.anyRequest()//
+				.hasRole("USER")
+
+				.and().formLogin()//
+				.loginPage(PublicController.USER_LOGIN_PAGE)//
+				.loginProcessingUrl("/user/login")//
+				.failureUrl(PublicController.USER_LOGIN_PAGE + "?error=loginError")//
+				.defaultSuccessUrl("/user/test")
+
+				.and().logout()//
+				.logoutUrl("/user/logout")//
+				.logoutSuccessUrl("/")//
+				.deleteCookies("JSESSIONID")
+
+				.and().exceptionHandling()//
+				.accessDeniedPage(PublicController.USER_LOGIN_PAGE + "?accessDenied=true")
+
+				.and().csrf().disable();
 	}
-	
-	 @Override
-	 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	     auth.userDetailsService(userDetailsService);
-	 }
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
 
 }

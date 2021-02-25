@@ -37,7 +37,8 @@ public class UserRestController {
 	}
 
 	@PutMapping("{username}/password")
-	public UserInput updatePassword(@PathVariable String username, @RequestBody @Valid PasswordWrapper passwordWrapper) {
+	public UserInput updatePassword(@PathVariable String username,
+			@RequestBody @Valid PasswordWrapper passwordWrapper) {
 		return service.updateUserPassword(username, passwordWrapper.getPassword());
 	}
 

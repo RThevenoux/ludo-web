@@ -24,10 +24,29 @@ public class UserService {
 		}
 
 		UserInput data = new UserInput();
+		data.setBorrowings(entity.getBorrowings());
+		data.setFirstName(entity.getFirstName());
+		data.setLastName(entity.getLastName());
 		data.setMail(entity.getMail());
+		data.setOtherMembers(entity.getOtherMembers());
 		data.setPhone(entity.getPhone());
+		data.setPlan(entity.getPlan());
+		data.setSubscriptionPaid(entity.isSubscriptionPaid());
+		data.setType(entity.getType());
 		data.setUsername(entity.getUsername());
 		return data;
+	}
+
+	private void fill(UserEntity entity, UserInput data) {
+		entity.setBorrowings(data.getBorrowings());
+		entity.setFirstName(data.getFirstName());
+		entity.setLastName(data.getLastName());
+		entity.setMail(data.getMail());
+		entity.setOtherMembers(data.getOtherMembers());
+		entity.setPhone(data.getPhone());
+		entity.setPlan(data.getPlan());
+		entity.setSubscriptionPaid(data.isSubscriptionPaid());
+		entity.setType(data.getType());
 	}
 
 	public List<UserInput> list() {
@@ -40,10 +59,9 @@ public class UserService {
 		}
 
 		UserEntity entity = new UserEntity();
-		entity.setMail(data.getMail());
 		entity.setPassword(null);
-		entity.setPhone(data.getPhone());
 		entity.setUsername(data.getUsername());
+		fill(entity, data);
 
 		UserEntity saved = repo.save(entity);
 		return convert(saved);
@@ -52,8 +70,7 @@ public class UserService {
 	public UserInput updateUserData(UserInput data) {
 		UserEntity entity = repo.findByUsername(data.getUsername());
 		if (entity != null) {
-			entity.setMail(data.getMail());
-			entity.setPhone(data.getPhone());
+			fill(entity, data);
 		}
 		return convert(entity);
 	}

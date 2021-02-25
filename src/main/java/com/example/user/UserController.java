@@ -1,5 +1,9 @@
 package com.example.user;
 
+import java.util.Map;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,8 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
 	@RequestMapping("test")
-	public String test() {
+	public String test(Map<String, Object> model) {
+		model.put("user", getUser());
 		return "user-test";
+	}
+
+	private UserEntity getUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		MyUserPrincipal principal = (MyUserPrincipal) auth.getPrincipal();
+		return principal.getUser();
 	}
 
 }

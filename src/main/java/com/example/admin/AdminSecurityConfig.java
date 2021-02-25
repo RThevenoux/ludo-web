@@ -18,43 +18,36 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	PasswordEncoder encoder;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		 http.antMatcher("/admin/**")
-         .authorizeRequests()
-         .anyRequest()
-         .hasRole("ADMIN")
-         
-         .and()
-         .formLogin()
-         .loginPage(PublicController.ADMIN_LOGIN_PAGE)
-         .loginProcessingUrl("/admin/login")
-         .failureUrl(PublicController.ADMIN_LOGIN_PAGE+"?error=loginError")
-         .defaultSuccessUrl("/admin/test")
-         
-         .and()
-         .logout()
-         .logoutUrl("/admin/logout")
-         .logoutSuccessUrl("/")
-         .deleteCookies("JSESSIONID")
-         
-         .and()
-         .exceptionHandling()
-         .accessDeniedPage(PublicController.ADMIN_LOGIN_PAGE+"?accessDenied=true")
-         
-         .and()
-         .csrf().disable();
+		http.antMatcher("/admin/**")//
+				.authorizeRequests()//
+				.anyRequest()//
+				.hasRole("ADMIN")
+
+				.and().formLogin()//
+				.loginPage(PublicController.ADMIN_LOGIN_PAGE)//
+				.loginProcessingUrl("/admin/login")//
+				.failureUrl(PublicController.ADMIN_LOGIN_PAGE + "?error=loginError")//
+				.defaultSuccessUrl("/admin/home")
+
+				.and().logout()//
+				.logoutUrl("/admin/logout")//
+				.logoutSuccessUrl("/")//
+				.deleteCookies("JSESSIONID")
+
+				.and().exceptionHandling()//
+				.accessDeniedPage(PublicController.ADMIN_LOGIN_PAGE + "?accessDenied=true")
+
+				.and().csrf().disable();
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()//
-				.withUser("admin")
-				.password(encoder.encode("password"))
-				.roles("ADMIN");
-		
-	}
+				.withUser("admin").password(encoder.encode("password")).roles("ADMIN");
 
+	}
 
 }

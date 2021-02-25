@@ -1,18 +1,36 @@
 package com.example.user;
 
+import java.util.List;
+
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+
+import com.sun.istack.NotNull;
 
 import lombok.Data;
 
 @Data
 public class UserInput {
 
-	// can be null
+	String firstName;
+
+	String lastName;
+
 	String mail;
 
-	// can be null
 	String phone;
+
+	String plan;
+
+	@NotNull
+	Boolean subscriptionPaid;
+
+	String type;
 
 	@NotEmpty
 	String username;
+
+	List<@NotEmpty String> otherMembers;
+
+	List<@Valid Borrowing> borrowings;
 }

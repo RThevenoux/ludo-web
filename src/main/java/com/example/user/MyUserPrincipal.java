@@ -7,12 +7,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.Getter;
+
 public class MyUserPrincipal implements UserDetails {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	UserEntity user;
 
 	public MyUserPrincipal(UserEntity user) {
