@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 @Service
 @Transactional
@@ -18,17 +19,20 @@ public class UserService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	private UserInput convert(UserEntity entity) {
+	private UserView convert(UserEntity entity) {
 		if (entity == null) {
 			return null;
 		}
 
-		UserInput data = new UserInput();
+		boolean isPassword = !StringUtils.isEmpty(entity.getPassword());
+
+		UserView data = new UserView();
 		data.setBorrowings(entity.getBorrowings());
 		data.setFirstName(entity.getFirstName());
 		data.setLastName(entity.getLastName());
 		data.setMail(entity.getMail());
 		data.setOtherMembers(entity.getOtherMembers());
+		data.setPassword(isPassword);
 		data.setPhone(entity.getPhone());
 		data.setPlan(entity.getPlan());
 		data.setSubscriptionPaid(entity.isSubscriptionPaid());
@@ -49,11 +53,11 @@ public class UserService {
 		entity.setType(data.getType());
 	}
 
-	public List<UserInput> list() {
+	public List<UserView> list() {
 		return repo.findAll().stream().map(this::convert).collect(Collectors.toList());
 	}
 
-	public UserInput create(UserInput data) {
+	public UserView create(UserInput data) {
 		if (repo.existsByUsername(data.getUsername())) {
 			return null;
 		}
@@ -67,7 +71,7 @@ public class UserService {
 		return convert(saved);
 	}
 
-	public UserInput updateUserData(UserInput data) {
+	public UserView updateUserData(UserInput data) {
 		UserEntity entity = repo.findByUsername(data.getUsername());
 		if (entity != null) {
 			fill(entity, data);
@@ -75,7 +79,7 @@ public class UserService {
 		return convert(entity);
 	}
 
-	public UserInput updateUserPassword(String username, String password) {
+	public UserView updateUserPassword(String username, String password) {
 		UserEntity entity = repo.findByUsername(username);
 		if (entity != null) {
 			String encoded = passwordEncoder.encode(password);
@@ -86,5 +90,10 @@ public class UserService {
 
 	public void delete(String username) {
 		repo.deleteByUsername(username);
+	}
+
+	public UserView get(String username) {
+		UserEntity entity = repo.findByUsername(username);
+		return convert(entity);
 	}
 }

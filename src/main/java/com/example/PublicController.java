@@ -14,14 +14,14 @@ public class PublicController {
 		return "admin-login";
 	}
 
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
-
 	@RequestMapping("games")
 	public String game() {
 		return "game";
+	}
+
+	@RequestMapping("/")
+	public String index() {
+		return "index";
 	}
 
 	@RequestMapping(USER_LOGIN_PAGE)

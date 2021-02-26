@@ -22,23 +22,22 @@ public class UserRestController {
 	UserService service;
 
 	@GetMapping
-	public List<UserInput> getUsers() {
+	public List<UserView> getUsers() {
 		return service.list();
 	}
 
 	@PostMapping
-	public UserInput create(@RequestBody @Valid UserInput data) {
+	public UserView create(@RequestBody @Valid UserInput data) {
 		return service.create(data);
 	}
 
 	@PutMapping
-	public UserInput update(@RequestBody @Valid UserInput data) {
+	public UserView update(@RequestBody @Valid UserInput data) {
 		return service.updateUserData(data);
 	}
 
 	@PutMapping("{username}/password")
-	public UserInput updatePassword(@PathVariable String username,
-			@RequestBody @Valid PasswordWrapper passwordWrapper) {
+	public UserView updatePassword(@PathVariable String username, @RequestBody @Valid PasswordWrapper passwordWrapper) {
 		return service.updateUserPassword(username, passwordWrapper.getPassword());
 	}
 
