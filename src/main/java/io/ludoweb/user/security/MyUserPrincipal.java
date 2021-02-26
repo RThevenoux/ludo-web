@@ -1,4 +1,4 @@
-package com.example.user.security;
+package io.ludoweb.user.security;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -6,9 +6,8 @@ import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.SecurityTool;
-import com.example.user.UserEntity;
-
+import io.ludoweb.security.SecurityTool;
+import io.ludoweb.user.UserEntity;
 import lombok.Getter;
 
 public class MyUserPrincipal implements UserDetails {

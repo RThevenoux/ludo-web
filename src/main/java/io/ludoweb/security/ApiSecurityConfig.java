@@ -1,4 +1,4 @@
-package com.example;
+package io.ludoweb.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

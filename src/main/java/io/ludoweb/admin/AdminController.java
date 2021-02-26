@@ -1,4 +1,4 @@
-package com.example.admin;
+package io.ludoweb.admin;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.user.PasswordWrapper;
-import com.example.user.UserService;
-import com.example.user.UserView;
+import io.ludoweb.user.PasswordWrapper;
+import io.ludoweb.user.UserService;
+import io.ludoweb.user.UserView;
 
 @Controller
 @RequestMapping("admin")
@@ -24,14 +24,14 @@ public class AdminController {
 	UserService userService;
 
 	@RequestMapping("home")
-	public String index() {
+	public String home() {
 		return "admin-home";
 	}
 
 	@RequestMapping("user")
 	public ModelAndView user() {
 		List<UserView> users = userService.list();
-		return new ModelAndView("admin-user","users",users);
+		return new ModelAndView("admin-user", "users", users);
 	}
 
 	@GetMapping("user/{username}/password")
@@ -54,11 +54,10 @@ public class AdminController {
 		UserView user = userService.updateUserPassword(username, password.getPassword());
 
 		if (user == null) {
-			return new ModelAndView("error", "message", "Utilisateur non trouvé:" + username);
+			return new ModelAndView("error", "message", "Utilisateur non trouvé: " + username);
 		}
 
 		return new ModelAndView("admin-user-password-ok");
-
 	}
 
 }

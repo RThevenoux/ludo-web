@@ -1,4 +1,4 @@
-package com.example;
+package io.ludoweb.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

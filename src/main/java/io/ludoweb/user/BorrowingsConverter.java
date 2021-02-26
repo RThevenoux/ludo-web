@@ -1,4 +1,4 @@
-package com.example.user;
+package io.ludoweb.user;
 
 import java.util.List;
 
@@ -11,14 +11,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ListConverter implements AttributeConverter<List<String>, String> {
+public class BorrowingsConverter implements AttributeConverter<List<Borrowing>, String> {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
-	private static final TypeReference<List<String>> typeRef = new TypeReference<List<String>>() {
+	private static final TypeReference<List<Borrowing>> typeRef = new TypeReference<List<Borrowing>>() {
 	};
 
 	@Override
-	public String convertToDatabaseColumn(List<String> attribute) {
+	public String convertToDatabaseColumn(List<Borrowing> attribute) {
 		if (attribute == null) {
 			return null;
 		}
@@ -31,7 +31,7 @@ public class ListConverter implements AttributeConverter<List<String>, String> {
 	}
 
 	@Override
-	public List<String> convertToEntityAttribute(String dbData) {
+	public List<Borrowing> convertToEntityAttribute(String dbData) {
 		if (dbData == null) {
 			return null;
 		}

@@ -1,4 +1,4 @@
-package com.example.user;
+package io.ludoweb.user;
 
 import javax.validation.constraints.NotEmpty;
 

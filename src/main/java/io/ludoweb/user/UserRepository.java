@@ -1,4 +1,4 @@
-package com.example.user;
+package io.ludoweb.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
