@@ -16,6 +16,8 @@ import com.example.PublicController;
 @Order(1)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	private static final String ROLE_ADMIN = "ADMIN";
+
 	@Autowired
 	PasswordEncoder encoder;
 
@@ -24,7 +26,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.antMatcher("/admin/**")//
 				.authorizeRequests()//
 				.anyRequest()//
-				.hasRole("ADMIN")
+				.hasRole(ROLE_ADMIN)
 
 				.and().formLogin()//
 				.loginPage(PublicController.ADMIN_LOGIN_PAGE)//
@@ -46,7 +48,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()//
-				.withUser("admin").password(encoder.encode("password")).roles("ADMIN");
+				.withUser("admin").password(encoder.encode("password")).roles(ROLE_ADMIN);
 
 	}
 

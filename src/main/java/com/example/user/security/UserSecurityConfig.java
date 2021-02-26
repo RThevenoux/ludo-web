@@ -1,4 +1,4 @@
-package com.example.user;
+package com.example.user.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +15,8 @@ import com.example.PublicController;
 @Order(2)
 public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	public static final String ROLE_USER = "USER";
+
 	@Autowired
 	MyUserDetailsService userDetailsService;
 
@@ -23,7 +25,7 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.antMatcher("/user/**")//
 				.authorizeRequests()//
 				.anyRequest()//
-				.hasRole("USER")
+				.hasRole(ROLE_USER)
 
 				.and().formLogin()//
 				.loginPage(PublicController.USER_LOGIN_PAGE)//

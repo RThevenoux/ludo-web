@@ -1,15 +1,18 @@
-package com.example.user;
+package com.example.user.security;
 
 import java.util.Collection;
 import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.example.SecurityTool;
+import com.example.user.UserEntity;
 
 import lombok.Getter;
 
 public class MyUserPrincipal implements UserDetails {
+
 	/**
 	 * 
 	 */
@@ -24,7 +27,7 @@ public class MyUserPrincipal implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		SimpleGrantedAuthority sgq = new SimpleGrantedAuthority("ROLE_USER");
+		GrantedAuthority sgq = SecurityTool.roleAuthority(UserSecurityConfig.ROLE_USER);
 		return Collections.singleton(sgq);
 	}
 
