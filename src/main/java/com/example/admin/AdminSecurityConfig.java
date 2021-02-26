@@ -28,8 +28,8 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				.and().formLogin()//
 				.loginPage(PublicController.ADMIN_LOGIN_PAGE)//
-				.loginProcessingUrl("/admin/login")//
-				.failureUrl(PublicController.ADMIN_LOGIN_PAGE + "?error=loginError")//
+				.loginProcessingUrl(PublicController.ADMIN_LOGIN_ACTION)//
+				.failureUrl(PublicController.ADMIN_LOGIN_PAGE_LOGIN_FAIL)//
 				.defaultSuccessUrl("/admin/home")
 
 				.and().logout()//
@@ -38,7 +38,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 				.deleteCookies("JSESSIONID")
 
 				.and().exceptionHandling()//
-				.accessDeniedPage(PublicController.ADMIN_LOGIN_PAGE + "?accessDenied=true")
+				.accessDeniedPage(PublicController.ADMIN_LOGIN_PAGE)
 
 				.and().csrf().disable();
 	}

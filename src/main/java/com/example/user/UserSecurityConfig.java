@@ -27,8 +27,8 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				.and().formLogin()//
 				.loginPage(PublicController.USER_LOGIN_PAGE)//
-				.loginProcessingUrl("/user/login")//
-				.failureUrl(PublicController.USER_LOGIN_PAGE + "?error=loginError")//
+				.loginProcessingUrl(PublicController.USER_LOGIN_ACTION)//
+				.failureUrl(PublicController.USER_LOGIN_PAGE_LOGIN_FAIL)//
 				.defaultSuccessUrl("/user/home")
 
 				.and().logout()//
@@ -37,7 +37,7 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 				.deleteCookies("JSESSIONID")
 
 				.and().exceptionHandling()//
-				.accessDeniedPage(PublicController.USER_LOGIN_PAGE + "?accessDenied=true")
+				.accessDeniedPage(PublicController.USER_LOGIN_PAGE)
 
 				.and().csrf().disable();
 	}

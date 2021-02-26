@@ -5,11 +5,13 @@
 <body>
 
 	<div class="container">
-		<h3>Connection "Membre"</h3>
-		<form action="/user/login" method="POST">
+		<h3 th:text="${title}">Title</h3>
+		<div th:if="${loginError}" class="alert alert-warning" role="alert">Identifiant
+			ou mot de passe invalide</div>
+		<form th:action="${action}" method="POST">
 			<table>
 				<tr>
-					<td>Numéro membre</td>
+					<td>Identifiant</td>
 					<td><input type="text" name="username" value=""></td>
 				</tr>
 				<tr>
