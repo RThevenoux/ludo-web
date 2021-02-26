@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("user")
 public class UserController {
 
-	@RequestMapping("test")
+	@RequestMapping("home")
 	public String test(Map<String, Object> model) {
 		model.put("user", getUser());
-		return "user-test";
+		return "user-home";
 	}
 
 	private UserEntity getUser() {

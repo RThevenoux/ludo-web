@@ -29,7 +29,7 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage(PublicController.USER_LOGIN_PAGE)//
 				.loginProcessingUrl("/user/login")//
 				.failureUrl(PublicController.USER_LOGIN_PAGE + "?error=loginError")//
-				.defaultSuccessUrl("/user/test")
+				.defaultSuccessUrl("/user/home")
 
 				.and().logout()//
 				.logoutUrl("/user/logout")//

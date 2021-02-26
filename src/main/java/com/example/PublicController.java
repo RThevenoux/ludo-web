@@ -1,14 +1,7 @@
 package com.example;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.example.tick.TickService;
 
 @Controller
 public class PublicController {
@@ -16,35 +9,19 @@ public class PublicController {
 	public static final String ADMIN_LOGIN_PAGE = "/admin-login";
 	public static final String USER_LOGIN_PAGE = "/user-login";
 
-	@Autowired
-	TickService tickDao;
-
 	@RequestMapping(ADMIN_LOGIN_PAGE)
 	public String adminLoginPage() {
 		return "admin-login";
 	}
 
-	@RequestMapping("/db")
-	public String db(Map<String, Object> model) {
-
-		try {
-			List<String> output = tickDao.loadTicks().stream()//
-					.map(tick -> "Read from DB: " + tick.getTimestamp())//
-					.collect(Collectors.toList());
-
-			model.put("records", output);
-			return "db";
-
-		} catch (Exception e) {
-			model.put("message", e.getMessage());
-			return "error";
-		}
-
-	}
-
 	@RequestMapping("/")
 	public String index() {
 		return "index";
+	}
+
+	@RequestMapping("games")
+	public String game() {
+		return "game";
 	}
 
 	@RequestMapping(USER_LOGIN_PAGE)

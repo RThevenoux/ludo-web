@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout-user :: layout (~{::body},'index')}">
+
+<body>
+
+	<div class="jumbotron text-center"></div>
+	<div class="container">
+
+		<div class="row">
+			<h1>Inscription</h1>
+			<div class="col-md-6">
+				<p>
+					<strong> <span th:text="${user.firstName}">Jean</span> <span
+						th:text="${user.lastName}">Paul</span>
+					</strong>
+				</p>
+				<ul th:each="member : ${user.otherMembers}">
+					<li th:text="${member}">L�a</li>
+				</ul>
+				<p>
+					Phone : <span th:text="${user.phone}">0511223344</span>
+				</p>
+				<p>
+					Mail : <span th:text="${user.mail}">joe@foo.bar</span>
+				</p>
+			</div>
+			<div class="col-md-6">
+				<p th:text="${user.plan}">Famille</p>
+				<p>
+					Cotisation à jour : <span th:text=${user.subscriptionPaid}></span>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<h1>Prêt de jeux</h1>
+			<div class="col-md-2">
+				<p>Emprut en cours</p>
+			</div>
+			<div class="col-md-10">
+				<ul th:each="borrowing : ${user.borrowings}">
+					<li><span th:text="${borrowing.itemName}">Puisance 4</span> <span
+						th:text="${borrowing.startDate}">Il y a longtemp</span></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
