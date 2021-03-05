@@ -2,21 +2,27 @@
 <html th:fragment="layout (template, menu)">
 <head>
 <title>LudoWeb</title>
-<link rel="stylesheet" type="text/css"
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" 	href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<script src="https://kit.fontawesome.com/f3ab414337.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-	<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="/admin/home"><span
-						class="glyphicon glyphicon-home"></span> Espace Admin</a></li>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link active" href="/admin/home">
+						<i class="fas fa-home"></i> Espace Admin
+					</a>
+				</li>
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="navbar-right"><a href="/admin/logout"><span
-						class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+			<ul class="navbar-nav navbar-right">
+				<li class="nav-item navbar-right">
+					<a class="nav-link" href="/admin/logout" >
+						<i class="fas fa-sign-out-alt"></i> Déconnexion
+					</a>
+				</li>
 			</ul>
 		</div>
 	</nav>

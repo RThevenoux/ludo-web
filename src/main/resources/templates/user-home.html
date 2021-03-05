@@ -4,45 +4,72 @@
 
 <body>
 
-	<div class="jumbotron text-center"></div>
-	<div class="container">
+	<div class="jumbotron text-center">
+		<h1>Parta'Jeu - Verfeil</h1>
+	</div>
 
-		<div class="row">
-			<h1>Inscription</h1>
-			<div class="col-md-6">
-				<p>
-					<strong> <span th:text="${user.firstName}">Jean</span> <span
-						th:text="${user.lastName}">Paul</span>
-					</strong>
-				</p>
-				<ul th:each="member : ${user.otherMembers}">
-					<li th:text="${member}">L�a</li>
-				</ul>
-				<p>
-					Phone : <span th:text="${user.phone}">0511223344</span>
-				</p>
-				<p>
-					Mail : <span th:text="${user.mail}">joe@foo.bar</span>
-				</p>
+	<div class="container">
+		<div class="card bg-light mb-3">
+			<div class="card-header">
+				<h5 class="card-title">
+					<i class="far fa-address-card"></i> Mon inscription
+				</h5>
 			</div>
-			<div class="col-md-6">
-				<p th:text="${user.plan}">Famille</p>
-				<p>
-					Cotisation à jour : <span th:text=${user.subscriptionPaid}></span>
-				</p>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-4">
+						<p>
+							<strong> <span th:text="${user.firstName}">Jean</span> <span
+								th:text="${user.lastName}">Paul</span>
+							</strong>
+						</p>
+						<ul th:each="member : ${user.otherMembers}">
+							<li th:text="${member}">Léa</li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<p>
+							<i class="fas fa-phone"></i> <span th:text="${user.phone}">0511223344</span>
+						</p>
+						<p>
+							<i class="fas fa-at"></i> <span th:text="${user.mail}">joe@foo.bar</span>
+						</p>
+					</div>
+					<div class="col-md-4">
+						<p th:text="${user.plan}">Famille</p>
+						<p>
+							Cotisation à jour : <span th:text=${user.subscriptionPaid}></span>
+						</p>
+					</div>
+
+				</div>
 			</div>
 		</div>
-		<div class="row">
-			<h1>Prêt de jeux</h1>
-			<div class="col-md-2">
-				<p>Emprut en cours</p>
+
+		<div class="card border-light">
+			<div class="card-header">
+				<h5 class="card-title">
+					<i class="fas fa-chess-knight"></i> Mes emprunts de jeux
+				</h5>
+
 			</div>
-			<div class="col-md-10">
-				<ul th:each="borrowing : ${user.borrowings}">
-					<li><span th:text="${borrowing.itemName}">Puisance 4</span> <span
-						th:text="${borrowing.startDate}">Il y a longtemp</span></li>
-				</ul>
-			</div>
+
+			<h6>Emprut en cours</h6>
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>Nom du jeux</th>
+						<th>Date de début</th>
+						<th>Date de Fin</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="borrowing : ${user.borrowings}">
+						<th th:text="${borrowing.itemName}">Puisance 4</th>
+						<th th:text="${borrowing.startDate}">02/03/89</th>
+						<th>---</th>
+					</tr>
+			</table>
 		</div>
 
 	</div>
