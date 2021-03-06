@@ -31,7 +31,7 @@ public class AdminController {
 
 		long borrowingCount = userService.getBorrowingCount();
 
-		ModelAndView modelAndView = new ModelAndView("admin-home");
+		ModelAndView modelAndView = new ModelAndView("admin/home");
 		modelAndView.addObject("userStats", userStats);
 		modelAndView.addObject("borrowingCount", borrowingCount);
 
@@ -56,7 +56,7 @@ public class AdminController {
 	@RequestMapping("user")
 	public ModelAndView showUserList() {
 		List<UserView> users = userService.list();
-		return new ModelAndView("admin-user", "users", users);
+		return new ModelAndView("admin/user", "users", users);
 	}
 
 	@GetMapping("user/{username}/password")
@@ -66,7 +66,7 @@ public class AdminController {
 			return new ModelAndView("redirect:/admin/user");
 		}
 
-		return new ModelAndView("admin-user-password", "user", user);
+		return new ModelAndView("admin/user-password", "user", user);
 	}
 
 	@PostMapping("user/{username}/password")
@@ -82,7 +82,7 @@ public class AdminController {
 			return new ModelAndView("error", "message", "Utilisateur non trouvé: " + username);
 		}
 
-		return new ModelAndView("admin-user-password-ok");
+		return new ModelAndView("admin/user-password-ok");
 	}
 
 }

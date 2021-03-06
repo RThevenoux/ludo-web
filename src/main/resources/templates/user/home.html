@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{fragments/layout-user :: layout (~{::body},'index')}">
+	th:replace="~{user/layout :: layout (~{::body},'index')}">
 
 <body>
 
 	<div class="jumbotron text-center">
-		<h1>Parta'Jeu - Verfeil</h1>
+		<h1 th:text="${#servletContext.getAttribute('title')}">Title</h1>
 	</div>
 
 	<div class="container">

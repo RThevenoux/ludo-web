@@ -12,7 +12,7 @@ public class UserController {
 
 	@RequestMapping("home")
 	public ModelAndView home() {
-		return new ModelAndView("user-home", "user", UserSecurityTool.getUser());
+		return new ModelAndView("user/home", "user", UserSecurityTool.getUser());
 	}
 
 }
