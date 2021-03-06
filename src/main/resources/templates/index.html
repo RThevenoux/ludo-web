@@ -6,13 +6,10 @@
 
 	<div class="jumbotron text-center">
 		<div class="container">
-			<img
-				src="http://parta-jeu.fr/wp-content/uploads/2019/10/LaLudotheque_512.png">
-			<h1>Parta'Jeu - Verfeil</h1>
+			<img th:src="${#servletContext.getAttribute('main-logo')}">
+			<h1 th:text="${#servletContext.getAttribute('title')}">Title</h1>
 		</div>
 	</div>
-
-
 
 	<div class="container">
 
