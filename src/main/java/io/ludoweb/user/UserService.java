@@ -96,4 +96,21 @@ public class UserService {
 		UserEntity entity = repo.findByUsername(username);
 		return convert(entity);
 	}
+
+	public UserStats getUserStats(boolean subscriptionPaid) {
+		List<UserEntity> users = repo.findBySubscriptionPaid(subscriptionPaid);
+
+		int memberCount = 0;
+		for (UserEntity user : users) {
+			memberCount += (1 + user.getOtherMembers().size());
+		}
+
+		return new UserStats(memberCount, users.size());
+	}
+
+	public long getBorrowingCount() {
+		return repo.findAll().stream()//
+				.flatMap(user -> user.getBorrowings().stream())//
+				.count();
+	}
 }

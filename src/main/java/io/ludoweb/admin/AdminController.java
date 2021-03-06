@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import io.ludoweb.user.PasswordWrapper;
 import io.ludoweb.user.UserService;
+import io.ludoweb.user.UserStats;
 import io.ludoweb.user.UserView;
 
 @Controller
@@ -24,12 +25,36 @@ public class AdminController {
 	UserService userService;
 
 	@RequestMapping("home")
-	public String home() {
-		return "admin-home";
+	public ModelAndView showHome() {
+		boolean subscriptionPaid = true;
+		UserStats userStats = userService.getUserStats(subscriptionPaid);
+
+		long borrowingCount = userService.getBorrowingCount();
+
+		ModelAndView modelAndView = new ModelAndView("admin-home");
+		modelAndView.addObject("userStats", userStats);
+		modelAndView.addObject("borrowingCount", borrowingCount);
+
+		return modelAndView;
+	}
+
+	@RequestMapping("config")
+	public ModelAndView showConfig() {
+		return showHome();
+	}
+
+	@RequestMapping("mail")
+	public ModelAndView showMailingList() {
+		return showHome();
+	}
+
+	@RequestMapping("stats")
+	public ModelAndView showStatistics() {
+		return showHome();
 	}
 
 	@RequestMapping("user")
-	public ModelAndView user() {
+	public ModelAndView showUserList() {
 		List<UserView> users = userService.list();
 		return new ModelAndView("admin-user", "users", users);
 	}

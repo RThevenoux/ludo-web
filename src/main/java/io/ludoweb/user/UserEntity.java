@@ -39,7 +39,7 @@ public class UserEntity {
 
 	@Convert(converter = ListConverter.class)
 	List<String> otherMembers;
-
+	
 	@Convert(converter = BorrowingsConverter.class)
 	List<Borrowing> borrowings;
 }

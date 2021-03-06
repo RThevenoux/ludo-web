@@ -5,19 +5,80 @@
 <body>
 	<div class="container">
 		<h1>Admin</h1>
-		<p>En développement. Fonctionnalités prévues:</p>
-		<ul>
-			<li><a href="/admin/user">Listing user + gestion mot de
-					passe</a></li>
-			<li>Mailing list</li>
-			<li>Stats ?</li>
-			<li>Gestion site
-				<ul>
-					<li>Gestion Auth API</li>
-					<li>Customisation (title, img)</li>
-				</ul>
-			</li>
-		</ul>
+
+		<div class="card-deck mb-5">
+			<div class="card">
+				<div class="card-body">
+					<h5>À jour de cotisation</h5>
+					<p>
+						<i class="far fa-address-card"></i> <span
+							th:text="${userStats.userCount}">123 </span> inscriptions
+					</p>
+					<p>
+						<i class="fas fa-user"></i> <span
+							th:text="${userStats.memberCount}">234 </span> membres
+					</p>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-body">
+					<h5>Emprunt en cours</h5>
+					<p>
+						<span th:text="${borrowingCount}">123 </span> emprunt
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-deck">
+			<div class="card">
+				<div class="card-header">
+					<i class="far fa-address-card"></i> Adhérents
+				</div>
+				<div class="card-body">
+					<p>Liste des adhérents et gestion du mot de passe</p>
+
+				</div>
+				<div class="card-footer">
+					<a class="card-link" href="/admin/user">Gestion adhérents</a>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<i class="far fa-envelope"></i> Mailing list
+				</div>
+				<div class="card-body">
+					<p>Blabla</p>
+				</div>
+				<div class="card-footer">
+					<a class="card-link" href="/admin/mail">Mailing list</a>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header"><i class="fas fa-poll-h"></i> Statistiques</div>
+				<div class="card-body">
+					<p>Blabla</p>
+				</div>
+				<div class="card-footer">
+					<a class="card-link" href="/admin/stats">Configuration</a>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<i class="fas fa-cog"></i> Gestion site
+				</div>
+				<div class="card-body">
+					<p>Configuration de l'aspect visuel (texte, image) et de la
+						sécurité</p>
+				</div>
+				<div class="card-footer">
+					<a class="card-link" href="/admin/config">Configuration</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
