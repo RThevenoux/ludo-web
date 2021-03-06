@@ -9,12 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class PublicController {
 
 	public static final String ADMIN_LOGIN_ACTION = "/admin/login";
-	public static final String ADMIN_LOGIN_PAGE = "/admin-login";
+	public static final String ADMIN_LOGIN_PAGE = "/public/admin-login";
 	public static final String ADMIN_LOGIN_PAGE_LOGIN_FAIL = ADMIN_LOGIN_PAGE + "?loginError=true";
 	private static final String ADMIN_LOGIN_TITLE = "Accés réservé aux administrateurs";
 
 	public static final String USER_LOGIN_ACTION = "/user/login";
-	public static final String USER_LOGIN_PAGE = "/user-login";
+	public static final String USER_LOGIN_PAGE = "/public/user-login";
 	public static final String USER_LOGIN_PAGE_LOGIN_FAIL = USER_LOGIN_PAGE + "?loginError=true";
 	private static final String USER_LOGIN_TITLE = "Connection \"Membre\"";
 
@@ -25,16 +25,16 @@ public class PublicController {
 
 	@RequestMapping("games")
 	public String game() {
-		return "game";
+		return "public/games";
 	}
 
 	@RequestMapping("/")
 	public String index() {
-		return "index";
+		return "public/index";
 	}
 
 	private ModelAndView loginModelAndView(boolean loginError, String title, String action) {
-		ModelAndView modelAndView = new ModelAndView("login");
+		ModelAndView modelAndView = new ModelAndView("public/login");
 		modelAndView.addObject("loginError", loginError);
 		modelAndView.addObject("title", title);
 		modelAndView.addObject("action", action);

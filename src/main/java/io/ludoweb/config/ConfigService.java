@@ -20,11 +20,23 @@ public class ConfigService {
 
 	@PostConstruct
 	public void onInit() {
-		ConfigEntity config = getConfig();
+		ConfigEntity config = getConfigEntity();
 		updateServletContext(config);
 	}
 
-	public ConfigEntity getConfig() {
+	public ConfigView getConfig() {
+		ConfigEntity entity = getConfigEntity();
+		return convert(entity);
+	}
+
+	private ConfigView convert(ConfigEntity entity) {
+		ConfigView view = new ConfigView();
+		view.setMainLogo(entity.getMainLogo());
+		view.setTitle(entity.getTitle());
+		return view;
+	}
+
+	private ConfigEntity getConfigEntity() {
 		Iterator<ConfigEntity> iterator = repo.findAll().iterator();
 
 		if (iterator.hasNext()) {
@@ -37,11 +49,12 @@ public class ConfigService {
 		}
 	}
 
-	public void updateConfig(ConfigInput input) {
-		ConfigEntity config = getConfig();
+	public ConfigView updateConfig(ConfigView input) {
+		ConfigEntity config = getConfigEntity();
 		config.setMainLogo(input.getMainLogo());
 		config.setTitle(input.getTitle());
 		updateServletContext(config);
+		return convert(config);
 	}
 
 	private void updateServletContext(ConfigEntity config) {

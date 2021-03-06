@@ -3,7 +3,7 @@ package io.ludoweb.config;
 import lombok.Data;
 
 @Data
-public class ConfigInput {
+public class ConfigView {
 
 	String mainLogo;
 	String title;
