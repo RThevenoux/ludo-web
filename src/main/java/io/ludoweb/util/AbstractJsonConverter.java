@@ -1,6 +1,4 @@
-package io.ludoweb.user;
-
-import java.util.List;
+package io.ludoweb.util;
 
 import javax.persistence.AttributeConverter;
 
@@ -11,17 +9,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class BorrowingsConverter implements AttributeConverter<List<Borrowing>, String> {
+public abstract class AbstractJsonConverter<T> implements AttributeConverter<T, String> {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
-	private static final TypeReference<List<Borrowing>> typeRef = new TypeReference<List<Borrowing>>() {
-	};
 
 	@Override
-	public String convertToDatabaseColumn(List<Borrowing> attribute) {
+	public String convertToDatabaseColumn(T attribute) {
 		if (attribute == null) {
 			return null;
 		}
+
 		try {
 			return objectMapper.writeValueAsString(attribute);
 		} catch (JsonProcessingException e) {
@@ -31,18 +28,18 @@ public class BorrowingsConverter implements AttributeConverter<List<Borrowing>, 
 	}
 
 	@Override
-	public List<Borrowing> convertToEntityAttribute(String dbData) {
+	public T convertToEntityAttribute(String dbData) {
 		if (dbData == null) {
 			return null;
 		}
 
 		try {
-
-			return objectMapper.readValue(dbData, typeRef);
+			return objectMapper.readValue(dbData, getTypeRef());
 		} catch (JsonProcessingException e) {
 			log.error("Fail to read JSON", e);
 			return null;
 		}
 	}
 
+	protected abstract TypeReference<T> getTypeRef();
 }

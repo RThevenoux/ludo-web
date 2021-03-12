@@ -4,10 +4,14 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import io.ludoweb.borrowing.BorrowingEntity;
+import io.ludoweb.user.plan.Plan;
 import lombok.Data;
 
 @Entity
@@ -20,6 +24,8 @@ public class UserEntity {
 	@GeneratedValue
 	Long id;
 
+	String externalId;
+
 	String lastName;
 
 	String mail;
@@ -28,9 +34,8 @@ public class UserEntity {
 
 	String phone;
 
-	String plan;
-
-	boolean subscriptionPaid;
+	@Embedded
+	Plan plan;
 
 	String type;
 
@@ -39,7 +44,7 @@ public class UserEntity {
 
 	@Convert(converter = ListConverter.class)
 	List<String> otherMembers;
-	
-	@Convert(converter = BorrowingsConverter.class)
-	List<Borrowing> borrowings;
+
+	@OneToMany(mappedBy = "user")
+	List<BorrowingEntity> borrowings;
 }

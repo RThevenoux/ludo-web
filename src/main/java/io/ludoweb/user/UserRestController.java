@@ -1,6 +1,7 @@
 package io.ludoweb.user;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -32,18 +33,19 @@ public class UserRestController {
 	}
 
 	@PutMapping
-	public UserView update(@RequestBody @Valid UserInput data) {
+	public Optional<UserView> update(@RequestBody @Valid UserInput data) {
 		return service.updateUserData(data);
 	}
 
-	@PutMapping("{username}/password")
-	public UserView updatePassword(@PathVariable String username, @RequestBody @Valid PasswordWrapper passwordWrapper) {
-		return service.updateUserPassword(username, passwordWrapper.getPassword());
+	@PutMapping("{externalId}/password")
+	public boolean updatePassword(@PathVariable String externalId,
+			@RequestBody @Valid PasswordWrapper passwordWrapper) {
+		return service.updateUserPassword(externalId, passwordWrapper.getPassword());
 	}
 
-	@DeleteMapping("{username}")
-	public void delete(@PathVariable String username) {
-		service.delete(username);
+	@DeleteMapping("{externalId}")
+	public void delete(@PathVariable String externalId) {
+		service.delete(externalId);
 	}
 
 }

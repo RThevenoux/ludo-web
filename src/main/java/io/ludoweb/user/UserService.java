@@ -1,6 +1,7 @@
 package io.ludoweb.user;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -27,7 +28,7 @@ public class UserService {
 		boolean isPassword = !StringUtils.isEmpty(entity.getPassword());
 
 		UserView data = new UserView();
-		data.setBorrowings(entity.getBorrowings());
+		data.setExternalId(entity.getExternalId());
 		data.setFirstName(entity.getFirstName());
 		data.setLastName(entity.getLastName());
 		data.setMail(entity.getMail());
@@ -35,22 +36,21 @@ public class UserService {
 		data.setPassword(isPassword);
 		data.setPhone(entity.getPhone());
 		data.setPlan(entity.getPlan());
-		data.setSubscriptionPaid(entity.isSubscriptionPaid());
 		data.setType(entity.getType());
 		data.setUsername(entity.getUsername());
 		return data;
 	}
 
-	private void fill(UserEntity entity, UserInput data) {
-		entity.setBorrowings(data.getBorrowings());
+	private UserEntity fill(UserEntity entity, UserInput data) {
 		entity.setFirstName(data.getFirstName());
 		entity.setLastName(data.getLastName());
 		entity.setMail(data.getMail());
 		entity.setOtherMembers(data.getOtherMembers());
 		entity.setPhone(data.getPhone());
 		entity.setPlan(data.getPlan());
-		entity.setSubscriptionPaid(data.getSubscriptionPaid());
 		entity.setType(data.getType());
+		entity.setUsername(data.getUsername());
+		return entity;
 	}
 
 	public List<UserView> list() {
@@ -58,43 +58,37 @@ public class UserService {
 	}
 
 	public UserView create(UserInput data) {
-		if (repo.existsByUsername(data.getUsername())) {
+		if (repo.existsByExternalId(data.getExternalId())) {
 			return null;
 		}
 
 		UserEntity entity = new UserEntity();
 		entity.setPassword(null);
-		entity.setUsername(data.getUsername());
+		entity.setExternalId(data.getExternalId());
 		fill(entity, data);
 
 		UserEntity saved = repo.save(entity);
 		return convert(saved);
 	}
 
-	public UserView updateUserData(UserInput data) {
-		UserEntity entity = repo.findByUsername(data.getUsername());
-		if (entity != null) {
-			fill(entity, data);
-		}
-		return convert(entity);
+	public Optional<UserView> updateUserData(UserInput data) {
+		return findEntityByExternalId(data.getExternalId())//
+				.map(entity -> fill(entity, data))//
+				.map(this::convert);
 	}
 
-	public UserView updateUserPassword(String username, String password) {
-		UserEntity entity = repo.findByUsername(username);
-		if (entity != null) {
-			String encoded = passwordEncoder.encode(password);
-			entity.setPassword(encoded);
-		}
-		return convert(entity);
+	public boolean updateUserPassword(String externalId, String password) {
+		return findEntityByExternalId(externalId)//
+				.map(entity -> {
+					String encoded = passwordEncoder.encode(password);
+					entity.setPassword(encoded);
+					return true;
+				})//
+				.orElse(false);
 	}
 
-	public void delete(String username) {
-		repo.deleteByUsername(username);
-	}
-
-	public UserView get(String username) {
-		UserEntity entity = repo.findByUsername(username);
-		return convert(entity);
+	public void delete(String externalId) {
+		repo.deleteByExternalId(externalId);
 	}
 
 	public UserStats getUserStats(boolean subscriptionPaid) {
@@ -108,9 +102,15 @@ public class UserService {
 		return new UserStats(memberCount, users.size());
 	}
 
-	public long getBorrowingCount() {
-		return repo.findAll().stream()//
-				.flatMap(user -> user.getBorrowings().stream())//
-				.count();
+	public Optional<UserEntity> findEntityByExternalId(String externalId) {
+		return repo.findByExternalId(externalId);
+	}
+
+	public Optional<UserView> findByExternalId(String externalId) {
+		return findEntityByExternalId(externalId).map(this::convert);
+	}
+
+	public Optional<UserView> findById(long id) {
+		return repo.findById(id).map(this::convert);
 	}
 }

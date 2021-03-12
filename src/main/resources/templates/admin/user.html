@@ -26,11 +26,11 @@
 				<td th:text="${user.lastName}">Dupond</td>
 				<td th:text="${user.mail}">mail@mail.com</td>
 				<td th:text="${user.type}">Ass. Mat.</td>
-				<td th:text="${user.plan}">Famille</td>
-				<td><th:block th:if=${user.subscriptionPaid}>À jour</th:block></td>
+				<td th:text="${user.plan.name}">Famille</td>
+				<td><th:block th:if=${user.plan.subscriptionPaid}>À jour</th:block></td>
 				<td th:text="${user.otherMembers.size()}+1">7</td>
 				<td><a
-					th:href="@{/admin/user/{id}/password(id=${user.username})}"
+					th:href="@{/admin/user/{id}/password(id=${user.externalId})}"
 					th:switch="${user.password}"> <span th:case="true">Modifier</span>
 						<span th:case="*">Créer</span>
 				</a></td>

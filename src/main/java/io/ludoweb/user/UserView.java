@@ -2,10 +2,16 @@ package io.ludoweb.user;
 
 import java.util.List;
 
+import io.ludoweb.borrowing.BorrowingView;
+import io.ludoweb.user.plan.Plan;
 import lombok.Data;
 
 @Data
 public class UserView {
+
+	List<BorrowingView> borrowings;
+
+	String externalId;
 
 	String firstName;
 
@@ -13,19 +19,15 @@ public class UserView {
 
 	String mail;
 
-	String phone;
+	List<String> otherMembers;
 
 	boolean password;
 
-	String plan;
+	String phone;
 
-	Boolean subscriptionPaid;
+	Plan plan;
 
 	String type;
 
 	String username;
-
-	List<String> otherMembers;
-
-	List<Borrowing> borrowings;
 }

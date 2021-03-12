@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import io.ludoweb.user.UserEntity;
 import io.ludoweb.user.UserRepository;
 
 @Service
@@ -17,10 +16,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		UserEntity user = userRepository.findByUsername(username);
-		if (user == null) {
-			throw new UsernameNotFoundException(username);
-		}
-		return new MyUserPrincipal(user);
+		return userRepository.findByUsername(username)//
+				.map(MyUserPrincipal::new)//
+				.orElseThrow(() -> new UsernameNotFoundException(username));
 	}
 }

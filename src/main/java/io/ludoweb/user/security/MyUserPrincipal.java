@@ -10,6 +10,7 @@ import io.ludoweb.security.SecurityTool;
 import io.ludoweb.user.UserEntity;
 import lombok.Getter;
 
+@Getter
 public class MyUserPrincipal implements UserDetails {
 
 	/**
@@ -17,27 +18,20 @@ public class MyUserPrincipal implements UserDetails {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Getter
-	UserEntity user;
+	String password;
+	String username;
+	long id;
 
 	public MyUserPrincipal(UserEntity user) {
-		this.user = user;
+		this.password = user.getPassword();
+		this.username = user.getUsername();
+		this.id = user.getId();
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		GrantedAuthority sgq = SecurityTool.roleAuthority(UserSecurityConfig.ROLE_USER);
 		return Collections.singleton(sgq);
-	}
-
-	@Override
-	public String getPassword() {
-		return this.user.getPassword();
-	}
-
-	@Override
-	public String getUsername() {
-		return this.user.getUsername();
 	}
 
 	@Override

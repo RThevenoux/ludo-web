@@ -36,9 +36,9 @@
 						</p>
 					</div>
 					<div class="col-md-4">
-						<p th:text="${user.plan}">Famille</p>
+						<p th:text="${user.plan.name}">Famille</p>
 						<p>
-							Cotisation à jour : <span th:text=${user.subscriptionPaid}></span>
+							Cotisation à jour : <span th:text=${user.plan.subscriptionPaid}></span>
 						</p>
 					</div>
 
@@ -65,7 +65,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="borrowing : ${user.borrowings}">
-						<th th:text="${borrowing.itemName}">Puisance 4</th>
+						<th th:text="${borrowing.game.name}">Puisance 4</th>
 						<th th:text="${borrowing.startDate}">02/03/89</th>
 						<th>---</th>
 					</tr>
