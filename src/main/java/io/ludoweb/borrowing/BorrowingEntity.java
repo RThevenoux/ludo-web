@@ -26,6 +26,4 @@ public class BorrowingEntity {
 	UserEntity user;
 
 	String startDate;
-
-	String endDate;
 }

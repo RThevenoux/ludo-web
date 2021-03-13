@@ -2,10 +2,12 @@ package io.ludoweb.borrowing;
 
 import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BorrowingRepository extends CrudRepository<BorrowingEntity, Long> {
+public interface BorrowingRepository extends JpaRepository<BorrowingEntity, Long> {
 
 	Optional<BorrowingEntity> findByExternalId(String externalId);
+
+	void deleteByExternalId(String externalId);
 
 }

@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
+import io.ludoweb.borrowing.BorrowingConverter;
+
 @Service
 @Transactional
 public class UserService {
@@ -19,6 +21,8 @@ public class UserService {
 	UserRepository repo;
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	@Autowired
+	BorrowingConverter borrowingConverter;
 
 	private UserView convert(UserEntity entity) {
 		if (entity == null) {
@@ -28,6 +32,7 @@ public class UserService {
 		boolean isPassword = !StringUtils.isEmpty(entity.getPassword());
 
 		UserView data = new UserView();
+		data.setBorrowings(borrowingConverter.convert(entity.getBorrowings()));
 		data.setExternalId(entity.getExternalId());
 		data.setFirstName(entity.getFirstName());
 		data.setLastName(entity.getLastName());

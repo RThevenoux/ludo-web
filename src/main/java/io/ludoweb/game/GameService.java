@@ -2,7 +2,6 @@ package io.ludoweb.game;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -15,25 +14,19 @@ public class GameService {
 
 	@Autowired
 	GameRepository repo;
-
-	private GameView convert(GameEntity entity) {
-		System.out.println("Entity: "+entity);
-		GameView view = new GameView();
-		view.setExternalId(entity.getExternalId());
-		view.setName(entity.getName());
-		return view;
-	}
+	@Autowired
+	GameConverter converter;
 
 	public Optional<GameEntity> findEntityByExternalId(String externalId) {
 		return repo.findByExternalId(externalId);
 	}
 
 	public List<GameView> listAll() {
-		return repo.findAll().stream().map(this::convert).collect(Collectors.toList());
+		return converter.convert(repo.findAll());
 	}
 
 	public Optional<GameView> findByExternalId(String externalId) {
-		return findEntityByExternalId(externalId).map(this::convert);
+		return findEntityByExternalId(externalId).map(converter::convert);
 	}
 
 	public void deleteByExternalId(String externalId) {
@@ -59,7 +52,7 @@ public class GameService {
 
 	public GameView createOrUpdate(GameInput input) {
 		GameEntity entity = createOrUpdateEntity(input);
-		return convert(entity);
+		return converter.convert(entity);
 	}
 
 	private void fill(GameEntity entity, GameInput input) {

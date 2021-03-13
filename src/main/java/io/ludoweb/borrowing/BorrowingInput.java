@@ -1,7 +1,6 @@
 package io.ludoweb.borrowing;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
 
@@ -17,8 +16,6 @@ public class BorrowingInput {
 	@NotBlank
 	String userExternalId;
 
-	@NotEmpty
+	@NotBlank
 	String startDate;
-
-	String endDate;
 }
