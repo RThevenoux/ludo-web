@@ -6,7 +6,18 @@
 
 	<div class="container">
 		<h1>Liste des jeux</h1>
-		<p>En cours de développment</p>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nom</th>
+				</tr>
+			</thead>
+			<tr th:each="game : ${games}">
+				<td th:text="${game.externalId}">123456</td>
+				<td th:text="${game.name}">Puissance 4</td>
+			</tr>
+		</table>
 	</div>
 
 </body>
