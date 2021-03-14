@@ -1,23 +1,21 @@
 package io.ludoweb.game;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
 
-@Component
-public class GameConverter {
+import io.ludoweb.util.Converter;
 
-	public GameView convert(GameEntity entity) {
+@Component
+public class GameConverter implements Converter<GameEntity, GameView> {
+
+	@Override
+	public GameView apply(GameEntity entity) {
+		if (entity == null) {
+			return null;
+		}
+
 		GameView view = new GameView();
 		view.setExternalId(entity.getExternalId());
 		view.setName(entity.getName());
 		return view;
 	}
-
-	public List<GameView> convert(Collection<GameEntity> entities) {
-		return entities.stream().map(this::convert).collect(Collectors.toList());
-	}
-
 }

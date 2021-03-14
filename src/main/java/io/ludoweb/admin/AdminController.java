@@ -25,24 +25,11 @@ import io.ludoweb.user.UserView;
 public class AdminController {
 
 	@Autowired
-	UserService userService;
-	@Autowired
 	BorrowingService borrowingService;
 	@Autowired
 	ConfigService configService;
-
-	@RequestMapping("home")
-	public ModelAndView showHome() {
-		boolean subscriptionPaid = true;
-		UserStats userStats = userService.getUserStats(subscriptionPaid);
-		long borrowingCount = borrowingService.getActiveBorrowingCount();
-
-		ModelAndView modelAndView = new ModelAndView("admin/home");
-		modelAndView.addObject("userStats", userStats);
-		modelAndView.addObject("borrowingCount", borrowingCount);
-
-		return modelAndView;
-	}
+	@Autowired
+	UserService userService;
 
 	@GetMapping("config")
 	public ModelAndView showConfig() {
@@ -55,13 +42,15 @@ public class AdminController {
 		return modelAndView;
 	}
 
-	@PostMapping("config")
-	public ModelAndView updateConfig(@ModelAttribute ConfigView input) {
-		ConfigView config = configService.updateConfig(input);
+	@RequestMapping("home")
+	public ModelAndView showHome() {
+		boolean subscriptionPaid = true;
+		UserStats userStats = userService.getUserStats(subscriptionPaid);
+		long borrowingCount = borrowingService.getActiveBorrowingCount();
 
-		ModelAndView modelAndView = new ModelAndView("admin/config");
-		modelAndView.addObject("config", config);
-		modelAndView.addObject("updateOk", true);
+		ModelAndView modelAndView = new ModelAndView("admin/home");
+		modelAndView.addObject("userStats", userStats);
+		modelAndView.addObject("borrowingCount", borrowingCount);
 
 		return modelAndView;
 	}
@@ -103,6 +92,17 @@ public class AdminController {
 		} else {
 			return new ModelAndView("error", "message", "Utilisateur non trouvé: " + username);
 		}
+	}
+
+	@PostMapping("config")
+	public ModelAndView updateConfig(@ModelAttribute ConfigView input) {
+		ConfigView config = configService.updateConfig(input);
+
+		ModelAndView modelAndView = new ModelAndView("admin/config");
+		modelAndView.addObject("config", config);
+		modelAndView.addObject("updateOk", true);
+
+		return modelAndView;
 	}
 
 }

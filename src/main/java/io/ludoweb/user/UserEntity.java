@@ -18,17 +18,23 @@ import lombok.Data;
 @Data
 public class UserEntity {
 
+	@OneToMany(mappedBy = "user")
+	List<BorrowingEntity> borrowings;
+
+	String externalId;
+
 	String firstName;
 
 	@Id
 	@GeneratedValue
 	Long id;
 
-	String externalId;
-
 	String lastName;
 
 	String mail;
+
+	@Convert(converter = ListConverter.class)
+	List<String> otherMembers;
 
 	String password;
 
@@ -41,10 +47,4 @@ public class UserEntity {
 
 	@Column(nullable = false, unique = true)
 	String username;
-
-	@Convert(converter = ListConverter.class)
-	List<String> otherMembers;
-
-	@OneToMany(mappedBy = "user")
-	List<BorrowingEntity> borrowings;
 }

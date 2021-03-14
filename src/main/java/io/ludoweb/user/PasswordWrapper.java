@@ -1,12 +1,12 @@
 package io.ludoweb.user;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
 @Data
 public class PasswordWrapper {
 
-	@NotEmpty
+	@NotBlank
 	String password;
 }

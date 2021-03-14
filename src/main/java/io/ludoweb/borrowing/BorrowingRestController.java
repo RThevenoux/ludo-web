@@ -26,14 +26,14 @@ public class BorrowingRestController {
 		return service.createOrUpdate(input);
 	}
 
-	@GetMapping("{externalId}")
-	public Optional<BorrowingView> get(@PathVariable String externalId) {
-		return service.getByExternalId(externalId);
-	}
-
 	@DeleteMapping("{externalId}")
 	public void delete(@PathVariable String externalId) {
 		service.deleteByExternalId(externalId);
+	}
+
+	@GetMapping("{externalId}")
+	public Optional<BorrowingView> get(@PathVariable String externalId) {
+		return service.getByExternalId(externalId);
 	}
 
 	@GetMapping

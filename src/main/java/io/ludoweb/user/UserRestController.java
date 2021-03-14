@@ -1,7 +1,6 @@
 package io.ludoweb.user;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -22,30 +21,25 @@ public class UserRestController {
 	@Autowired
 	UserService service;
 
+	@PostMapping
+	public UserView createOrUpdate(@RequestBody @Valid UserInput data) {
+		return service.createOrUpdate(data);
+	}
+
+	@DeleteMapping("{externalId}")
+	public void delete(@PathVariable String externalId) {
+		service.delete(externalId);
+	}
+
 	@GetMapping
 	public List<UserView> getUsers() {
 		return service.list();
-	}
-
-	@PostMapping
-	public UserView create(@RequestBody @Valid UserInput data) {
-		return service.create(data);
-	}
-
-	@PutMapping
-	public Optional<UserView> update(@RequestBody @Valid UserInput data) {
-		return service.updateUserData(data);
 	}
 
 	@PutMapping("{externalId}/password")
 	public boolean updatePassword(@PathVariable String externalId,
 			@RequestBody @Valid PasswordWrapper passwordWrapper) {
 		return service.updateUserPassword(externalId, passwordWrapper.getPassword());
-	}
-
-	@DeleteMapping("{externalId}")
-	public void delete(@PathVariable String externalId) {
-		service.delete(externalId);
 	}
 
 }

@@ -14,8 +14,8 @@ public class BorrowingInput {
 	String gameExternalId;
 
 	@NotBlank
-	String userExternalId;
+	String startDate;
 
 	@NotBlank
-	String startDate;
+	String userExternalId;
 }

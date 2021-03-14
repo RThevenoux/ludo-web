@@ -18,22 +18,16 @@ public class ConfigService {
 	@Autowired
 	ConfigRepository repo;
 
-	@PostConstruct
-	public void onInit() {
-		ConfigEntity config = getConfigEntity();
-		updateServletContext(config);
-	}
-
-	public ConfigView getConfig() {
-		ConfigEntity entity = getConfigEntity();
-		return convert(entity);
-	}
-
 	private ConfigView convert(ConfigEntity entity) {
 		ConfigView view = new ConfigView();
 		view.setMainLogo(entity.getMainLogo());
 		view.setTitle(entity.getTitle());
 		return view;
+	}
+
+	public ConfigView getConfig() {
+		ConfigEntity entity = getConfigEntity();
+		return convert(entity);
 	}
 
 	private ConfigEntity getConfigEntity() {
@@ -47,6 +41,12 @@ public class ConfigService {
 			config.setTitle("Parta'Jeu - Verfeil");
 			return repo.save(config);
 		}
+	}
+
+	@PostConstruct
+	public void onInit() {
+		ConfigEntity config = getConfigEntity();
+		updateServletContext(config);
 	}
 
 	public ConfigView updateConfig(ConfigView input) {

@@ -13,17 +13,17 @@ import lombok.Data;
 @Data
 public class BorrowingEntity {
 
-	@Id
-	@GeneratedValue
-	Long id;
-
 	String externalId;
 
 	@ManyToOne
 	GameEntity game;
 
-	@ManyToOne
-	UserEntity user;
+	@Id
+	@GeneratedValue
+	Long id;
 
 	String startDate;
+
+	@ManyToOne
+	UserEntity user;
 }

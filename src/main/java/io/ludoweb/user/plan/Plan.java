@@ -8,15 +8,15 @@ import lombok.Data;
 @Embeddable
 public class Plan {
 
-	String name;
-
-	boolean subscriptionPaid;
-
-	String startDate;
-
 	String endDate;
 
 	int maxBorrowingCount;
 
 	int maxBorrowingDuration;
+
+	String name;
+
+	String startDate;
+
+	boolean subscriptionPaid;
 }

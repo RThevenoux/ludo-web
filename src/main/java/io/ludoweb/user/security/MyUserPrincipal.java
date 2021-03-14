@@ -18,9 +18,9 @@ public class MyUserPrincipal implements UserDetails {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	long id;
 	String password;
 	String username;
-	long id;
 
 	public MyUserPrincipal(UserEntity user) {
 		this.password = user.getPassword();

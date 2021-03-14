@@ -13,7 +13,7 @@ public class BorrowingResult {
 		return new BorrowingResult(true, true, true);
 	}
 
+	boolean gameFound;
 	boolean success;
 	boolean userFound;
-	boolean gameFound;
 }

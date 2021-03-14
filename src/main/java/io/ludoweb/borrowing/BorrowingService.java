@@ -18,20 +18,16 @@ import io.ludoweb.user.UserService;
 public class BorrowingService {
 
 	@Autowired
-	BorrowingRepository repo;
-
-	@Autowired
-	UserService userService;
+	BorrowingConverter converter;
 
 	@Autowired
 	GameService gameService;
 
 	@Autowired
-	BorrowingConverter converter;
+	BorrowingRepository repo;
 
-	public Optional<BorrowingEntity> getBorrowingByExternalID(String externalId) {
-		return repo.findByExternalId(externalId);
-	}
+	@Autowired
+	UserService userService;
 
 	public BorrowingResult createOrUpdate(BorrowingInput input) {
 		Optional<GameEntity> optGame = gameService.findEntityByExternalId(input.getGameExternalId());
@@ -60,6 +56,10 @@ public class BorrowingService {
 		return BorrowingResult.success();
 	}
 
+	public void deleteByExternalId(String externalId) {
+		repo.deleteByExternalId(externalId);
+	}
+
 	private void fill(BorrowingEntity entity, BorrowingInput input, GameEntity game, UserEntity user) {
 		entity.setGame(game);
 		entity.setStartDate(input.getStartDate());
@@ -70,15 +70,15 @@ public class BorrowingService {
 		return repo.count();
 	}
 
+	public Optional<BorrowingEntity> getBorrowingByExternalID(String externalId) {
+		return repo.findByExternalId(externalId);
+	}
+
 	public Optional<BorrowingView> getByExternalId(String externalId) {
-		return repo.findByExternalId(externalId).map(converter::convert);
+		return repo.findByExternalId(externalId).map(converter);
 	}
 
 	public List<BorrowingView> listAll() {
 		return converter.convert(repo.findAll());
-	}
-
-	public void deleteByExternalId(String externalId) {
-		repo.deleteByExternalId(externalId);
 	}
 }

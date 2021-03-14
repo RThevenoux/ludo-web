@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-	Optional<UserEntity> findByUsername(String username);
+	void deleteByExternalId(String externalId);
+
+	boolean existsByExternalId(String externalId);
+
+	Optional<UserEntity> findByExternalId(String externalId);
 
 	@Query("SELECT u FROM UserEntity u WHERE u.plan.subscriptionPaid = :subscriptionPaid")
 	List<UserEntity> findBySubscriptionPaid(boolean subscriptionPaid);
 
-	boolean existsByExternalId(String externalId);
-
-	void deleteByExternalId(String externalId);
-
-	Optional<UserEntity> findByExternalId(String externalId);
+	Optional<UserEntity> findByUsername(String username);
 }

@@ -14,14 +14,16 @@ import lombok.Data;
 @Data
 public class UserInput {
 
-	String firstName;
-
 	@NotBlank
 	String externalId;
+
+	String firstName;
 
 	String lastName;
 
 	String mail;
+
+	List<@NotEmpty String> otherMembers;
 
 	String phone;
 
@@ -35,6 +37,4 @@ public class UserInput {
 
 	@NotBlank
 	String username;
-
-	List<@NotEmpty String> otherMembers;
 }

@@ -22,6 +22,13 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 	PasswordEncoder encoder;
 
 	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication()//
+				.withUser("admin").password(encoder.encode("password")).roles(ROLE_ADMIN);
+
+	}
+
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.antMatcher("/admin/**")//
 				.authorizeRequests()//
@@ -43,13 +50,6 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDeniedPage(PublicController.ADMIN_LOGIN_PAGE)
 
 				.and().csrf().disable();
-	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()//
-				.withUser("admin").password(encoder.encode("password")).roles(ROLE_ADMIN);
-
 	}
 
 }

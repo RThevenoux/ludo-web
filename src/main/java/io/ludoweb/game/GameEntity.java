@@ -14,14 +14,14 @@ import lombok.Data;
 @Data
 public class GameEntity {
 
+	@OneToMany(mappedBy = "game")
+	List<BorrowingEntity> borrowings;
+
+	String externalId;
+
 	@Id
 	@GeneratedValue
 	Long id;
 
-	String externalId;
-
 	String name;
-
-	@OneToMany(mappedBy = "game")
-	List<BorrowingEntity> borrowings;
 }

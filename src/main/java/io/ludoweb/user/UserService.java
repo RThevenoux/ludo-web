@@ -2,48 +2,44 @@ package io.ludoweb.user;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
-
-import io.ludoweb.borrowing.BorrowingConverter;
 
 @Service
 @Transactional
 public class UserService {
 
 	@Autowired
-	UserRepository repo;
+	UserConverter converter;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired
-	BorrowingConverter borrowingConverter;
+	UserRepository repo;
 
-	private UserView convert(UserEntity entity) {
-		if (entity == null) {
-			return null;
+	public UserView createOrUpdate(UserInput data) {
+		Optional<UserEntity> optUser = findEntityByExternalId(data.getExternalId());
+
+		if (optUser.isPresent()) {
+			UserEntity entity = optUser.get();
+			fill(entity, data);
+			return converter.apply(entity);
+		} else {
+			UserEntity entity = new UserEntity();
+			entity.setPassword(null);
+			entity.setExternalId(data.getExternalId());
+			fill(entity, data);
+
+			UserEntity saved = repo.save(entity);
+			return converter.apply(saved);
 		}
+	}
 
-		boolean isPassword = !StringUtils.isEmpty(entity.getPassword());
-
-		UserView data = new UserView();
-		data.setBorrowings(borrowingConverter.convert(entity.getBorrowings()));
-		data.setExternalId(entity.getExternalId());
-		data.setFirstName(entity.getFirstName());
-		data.setLastName(entity.getLastName());
-		data.setMail(entity.getMail());
-		data.setOtherMembers(entity.getOtherMembers());
-		data.setPassword(isPassword);
-		data.setPhone(entity.getPhone());
-		data.setPlan(entity.getPlan());
-		data.setType(entity.getType());
-		data.setUsername(entity.getUsername());
-		return data;
+	public void delete(String externalId) {
+		repo.deleteByExternalId(externalId);
 	}
 
 	private UserEntity fill(UserEntity entity, UserInput data) {
@@ -58,42 +54,16 @@ public class UserService {
 		return entity;
 	}
 
-	public List<UserView> list() {
-		return repo.findAll().stream().map(this::convert).collect(Collectors.toList());
+	public Optional<UserView> findByExternalId(String externalId) {
+		return findEntityByExternalId(externalId).map(converter);
 	}
 
-	public UserView create(UserInput data) {
-		if (repo.existsByExternalId(data.getExternalId())) {
-			return null;
-		}
-
-		UserEntity entity = new UserEntity();
-		entity.setPassword(null);
-		entity.setExternalId(data.getExternalId());
-		fill(entity, data);
-
-		UserEntity saved = repo.save(entity);
-		return convert(saved);
+	public Optional<UserView> findById(long id) {
+		return repo.findById(id).map(converter);
 	}
 
-	public Optional<UserView> updateUserData(UserInput data) {
-		return findEntityByExternalId(data.getExternalId())//
-				.map(entity -> fill(entity, data))//
-				.map(this::convert);
-	}
-
-	public boolean updateUserPassword(String externalId, String password) {
-		return findEntityByExternalId(externalId)//
-				.map(entity -> {
-					String encoded = passwordEncoder.encode(password);
-					entity.setPassword(encoded);
-					return true;
-				})//
-				.orElse(false);
-	}
-
-	public void delete(String externalId) {
-		repo.deleteByExternalId(externalId);
+	public Optional<UserEntity> findEntityByExternalId(String externalId) {
+		return repo.findByExternalId(externalId);
 	}
 
 	public UserStats getUserStats(boolean subscriptionPaid) {
@@ -107,15 +77,17 @@ public class UserService {
 		return new UserStats(memberCount, users.size());
 	}
 
-	public Optional<UserEntity> findEntityByExternalId(String externalId) {
-		return repo.findByExternalId(externalId);
+	public List<UserView> list() {
+		return converter.convert(repo.findAll());
 	}
 
-	public Optional<UserView> findByExternalId(String externalId) {
-		return findEntityByExternalId(externalId).map(this::convert);
-	}
-
-	public Optional<UserView> findById(long id) {
-		return repo.findById(id).map(this::convert);
+	public boolean updateUserPassword(String externalId, String password) {
+		return findEntityByExternalId(externalId)//
+				.map(entity -> {
+					String encoded = passwordEncoder.encode(password);
+					entity.setPassword(encoded);
+					return true;
+				})//
+				.orElse(false);
 	}
 }

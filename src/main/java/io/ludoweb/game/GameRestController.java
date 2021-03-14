@@ -21,14 +21,9 @@ public class GameRestController {
 	@Autowired
 	GameService service;
 
-	@GetMapping
-	public List<GameView> listAll() {
-		return service.listAll();
-	}
-
-	@GetMapping("{externalId}")
-	public Optional<GameView> find(@PathVariable String externalId) {
-		return service.findByExternalId(externalId);
+	@PostMapping
+	public GameView createOrUpdate(@RequestBody @Valid GameInput input) {
+		return service.createOrUpdate(input);
 	}
 
 	@DeleteMapping("{externalId}")
@@ -36,8 +31,13 @@ public class GameRestController {
 		service.deleteByExternalId(externalId);
 	}
 
-	@PostMapping
-	public GameView createOrUpdate(@RequestBody @Valid GameInput input) {
-		return service.createOrUpdate(input);
+	@GetMapping("{externalId}")
+	public Optional<GameView> find(@PathVariable String externalId) {
+		return service.findByExternalId(externalId);
+	}
+
+	@GetMapping
+	public List<GameView> listAll() {
+		return service.listAll();
 	}
 }

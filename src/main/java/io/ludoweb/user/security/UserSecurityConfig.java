@@ -21,6 +21,11 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 	MyUserDetailsService userDetailsService;
 
 	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
+
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.antMatcher("/user/**")//
 				.authorizeRequests()//
@@ -42,11 +47,6 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDeniedPage(PublicController.USER_LOGIN_PAGE)
 
 				.and().csrf().disable();
-	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
 	}
 
 }

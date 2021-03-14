@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GameRepository extends JpaRepository<GameEntity, Long>{
-
-	Optional<GameEntity> findByExternalId(String externalId);
+public interface GameRepository extends JpaRepository<GameEntity, Long> {
 
 	void deleteByExternalId(String externalId);
+
+	Optional<GameEntity> findByExternalId(String externalId);
 
 }

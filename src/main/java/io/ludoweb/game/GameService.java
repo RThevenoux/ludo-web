@@ -13,24 +13,13 @@ import org.springframework.stereotype.Service;
 public class GameService {
 
 	@Autowired
-	GameRepository repo;
-	@Autowired
 	GameConverter converter;
+	@Autowired
+	GameRepository repo;
 
-	public Optional<GameEntity> findEntityByExternalId(String externalId) {
-		return repo.findByExternalId(externalId);
-	}
-
-	public List<GameView> listAll() {
-		return converter.convert(repo.findAll());
-	}
-
-	public Optional<GameView> findByExternalId(String externalId) {
-		return findEntityByExternalId(externalId).map(converter::convert);
-	}
-
-	public void deleteByExternalId(String externalId) {
-		repo.deleteByExternalId(externalId);
+	public GameView createOrUpdate(GameInput input) {
+		GameEntity entity = createOrUpdateEntity(input);
+		return converter.apply(entity);
 	}
 
 	private GameEntity createOrUpdateEntity(GameInput input) {
@@ -50,12 +39,23 @@ public class GameService {
 		}
 	}
 
-	public GameView createOrUpdate(GameInput input) {
-		GameEntity entity = createOrUpdateEntity(input);
-		return converter.convert(entity);
+	public void deleteByExternalId(String externalId) {
+		repo.deleteByExternalId(externalId);
 	}
 
 	private void fill(GameEntity entity, GameInput input) {
 		entity.setName(input.getName());
+	}
+
+	public Optional<GameView> findByExternalId(String externalId) {
+		return findEntityByExternalId(externalId).map(converter);
+	}
+
+	public Optional<GameEntity> findEntityByExternalId(String externalId) {
+		return repo.findByExternalId(externalId);
+	}
+
+	public List<GameView> listAll() {
+		return converter.convert(repo.findAll());
 	}
 }
