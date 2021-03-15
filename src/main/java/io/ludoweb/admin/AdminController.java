@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import io.ludoweb.config.ConfigView;
 import io.ludoweb.borrowing.BorrowingService;
 import io.ludoweb.config.ConfigService;
+import io.ludoweb.config.ConfigView;
 import io.ludoweb.user.PasswordWrapper;
 import io.ludoweb.user.UserService;
 import io.ludoweb.user.UserStats;

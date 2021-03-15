@@ -1,0 +1,41 @@
+[
+	{
+		"mail": "camille@te.st",
+		"phone": "0611223344",
+		"username": "10024",
+		"firstName": "Camille",
+		"lastName": "Test",
+		"externalId": 1,
+		"otherMembers": [
+			"Léa",
+			"Léo"
+		],
+		"plan": {
+			"name": "Famille Complète",
+			"startDate": "hier",
+			"endDate": "dans un an",
+			"subscriptionPaid": true,
+			"maxBorrowingCount": 4,
+			"maxBorrowingDuration": 21
+		},
+		"type": "Membre"
+	},
+	{
+		"mail": "dominique@te.st",
+		"phone": "0601020304",
+		"username": "10025",
+		"firstName": "Dominique",
+		"lastName": "Test",
+		"externalId": 2,
+		"otherMembers": [],
+		"plan": {
+			"name": "Individuel",
+			"startDate": "hier",
+			"endDate": "dans un an",
+			"subscriptionPaid": true,
+			"maxBorrowingCount": 2,
+			"maxBorrowingDuration": 21
+		},
+		"type": "Membre"
+	}
+]

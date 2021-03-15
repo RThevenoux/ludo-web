@@ -1,0 +1,26 @@
+[
+    {
+        "externalId": "1",
+        "gameExternalId": "1",
+        "userExternalId": "1",
+        "startDate": "12/05/05"
+    },
+    {
+        "externalId": "2",
+        "gameExternalId": "3",
+        "userExternalId": "1",
+        "startDate": "13/06/06"
+    },
+    {
+        "externalId": "3",
+        "gameExternalId": "5",
+        "userExternalId": "1",
+        "startDate": "14/07/07"
+    },
+    {
+        "externalId": "4",
+        "gameExternalId": "7",
+        "userExternalId": "2",
+        "startDate": "15/08/08"
+    }
+]

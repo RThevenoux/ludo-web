@@ -18,5 +18,5 @@ public class Plan {
 
 	String startDate;
 
-	boolean subscriptionPaid;
+	Boolean subscriptionPaid;
 }

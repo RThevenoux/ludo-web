@@ -2,6 +2,7 @@ package io.ludoweb.user;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embedded;
@@ -18,9 +19,10 @@ import lombok.Data;
 @Data
 public class UserEntity {
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	List<BorrowingEntity> borrowings;
 
+	@Column(nullable = false, unique = true)
 	String externalId;
 
 	String firstName;

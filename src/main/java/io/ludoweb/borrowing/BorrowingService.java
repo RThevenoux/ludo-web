@@ -43,6 +43,11 @@ public class BorrowingService {
 
 		if (optBorrowing.isPresent()) {
 			BorrowingEntity entity = optBorrowing.get();
+
+			// Remove old relation
+			entity.getGame().getBorrowings().remove(entity);
+			entity.getUser().getBorrowings().remove(entity);
+
 			fill(entity, input, game, user);
 
 		} else {

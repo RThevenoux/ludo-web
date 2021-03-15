@@ -6,8 +6,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
-import com.sun.istack.NotNull;
-
 import io.ludoweb.user.plan.Plan;
 import lombok.Data;
 
@@ -29,9 +27,6 @@ public class UserInput {
 
 	@Valid
 	Plan plan;
-
-	@NotNull
-	Boolean subscriptionPaid;
 
 	String type;
 
