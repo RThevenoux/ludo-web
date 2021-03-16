@@ -16,8 +16,14 @@ import lombok.Data;
 @Data
 public class GameEntity {
 
+	String ageCategory;
+
+	boolean borrowable;
+
 	@OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	List<BorrowingEntity> borrowings;
+
+	String durationCategory;
 
 	@Column(nullable = false, unique = true)
 	String externalId;
@@ -28,4 +34,10 @@ public class GameEntity {
 
 	@Column(nullable = false)
 	String name;
+
+	boolean onSite;
+
+	String playerCount;
+
+	String type;
 }

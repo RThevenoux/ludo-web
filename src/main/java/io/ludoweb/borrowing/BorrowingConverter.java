@@ -25,5 +25,4 @@ public class BorrowingConverter implements Converter<BorrowingEntity, BorrowingV
 		view.setUserExternalId(entity.getUser().getExternalId());
 		return view;
 	}
-
 }

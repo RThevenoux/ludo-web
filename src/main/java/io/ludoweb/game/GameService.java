@@ -44,7 +44,13 @@ public class GameService {
 	}
 
 	private void fill(GameEntity entity, GameInput input) {
+		entity.setAgeCategory(input.getAgeCategory());
+		entity.setBorrowable(input.isBorrowable());
+		entity.setDurationCategory(input.getDurationCategory());
 		entity.setName(input.getName());
+		entity.setOnSite(input.isOnSite());
+		entity.setPlayerCount(input.getPlayerCount());
+		entity.setType(input.getType());
 	}
 
 	public Optional<GameView> findByExternalId(String externalId) {

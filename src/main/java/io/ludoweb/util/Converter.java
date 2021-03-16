@@ -12,7 +12,7 @@ public interface Converter<T, R> extends Function<T, R> {
 		if (entities == null) {
 			return Collections.emptyList();
 		}
-		
+
 		return entities.stream().map(this).collect(Collectors.toList());
 	}
 }

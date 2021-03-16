@@ -11,11 +11,21 @@
 				<tr>
 					<th>ID</th>
 					<th>Nom</th>
+					<th>Âge</th>
+					<th>Joueurs</th>
+					<th>Type</th>
+					<th>Durée</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			<tr th:each="game : ${games}">
 				<td th:text="${game.externalId}">123456</td>
 				<td th:text="${game.name}">Puissance 4</td>
+				<td th:text="${game.ageCategory}">5+</td>
+				<td th:text="${game.playerCount}">2+</td>
+				<td th:text="${game.type}">Stratégie</td>
+				<td th:text="${game.durationCategory}">5-10 minutes</td>
+				<td th:text="${game.status}">Dispo</td>
 			</tr>
 		</table>
 	</div>

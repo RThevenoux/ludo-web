@@ -21,6 +21,13 @@ public class GameRestController {
 	@Autowired
 	GameService service;
 
+	@PostMapping("batch")
+	public void batchCreateOrUpdate(@RequestBody @Valid List<GameInput> inputs) {
+		for (GameInput input : inputs) {
+			service.createOrUpdate(input);
+		}
+	}
+
 	@PostMapping
 	public GameView createOrUpdate(@RequestBody @Valid GameInput input) {
 		return service.createOrUpdate(input);

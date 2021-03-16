@@ -21,6 +21,13 @@ public class BorrowingRestController {
 	@Autowired
 	BorrowingService service;
 
+	@PostMapping("batch")
+	public void batchCreateOrUpdate(@RequestBody @Valid List<BorrowingInput> inputs) {
+		for (BorrowingInput input : inputs) {
+			service.createOrUpdate(input);
+		}
+	}
+
 	@PostMapping
 	public BorrowingResult createOrUpdate(@RequestBody @Valid BorrowingInput input) {
 		return service.createOrUpdate(input);

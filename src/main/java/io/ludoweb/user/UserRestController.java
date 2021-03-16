@@ -21,6 +21,13 @@ public class UserRestController {
 	@Autowired
 	UserService service;
 
+	@PostMapping("batch")
+	public void batchCreateOrUpdate(@RequestBody @Valid List<UserInput> inputs) {
+		for (UserInput input : inputs) {
+			service.createOrUpdate(input);
+		}
+	}
+
 	@PostMapping
 	public UserView createOrUpdate(@RequestBody @Valid UserInput data) {
 		return service.createOrUpdate(data);
