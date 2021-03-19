@@ -7,30 +7,29 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import io.ludoweb.PublicController;
+import io.ludoweb.admin.user.AdminUserService;
 
 @Configuration
 @EnableWebSecurity
 @Order(1)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final String ROLE_ADMIN = "ADMIN";
+	private static final String ADMIN_URL_PATTERN = "/admin/**";
+	public static final String ROLE_ADMIN = "ADMIN";
 
 	@Autowired
-	PasswordEncoder encoder;
+	AdminUserService service;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()//
-				.withUser("admin").password(encoder.encode("password")).roles(ROLE_ADMIN);
-
+		auth.userDetailsService(service);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/admin/**")//
+		http.antMatcher(ADMIN_URL_PATTERN)//
 				.authorizeRequests()//
 				.anyRequest()//
 				.hasRole(ROLE_ADMIN)

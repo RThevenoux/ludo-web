@@ -16,6 +16,7 @@ import io.ludoweb.PublicController;
 public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String ROLE_USER = "USER";
+	private static final String USER_URL_PATTERN = "/user/**";
 
 	@Autowired
 	MyUserDetailsService userDetailsService;
@@ -27,7 +28,7 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/user/**")//
+		http.antMatcher(USER_URL_PATTERN)//
 				.authorizeRequests()//
 				.anyRequest()//
 				.hasRole(ROLE_USER)

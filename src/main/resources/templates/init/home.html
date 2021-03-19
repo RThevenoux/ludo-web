@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>LudoWeb</title>
+<link rel="stylesheet" type="text/css"
+	href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<script src="https://kit.fontawesome.com/f3ab414337.js"
+	crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Initialisation</h1>
+
+		<p>Bienvenu !</p>
+		<p>Pour démarrer, vous devez définir un identifant et un mot de
+			passe pour le compte administrateur. Attention à ne pas perdre ces
+			informations.</p>
+
+		<form method="post" action="/init">
+			<table>
+				<tr>
+					<td>Identifiant</td>
+					<td><input type="text" name="username" value=""></td>
+				</tr>
+				<tr>
+					<td>Mot de passe</td>
+					<td><input type="password" name="password" /></td>
+				</tr>
+			</table>
+			<button class="btn btn-primary">Go</button>
+		</form>
+
+	</div>
+</body>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</html>
