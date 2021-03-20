@@ -4,14 +4,13 @@
 
 <body>
 
-	<div class="jumbotron text-center">
-		<div class="container">
-			<img th:src="${#servletContext.getAttribute('main-logo')}">
-			<h1 th:text="${#servletContext.getAttribute('title')}">Title</h1>
-		</div>
+	<div class="text-center mb-3 py-4 bg-info text-white">
+		<img th:src="${#servletContext.getAttribute('main-logo')}" class="main-logo">
+		<h1 th:text="${#servletContext.getAttribute('title')}">Title</h1>
 	</div>
 
 	<div class="container">
+
 
 		<div class="card-deck">
 

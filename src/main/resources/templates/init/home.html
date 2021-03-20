@@ -11,17 +11,24 @@
 </head>
 
 <body>
-	<div class="container">
+	<div class=jumbotron>
 		<h1>Initialisation</h1>
+	</div>
+	<div class="container">
 
-		<p>Bienvenu !</p>
+
+		<h2>Bienvenu !</h2>
 		<p>Pour démarrer, vous devez définir un identifant et un mot de
-			passe pour le compte administrateur. Attention à ne pas perdre ces
-			informations. Il sera possible de modifier ces paramètres de
-			connexion ultérieurement</p>
+			passe pour le compte administrateur. Il sera possible de modifier ces
+			paramètres de connexion ultérieurement.</p>
+		<p>
+			<strong>Attention :</strong> conserver ces informations. Si vous
+			perdez les informations de connexions du compte administrateur, il ne
+			sera impossible de les récupérer ou de les modifier.
+		</p>
 
 		<form method="post" action="/init">
-			<table>
+			<table class="mb-3">
 				<tr>
 					<td>Identifiant</td>
 					<td><input type="text" name="adminCredentials.username"></td>
