@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import io.ludoweb.admin.user.AdminCredentialsInput;
+import io.ludoweb.admin.user.AdminUserService;
 import io.ludoweb.borrowing.BorrowingService;
 import io.ludoweb.config.ConfigService;
 import io.ludoweb.config.ConfigView;
@@ -25,6 +28,8 @@ import io.ludoweb.user.UserView;
 public class AdminController {
 
 	@Autowired
+	AdminUserService adminUserService;
+	@Autowired
 	BorrowingService borrowingService;
 	@Autowired
 	ConfigService configService;
@@ -32,11 +37,24 @@ public class AdminController {
 	UserService userService;
 
 	@GetMapping("config")
-	public ModelAndView showConfig() {
+	public RedirectView showConfig() {
+		return new RedirectView("/admin/config/appearance");
+	}
+
+	@GetMapping("config/appearance")
+	public ModelAndView showConfigAppaerance() {
 		ConfigView config = configService.getConfig();
 
-		ModelAndView modelAndView = new ModelAndView("admin/config");
+		ModelAndView modelAndView = new ModelAndView("admin/config/appearance");
 		modelAndView.addObject("config", config);
+		modelAndView.addObject("updateOk", false);
+
+		return modelAndView;
+	}
+
+	@GetMapping("config/security")
+	public ModelAndView showConfigSecurity() {
+		ModelAndView modelAndView = new ModelAndView("admin/config/security");
 		modelAndView.addObject("updateOk", false);
 
 		return modelAndView;
@@ -94,11 +112,21 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping("config")
-	public ModelAndView updateConfig(@ModelAttribute ConfigView input) {
+	@PostMapping("config/admin-credetials")
+	public ModelAndView updateAdminCredential(@ModelAttribute AdminCredentialsInput input) {
+		adminUserService.createOrUpdateAdminUser(input);
+
+		ModelAndView modelAndView = new ModelAndView("admin/config/security");
+		modelAndView.addObject("updateOk", true);
+
+		return modelAndView;
+	}
+
+	@PostMapping("config/appearance")
+	public ModelAndView updateConfigAppearance(@ModelAttribute ConfigView input) {
 		ConfigView config = configService.updateConfig(input);
 
-		ModelAndView modelAndView = new ModelAndView("admin/config");
+		ModelAndView modelAndView = new ModelAndView("admin/config/appearance");
 		modelAndView.addObject("config", config);
 		modelAndView.addObject("updateOk", true);
 

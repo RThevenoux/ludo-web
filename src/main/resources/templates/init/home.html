@@ -17,20 +17,21 @@
 		<p>Bienvenu !</p>
 		<p>Pour démarrer, vous devez définir un identifant et un mot de
 			passe pour le compte administrateur. Attention à ne pas perdre ces
-			informations.</p>
+			informations. Il sera possible de modifier ces paramètres de
+			connexion ultérieurement</p>
 
 		<form method="post" action="/init">
 			<table>
 				<tr>
 					<td>Identifiant</td>
-					<td><input type="text" name="username" value=""></td>
+					<td><input type="text" name="adminCredentials.username"></td>
 				</tr>
 				<tr>
 					<td>Mot de passe</td>
-					<td><input type="password" name="password" /></td>
+					<td><input type="password" name="adminCredentials.password" /></td>
 				</tr>
 			</table>
-			<button class="btn btn-primary">Go</button>
+			<button class="btn btn-primary">Enregistrer</button>
 		</form>
 
 	</div>

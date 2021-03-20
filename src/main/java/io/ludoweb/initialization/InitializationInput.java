@@ -1,11 +1,13 @@
 package io.ludoweb.initialization;
 
+import javax.validation.Valid;
+
+import io.ludoweb.admin.user.AdminCredentialsInput;
 import lombok.Data;
 
 @Data
 public class InitializationInput {
 
-	String password;
-
-	String username;
+	@Valid
+	AdminCredentialsInput adminCredentials;
 }

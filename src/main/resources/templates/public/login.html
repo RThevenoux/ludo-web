@@ -5,11 +5,11 @@
 <body>
 
 	<div class="container">
-		<h3 th:text="${title}">Title</h3>
+		<h3 class="my-4" th:text="${title}">Title</h3>
 		<div th:if="${loginError}" class="alert alert-warning" role="alert">Identifiant
 			ou mot de passe invalide</div>
 		<form th:action="${action}" method="POST">
-			<table>
+			<table class="mb-3">
 				<tr>
 					<td>Identifiant</td>
 					<td><input type="text" name="username" value=""></td>
@@ -18,11 +18,9 @@
 					<td>Mot de passe</td>
 					<td><input type="password" name="password" /></td>
 				</tr>
-				<tr>
-					<td><input name="submit" type="submit" value="Connecter"
-						class="btn btn-primary" /></td>
-				</tr>
 			</table>
+			<input name="submit" type="submit" value="Connecter"
+				class="btn btn-primary " />
 		</form>
 	</div>
 </body>

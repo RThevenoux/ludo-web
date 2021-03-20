@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{admin/layout :: layout (~{::body},'index')}">
+
+<body>
+
+	<div class="container">
+		<h1 class="my-4">Configuration</h1>
+
+
+		<div class="card">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs">
+					<li class="nav-item"><a class="nav-link" href="appearance">Apparence</a>
+					</li>
+					<li class="nav-item"><a class="nav-link active" href="#">Sécurité</a></li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<p>Vous pouvez modifier l'identifant et le mot de passe pour le
+					compte administrateur. Attention à ne pas perdre ces informations.
+					Il sera à nouveau possible de modifier ces paramètres
+					ultérieurement</p>
+				<p>
+					<strong>Attention :</strong> Cela supprime les anciens paramètres.
+					Vous ne pourrez donc seulement vous connecter avec les nouveaux
+					paramètres.
+				</p>
+				<form method="post" action="/admin/config/admin-credetials">
+					<table class="mb-3">
+						<tr>
+							<td>Nouvel Identifiant</td>
+							<td><input type="text" name="username" value=""></td>
+						</tr>
+						<tr>
+							<td>Nouveau Mot de passe</td>
+							<td><input type="password" name="password" /></td>
+						</tr>
+					</table>
+					<button class="btn btn-danger">Modifier</button>
+				</form>
+
+				<div th:if="${updateOk}" class="alert alert-success" role="alert">Configuration
+					mise à jour</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+</body>
+</html>

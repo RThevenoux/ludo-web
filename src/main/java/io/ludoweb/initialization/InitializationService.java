@@ -12,7 +12,7 @@ public class InitializationService {
 	AdminUserService adminUserService;
 
 	public void doInitialization(InitializationInput input) {
-		adminUserService.save(input.getUsername(), input.getPassword());
+		adminUserService.createOrUpdateAdminUser(input.getAdminCredentials());
 	}
 
 	public boolean isInitialized() {

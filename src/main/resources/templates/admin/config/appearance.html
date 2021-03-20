@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{admin/layout :: layout (~{::body},'index')}">
+
+<body>
+
+	<div class="container">
+		<h1 class="my-4">Configuration</h1>
+
+
+		<div class="card">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs">
+					<li class="nav-item"><a class="nav-link active" href="#">Apparence</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="security">Sécurité</a></li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<form action="/admin/config/appearance" method="POST" class="mb-3">
+					<div class="form-group">
+						<label for="title">Titre</label> <input id="title"
+							class="form-control" name="title" th:value="${config.title}">
+					</div>
+					<div class="form-group">
+						<label for="main-logo">Logo</label> <input id="main-logo"
+							class="form-control" name="mainLogo"
+							th:value="${config.mainLogo}">
+					</div>
+
+					<button type="submit" class="btn btn-primary">Mettre à
+						jour</button>
+				</form>
+
+				<div th:if="${updateOk}" class="alert alert-success" role="alert">Configuration
+					mise à jour</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+</body>
+</html>
