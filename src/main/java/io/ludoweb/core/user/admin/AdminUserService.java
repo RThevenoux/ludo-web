@@ -1,4 +1,4 @@
-package io.ludoweb.core.adminuser;
+package io.ludoweb.core.user.admin;
 
 import java.util.List;
 
@@ -42,6 +42,7 @@ public class AdminUserService implements UserDetailsService {
 		return repo.count() > 0;
 	}
 
+	// Implement UserDetailsService (Spring-Security)
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return repo.findByUsername(username)//

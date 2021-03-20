@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import io.ludoweb.core.adminuser.AdminCredentialsInput;
-import io.ludoweb.core.adminuser.AdminUserService;
 import io.ludoweb.core.borrowing.BorrowingService;
 import io.ludoweb.core.config.ConfigService;
 import io.ludoweb.core.config.ConfigView;
-import io.ludoweb.core.user.PasswordWrapper;
-import io.ludoweb.core.user.UserService;
-import io.ludoweb.core.user.UserStats;
-import io.ludoweb.core.user.UserView;
+import io.ludoweb.core.user.admin.AdminCredentialsInput;
+import io.ludoweb.core.user.admin.AdminUserService;
+import io.ludoweb.core.user.member.PasswordWrapper;
+import io.ludoweb.core.user.member.MemberService;
+import io.ludoweb.core.user.member.MemberStats;
+import io.ludoweb.core.user.member.MemberView;
 
 @Controller
 @RequestMapping("admin")
@@ -34,7 +34,7 @@ public class AdminController {
 	@Autowired
 	ConfigService configService;
 	@Autowired
-	UserService userService;
+	MemberService memberService;
 
 	@GetMapping("config")
 	public RedirectView showConfig() {
@@ -63,11 +63,11 @@ public class AdminController {
 	@RequestMapping("home")
 	public ModelAndView showHome() {
 		boolean subscriptionPaid = true;
-		UserStats userStats = userService.getUserStats(subscriptionPaid);
+		MemberStats memberStats = memberService.getMemberStats(subscriptionPaid);
 		long borrowingCount = borrowingService.getActiveBorrowingCount();
 
 		ModelAndView modelAndView = new ModelAndView("admin/home");
-		modelAndView.addObject("userStats", userStats);
+		modelAndView.addObject("memberStats", memberStats);
 		modelAndView.addObject("borrowingCount", borrowingCount);
 
 		return modelAndView;
@@ -83,32 +83,32 @@ public class AdminController {
 		return showHome();
 	}
 
-	@RequestMapping("user")
-	public ModelAndView showUserList() {
-		List<UserView> users = userService.list();
-		return new ModelAndView("admin/user", "users", users);
+	@RequestMapping("member")
+	public ModelAndView showMembers() {
+		List<MemberView> members = memberService.list();
+		return new ModelAndView("admin/members", "members", members);
 	}
 
-	@GetMapping("user/{externalId}/password")
-	public ModelAndView showUserPasswordFrom(@PathVariable String externalId) {
-		return userService.findByExternalId(externalId)//
-				.map(user -> new ModelAndView("admin/user-password", "user", user))//
-				.orElseGet(() -> new ModelAndView("redirect:/admin/user"));
+	@GetMapping("member/{externalId}/password")
+	public ModelAndView showMemberPasswordFrom(@PathVariable String externalId) {
+		return memberService.findByExternalId(externalId)//
+				.map(member -> new ModelAndView("admin/member-password", "member", member))//
+				.orElseGet(() -> new ModelAndView("redirect:/admin/members"));
 	}
 
-	@PostMapping("user/{username}/password")
-	public ModelAndView submitUserPasswordForm(@PathVariable String username,
+	@PostMapping("member/{externalId}/password")
+	public ModelAndView submitMEmberPasswordForm(@PathVariable String externalId,
 			@ModelAttribute PasswordWrapper password) {
 		if (password == null || StringUtils.isEmpty(password.getPassword())) {
-			return showUserPasswordFrom(username);
+			return showMemberPasswordFrom(externalId);
 		}
 
-		boolean userFound = userService.updateUserPassword(username, password.getPassword());
+		boolean memberFound = memberService.updateMemberPassword(externalId, password.getPassword());
 
-		if (userFound) {
-			return new ModelAndView("admin/user-password-ok");
+		if (memberFound) {
+			return new ModelAndView("admin/member-password-ok");
 		} else {
-			return new ModelAndView("error", "message", "Utilisateur non trouvé: " + username);
+			return new ModelAndView("error", "message", "Utilisateur non trouvé: " + externalId);
 		}
 	}
 

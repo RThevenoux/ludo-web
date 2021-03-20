@@ -8,38 +8,37 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import io.ludoweb.core.user.security.MyUserDetailsService;
+import io.ludoweb.core.user.member.MemberPrincipal;
+import io.ludoweb.core.user.member.MemberService;
 
 @Configuration
 @EnableWebSecurity
 @Order(2)
-public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	public static final String ROLE_USER = "USER";
+public class MemberSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	MyUserDetailsService userDetailsService;
+	MemberService memberService;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
+		auth.userDetailsService(memberService);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/user/**")//
+		http.antMatcher("/member/**")//
 				.authorizeRequests()//
 				.anyRequest()//
-				.hasRole(ROLE_USER)
+				.hasRole(MemberPrincipal.ROLE_MEMBER)
 
 				.and().formLogin()//
 				.loginPage(PublicController.USER_LOGIN_PAGE)//
 				.loginProcessingUrl(PublicController.USER_LOGIN_ACTION)//
 				.failureUrl(PublicController.USER_LOGIN_PAGE_LOGIN_FAIL)//
-				.defaultSuccessUrl("/user/home")
+				.defaultSuccessUrl("/member/home")
 
 				.and().logout()//
-				.logoutUrl("/user/logout")//
+				.logoutUrl("/member/logout")//
 				.logoutSuccessUrl("/")//
 				.deleteCookies("JSESSIONID")
 

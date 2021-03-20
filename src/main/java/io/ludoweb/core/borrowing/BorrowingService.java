@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import io.ludoweb.core.game.GameEntity;
 import io.ludoweb.core.game.GameService;
-import io.ludoweb.core.user.UserEntity;
-import io.ludoweb.core.user.UserService;
+import io.ludoweb.core.user.member.MemberEntity;
+import io.ludoweb.core.user.member.MemberService;
 
 @Service
 @Transactional
@@ -27,17 +27,17 @@ public class BorrowingService {
 	BorrowingRepository repo;
 
 	@Autowired
-	UserService userService;
+	MemberService memberService;
 
 	public SaveBorrowingResult createOrUpdate(BorrowingInput input) {
 		Optional<GameEntity> optGame = gameService.findEntityByExternalId(input.getGameExternalId());
-		Optional<UserEntity> optUser = userService.findEntityByExternalId(input.getUserExternalId());
+		Optional<MemberEntity> optMember = memberService.findEntityByExternalId(input.getMemberExternalId());
 
-		if (!optGame.isPresent() || !optUser.isPresent()) {
-			return SaveBorrowingResult.fail(optUser.isPresent(), optGame.isPresent());
+		if (!optGame.isPresent() || !optMember.isPresent()) {
+			return SaveBorrowingResult.fail(optMember.isPresent(), optGame.isPresent());
 		}
 		GameEntity game = optGame.get();
-		UserEntity user = optUser.get();
+		MemberEntity member = optMember.get();
 
 		Optional<BorrowingEntity> optBorrowing = repo.findByExternalId(input.getExternalId());
 
@@ -46,14 +46,14 @@ public class BorrowingService {
 
 			// Remove old relation
 			entity.getGame().getBorrowings().remove(entity);
-			entity.getUser().getBorrowings().remove(entity);
+			entity.getMember().getBorrowings().remove(entity);
 
-			fill(entity, input, game, user);
+			fill(entity, input, game, member);
 
 		} else {
 			BorrowingEntity entity = new BorrowingEntity();
 			entity.setExternalId(input.getExternalId());
-			fill(entity, input, game, user);
+			fill(entity, input, game, member);
 
 			repo.save(entity);
 		}
@@ -65,10 +65,10 @@ public class BorrowingService {
 		repo.deleteByExternalId(externalId);
 	}
 
-	private void fill(BorrowingEntity entity, BorrowingInput input, GameEntity game, UserEntity user) {
+	private void fill(BorrowingEntity entity, BorrowingInput input, GameEntity game, MemberEntity member) {
 		entity.setGame(game);
 		entity.setStartDate(input.getStartDate());
-		entity.setUser(user);
+		entity.setMember(member);
 	}
 
 	public long getActiveBorrowingCount() {

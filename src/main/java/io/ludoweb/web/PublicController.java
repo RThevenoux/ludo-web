@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,8 +20,8 @@ public class PublicController {
 	public static final String ADMIN_LOGIN_PAGE_LOGIN_FAIL = ADMIN_LOGIN_PAGE + "?loginError=true";
 	private static final String ADMIN_LOGIN_TITLE = "Accés réservé aux administrateurs";
 
-	public static final String USER_LOGIN_ACTION = "/user/login";
-	public static final String USER_LOGIN_PAGE = "/public/user-login";
+	public static final String USER_LOGIN_ACTION = "/member/login";
+	public static final String USER_LOGIN_PAGE = "/public/member-login";
 	public static final String USER_LOGIN_PAGE_LOGIN_FAIL = USER_LOGIN_PAGE + "?loginError=true";
 	private static final String USER_LOGIN_TITLE = "Connection \"Membre\"";
 
@@ -32,13 +33,13 @@ public class PublicController {
 		return loginModelAndView(loginError, ADMIN_LOGIN_TITLE, ADMIN_LOGIN_ACTION);
 	}
 
-	@RequestMapping("games")
+	@GetMapping("games")
 	public ModelAndView game() {
 		List<GameView> games = gameService.listAll();
 		return new ModelAndView("public/games", "games", games);
 	}
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String index() {
 		return "public/index";
 	}

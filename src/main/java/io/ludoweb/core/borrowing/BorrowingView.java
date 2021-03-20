@@ -12,6 +12,6 @@ public class BorrowingView {
 
 	String startDate;
 
-	String userExternalId;
+	String memberExternalId;
 
 }

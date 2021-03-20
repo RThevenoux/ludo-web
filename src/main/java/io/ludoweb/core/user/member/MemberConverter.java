@@ -1,4 +1,4 @@
-package io.ludoweb.core.user;
+package io.ludoweb.core.user.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,20 +8,20 @@ import io.ludoweb.core.borrowing.BorrowingConverter;
 import io.ludoweb.core.util.Converter;
 
 @Component
-public class UserConverter implements Converter<UserEntity, UserView> {
+public class MemberConverter implements Converter<MemberEntity, MemberView> {
 
 	@Autowired
 	BorrowingConverter borrowingConverter;
 
 	@Override
-	public UserView apply(UserEntity entity) {
+	public MemberView apply(MemberEntity entity) {
 		if (entity == null) {
 			return null;
 		}
 
 		boolean isPassword = !StringUtils.isEmpty(entity.getPassword());
 
-		UserView data = new UserView();
+		MemberView data = new MemberView();
 		data.setBorrowings(borrowingConverter.convert(entity.getBorrowings()));
 		data.setExternalId(entity.getExternalId());
 		data.setFirstName(entity.getFirstName());

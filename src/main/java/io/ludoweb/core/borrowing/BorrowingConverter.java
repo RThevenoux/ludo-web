@@ -22,7 +22,7 @@ public class BorrowingConverter implements Converter<BorrowingEntity, BorrowingV
 		view.setExternalId(entity.getExternalId());
 		view.setGame(gameConverter.apply(entity.getGame()));
 		view.setStartDate(entity.getStartDate());
-		view.setUserExternalId(entity.getUser().getExternalId());
+		view.setMemberExternalId(entity.getMember().getExternalId());
 		return view;
 	}
 }

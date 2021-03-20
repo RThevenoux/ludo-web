@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import io.ludoweb.core.game.GameEntity;
-import io.ludoweb.core.user.UserEntity;
+import io.ludoweb.core.user.member.MemberEntity;
 import lombok.Data;
 
 @Entity
@@ -28,5 +28,5 @@ public class BorrowingEntity {
 	String startDate;
 
 	@ManyToOne(optional = false)
-	UserEntity user;
+	MemberEntity member;
 }

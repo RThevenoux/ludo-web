@@ -17,5 +17,5 @@ public class BorrowingInput {
 	String startDate;
 
 	@NotBlank
-	String userExternalId;
+	String memberExternalId;
 }

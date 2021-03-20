@@ -1,4 +1,4 @@
-package io.ludoweb.core.user;
+package io.ludoweb.core.user.member;
 
 import java.util.List;
 
@@ -12,14 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import io.ludoweb.core.borrowing.BorrowingEntity;
-import io.ludoweb.core.user.plan.Plan;
+import io.ludoweb.core.user.member.plan.Plan;
+import io.ludoweb.core.util.ListConverter;
 import lombok.Data;
 
 @Entity
 @Data
-public class UserEntity {
+public class MemberEntity {
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	List<BorrowingEntity> borrowings;
 
 	@Column(nullable = false, unique = true)

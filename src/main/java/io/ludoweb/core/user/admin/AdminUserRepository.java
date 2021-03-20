@@ -1,4 +1,4 @@
-package io.ludoweb.core.adminuser;
+package io.ludoweb.core.user.admin;
 
 import java.util.Optional;
 

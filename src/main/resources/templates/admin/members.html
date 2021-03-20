@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{admin/layout :: layout (~{::body},'index')}">
+
+<body>
+
+	<div class="container">
+		<h1 class="my-4">Liste des inscriptions</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nom</th>
+					<th>Prénom</th>
+					<th>Email</th>
+					<th>Type</th>
+					<th>Forfait</th>
+					<th>Cotisation</th>
+					<th>Membres</th>
+					<th>Mot de passe</th>
+				</tr>
+			</thead>
+			<tr th:each="member : ${members}">
+				<td th:text="${member.username}">1026</td>
+				<td th:text="${member.firstName}">Jean</td>
+				<td th:text="${member.lastName}">Dupond</td>
+				<td th:text="${member.mail}">mail@mail.com</td>
+				<td th:text="${member.type}">Ass. Mat.</td>
+				<td th:text="${member.plan.name}">Famille</td>
+				<td><th:block th:if=${member.plan.subscriptionPaid}>À jour</th:block></td>
+				<td th:text="${member.otherMembers.size()}+1">7</td>
+				<td><a
+					th:href="@{/admin/member/{id}/password(id=${member.externalId})}"
+					th:switch="${member.password}"> <span th:case="true">Modifier</span>
+						<span th:case="*">Créer</span>
+				</a></td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+</html>

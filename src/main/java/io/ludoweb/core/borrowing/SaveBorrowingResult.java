@@ -5,8 +5,8 @@ import lombok.Value;
 @Value
 public class SaveBorrowingResult {
 
-	public static SaveBorrowingResult fail(boolean userFound, boolean gameFound) {
-		return new SaveBorrowingResult(false, userFound, gameFound);
+	public static SaveBorrowingResult fail(boolean memberFound, boolean gameFound) {
+		return new SaveBorrowingResult(gameFound, memberFound, false);
 	}
 
 	public static SaveBorrowingResult success() {
@@ -14,6 +14,6 @@ public class SaveBorrowingResult {
 	}
 
 	boolean gameFound;
+	boolean memberFound;
 	boolean success;
-	boolean userFound;
 }

@@ -14,28 +14,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.ludoweb.core.user.PasswordWrapper;
-import io.ludoweb.core.user.UserInput;
-import io.ludoweb.core.user.UserService;
-import io.ludoweb.core.user.UserView;
+import io.ludoweb.core.user.member.PasswordWrapper;
+import io.ludoweb.core.user.member.MemberInput;
+import io.ludoweb.core.user.member.MemberService;
+import io.ludoweb.core.user.member.MemberView;
 
 @RestController
-@RequestMapping("api/user")
-public class UserRestController {
+@RequestMapping("api/member")
+public class MemberRestController {
 
 	@Autowired
-	UserService service;
+	MemberService service;
 
 	@PostMapping("batch")
-	public void batchCreateOrUpdate(@RequestBody @Valid List<UserInput> inputs) {
-		for (UserInput input : inputs) {
+	public void batchCreateOrUpdate(@RequestBody @Valid List<MemberInput> inputs) {
+		for (MemberInput input : inputs) {
 			service.createOrUpdate(input);
 		}
 	}
 
 	@PostMapping
-	public UserView createOrUpdate(@RequestBody @Valid UserInput data) {
-		return service.createOrUpdate(data);
+	public MemberView createOrUpdate(@RequestBody @Valid MemberInput input) {
+		return service.createOrUpdate(input);
 	}
 
 	@DeleteMapping("{externalId}")
@@ -44,14 +44,14 @@ public class UserRestController {
 	}
 
 	@GetMapping
-	public List<UserView> getUsers() {
+	public List<MemberView> getUsers() {
 		return service.list();
 	}
 
 	@PutMapping("{externalId}/password")
 	public boolean updatePassword(@PathVariable String externalId,
 			@RequestBody @Valid PasswordWrapper passwordWrapper) {
-		return service.updateUserPassword(externalId, passwordWrapper.getPassword());
+		return service.updateMemberPassword(externalId, passwordWrapper.getPassword());
 	}
 
 }

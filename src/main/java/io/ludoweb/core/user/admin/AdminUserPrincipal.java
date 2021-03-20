@@ -1,4 +1,4 @@
-package io.ludoweb.core.user.security;
+package io.ludoweb.core.user.admin;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -6,24 +6,28 @@ import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import io.ludoweb.core.user.UserEntity;
 import io.ludoweb.core.util.SecurityTool;
-import io.ludoweb.web.UserSecurityConfig;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
-public class MyUserPrincipal implements UserDetails {
+/**
+ * Principal expect by Spring-Security
+ *
+ */
+@Data
+public class AdminUserPrincipal implements UserDetails {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final String ROLE_ADMIN = "ADMIN";
+
 	long id;
 	String password;
 	String username;
 
-	public MyUserPrincipal(UserEntity user) {
+	public AdminUserPrincipal(AdminUserEntity user) {
 		this.password = user.getPassword();
 		this.username = user.getUsername();
 		this.id = user.getId();
@@ -31,7 +35,7 @@ public class MyUserPrincipal implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		GrantedAuthority sgq = SecurityTool.roleAuthority(UserSecurityConfig.ROLE_USER);
+		GrantedAuthority sgq = SecurityTool.roleAuthority(ROLE_ADMIN);
 		return Collections.singleton(sgq);
 	}
 
@@ -54,4 +58,5 @@ public class MyUserPrincipal implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+
 }

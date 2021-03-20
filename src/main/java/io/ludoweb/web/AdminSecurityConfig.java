@@ -8,15 +8,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import io.ludoweb.core.adminuser.AdminUserService;
+import io.ludoweb.core.user.admin.AdminUserPrincipal;
+import io.ludoweb.core.user.admin.AdminUserService;
 
 @Configuration
 @EnableWebSecurity
 @Order(1)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	public static final String ROLE_ADMIN = "ADMIN";
-
+	
 	@Autowired
 	AdminUserService service;
 
@@ -30,7 +30,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.antMatcher("/admin/**")//
 				.authorizeRequests()//
 				.anyRequest()//
-				.hasRole(ROLE_ADMIN)
+				.hasRole(AdminUserPrincipal.ROLE_ADMIN)
 
 				.and().formLogin()//
 				.loginPage(PublicController.ADMIN_LOGIN_PAGE)//

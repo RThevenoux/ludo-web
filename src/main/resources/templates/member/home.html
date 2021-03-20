@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{user/layout :: layout (~{::body},'index')}">
+	th:replace="~{member/layout :: layout (~{::body},'index')}">
 
 <body>
 
@@ -22,20 +22,20 @@
 						<div class="row">
 							<div class="col-md-6">
 								<p>
-									<strong> <span th:text="${user.firstName}">Jean</span>
-										<span th:text="${user.lastName}">Paul</span>
+									<strong> <span th:text="${member.firstName}">Jean</span>
+										<span th:text="${member.lastName}">Paul</span>
 									</strong>
 								</p>
-								<ul th:each="member : ${user.otherMembers}">
+								<ul th:each="member : ${member.otherMembers}">
 									<li th:text="${member}">Léa</li>
 								</ul>
 							</div>
 							<div class="col-md-6">
 								<p>
-									<i class="fas fa-phone"></i> <span th:text="${user.phone}">0511223344</span>
+									<i class="fas fa-phone"></i> <span th:text="${member.phone}">0511223344</span>
 								</p>
 								<p>
-									<i class="fas fa-envelope"></i> <span th:text="${user.mail}">joe@foo.bar</span>
+									<i class="fas fa-envelope"></i> <span th:text="${member.mail}">joe@foo.bar</span>
 								</p>
 							</div>
 						</div>
@@ -45,20 +45,20 @@
 				<div class="card bg-light col-md-4">
 					<div class="card-header">
 						<h5 class="card-title">
-							Forfait : <span th:text="${user.plan.name}">Famille</span>
+							Forfait : <span th:text="${member.plan.name}">Famille</span>
 						</h5>
 					</div>
 					<p>
 						Nombre d'emprunt max : <span
-							th:text="${user.plan.maxBorrowingCount}"></span>
+							th:text="${member.plan.maxBorrowingCount}"></span>
 					</p>
 					<p>
 						Durée d'emprunt max : <span
-							th:text="${user.plan.maxBorrowingDuration}"></span>
+							th:text="${member.plan.maxBorrowingDuration}"></span>
 					</p>
 					<p>
-						Cotisation à jour : <span th:if="${user.plan.subscriptionPaid}">Oui</span>
-						<span th:unless="${user.plan.subscriptionPaid}" class="xxx">Non</span>
+						Cotisation à jour : <span th:if="${member.plan.subscriptionPaid}">Oui</span>
+						<span th:unless="${member.plan.subscriptionPaid}" class="xxx">Non</span>
 					</p>
 				</div>
 			</div>
@@ -67,8 +67,8 @@
 		<div class="card border-light">
 			<h5>
 				<i class="fas fa-chess-knight"></i> Emprut en cours ( <span
-					th:text="${#lists.size(user.borrowings)}">4</span> / <span
-					th:text="${user.plan.maxBorrowingCount}">5</span> )
+					th:text="${#lists.size(member.borrowings)}">4</span> / <span
+					th:text="${member.plan.maxBorrowingCount}">5</span> )
 			</h5>
 
 			<table class="table">
@@ -80,7 +80,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="borrowing : ${user.borrowings}">
+					<tr th:each="borrowing : ${member.borrowings}">
 						<th th:text="${borrowing.game.name}">Puisance 4</th>
 						<th th:text="${borrowing.startDate}">02/03/89</th>
 						<th>---</th>

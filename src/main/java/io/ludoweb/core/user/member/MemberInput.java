@@ -1,4 +1,4 @@
-package io.ludoweb.core.user;
+package io.ludoweb.core.user.member;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
-import io.ludoweb.core.user.plan.Plan;
+import io.ludoweb.core.user.member.plan.Plan;
 import lombok.Data;
 
 @Data
-public class UserInput {
+public class MemberInput {
 
 	@NotBlank
 	String externalId;

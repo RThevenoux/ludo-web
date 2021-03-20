@@ -1,4 +1,4 @@
-package io.ludoweb.core.user;
+package io.ludoweb.core.util;
 
 import java.util.List;
 

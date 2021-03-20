@@ -1,4 +1,4 @@
-package io.ludoweb.core.user.plan;
+package io.ludoweb.core.user.member.plan;
 
 import javax.persistence.Embeddable;
 

@@ -3,7 +3,7 @@ package io.ludoweb.core.initialization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.ludoweb.core.adminuser.AdminUserService;
+import io.ludoweb.core.user.admin.AdminUserService;
 
 @Service
 public class InitializationService {
