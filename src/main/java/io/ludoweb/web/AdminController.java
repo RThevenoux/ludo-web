@@ -16,8 +16,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import io.ludoweb.core.borrowing.BorrowingService;
 import io.ludoweb.core.config.ConfigService;
 import io.ludoweb.core.config.ConfigView;
-import io.ludoweb.core.user.admin.AdminCredentialsInput;
 import io.ludoweb.core.user.admin.AdminUserService;
+import io.ludoweb.core.user.admin.CredentialsInput;
 import io.ludoweb.core.user.member.PasswordWrapper;
 import io.ludoweb.core.user.member.MemberService;
 import io.ludoweb.core.user.member.MemberStats;
@@ -113,13 +113,37 @@ public class AdminController {
 	}
 
 	@PostMapping("config/admin-credetials")
-	public ModelAndView updateAdminCredential(@ModelAttribute AdminCredentialsInput input) {
-		adminUserService.createOrUpdateAdminUser(input);
+	public ModelAndView updateAdminCredential(@ModelAttribute CredentialsInput input) {
+		boolean success = adminUserService.createOrUpdateAdminUser(input);
 
-		ModelAndView modelAndView = new ModelAndView("admin/config/security");
-		modelAndView.addObject("updateOk", true);
+		if (success) {
+			ModelAndView modelAndView = new ModelAndView("admin/config/security");
+			modelAndView.addObject("updateAdminOk", true);
 
-		return modelAndView;
+			return modelAndView;
+		} else {
+			ModelAndView modelAndView = new ModelAndView("admin/config/security");
+			modelAndView.addObject("updateAdminFailMessage", "Nom utilisateur déjà utilisé pour l'API");
+
+			return modelAndView;
+		}
+	}
+
+	@PostMapping("config/api-sync-credetials")
+	public ModelAndView updateApiSyncCredential(@ModelAttribute CredentialsInput input) {
+		boolean success = adminUserService.createOrUpdateApiSyncUser(input);
+
+		if (success) {
+			ModelAndView modelAndView = new ModelAndView("admin/config/security");
+			modelAndView.addObject("updateApiSyncOk", true);
+
+			return modelAndView;
+		} else {
+			ModelAndView modelAndView = new ModelAndView("admin/config/security");
+			modelAndView.addObject("updateApiSyncFailMessage", "Nom utilisateur déjà utilisé pour l'administateur");
+
+			return modelAndView;
+		}
 	}
 
 	@PostMapping("config/appearance")

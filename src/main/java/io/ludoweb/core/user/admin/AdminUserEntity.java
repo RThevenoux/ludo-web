@@ -1,20 +1,11 @@
 package io.ludoweb.core.user.admin;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-import lombok.Data;
+import io.ludoweb.core.user.AbstractUserEntity;
 
 @Entity
-@Data
-public class AdminUserEntity {
+public class AdminUserEntity extends AbstractUserEntity {
 
-	@Id
-	@GeneratedValue
-	Long id;
-
-	String password;
-
-	String username;
+	
 }

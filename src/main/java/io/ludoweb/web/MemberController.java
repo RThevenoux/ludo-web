@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import io.ludoweb.core.user.member.MemberPrincipal;
+import io.ludoweb.core.user.member.MemberUserDetails;
 import io.ludoweb.core.user.member.MemberService;
 import io.ludoweb.core.user.member.MemberView;
 
@@ -26,7 +26,7 @@ public class MemberController {
 
 	private MemberView getMemberView() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		MemberPrincipal principal = (MemberPrincipal) auth.getPrincipal();
+		MemberUserDetails principal = (MemberUserDetails) auth.getPrincipal();
 		return memberService.findById(principal.getId()).orElse(null);
 	}
 

@@ -12,9 +12,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import io.ludoweb.core.user.SecurityTool;
+
 @Service
 @Transactional
 public class MemberService implements UserDetailsService {
+
+	public static final String ROLE_MEMBER = "MEMBER";
 
 	@Autowired
 	MemberConverter converter;
@@ -27,7 +31,7 @@ public class MemberService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		return repo.findByUsername(username)//
-				.map(MemberPrincipal::new)//
+				.map(this::buildDetails)//
 				.orElseThrow(() -> new UsernameNotFoundException(username));
 	}
 
@@ -42,6 +46,7 @@ public class MemberService implements UserDetailsService {
 			MemberEntity entity = new MemberEntity();
 			entity.setPassword(null);
 			entity.setExternalId(data.getExternalId());
+			entity.setRole(ROLE_MEMBER);
 			fill(entity, data);
 
 			MemberEntity saved = repo.save(entity);
@@ -100,5 +105,14 @@ public class MemberService implements UserDetailsService {
 					return true;
 				})//
 				.orElse(false);
+	}
+
+	private MemberUserDetails buildDetails(MemberEntity entity) {
+		MemberUserDetails details = new MemberUserDetails();
+		details.setId(entity.getId());
+		details.setPassword(entity.getPassword());
+		details.setUsername(entity.getUsername());
+		details.setAuthorities(SecurityTool.roleAuthorityAsSet(entity.getRole()));
+		return details;
 	}
 }

@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import io.ludoweb.core.user.member.MemberPrincipal;
 import io.ludoweb.core.user.member.MemberService;
 
 @Configuration
@@ -29,7 +28,7 @@ public class MemberSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.antMatcher("/member/**")//
 				.authorizeRequests()//
 				.anyRequest()//
-				.hasRole(MemberPrincipal.ROLE_MEMBER)
+				.hasRole(MemberService.ROLE_MEMBER)
 
 				.and().formLogin()//
 				.loginPage(PublicController.USER_LOGIN_PAGE)//

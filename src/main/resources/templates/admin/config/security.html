@@ -16,32 +16,63 @@
 					<li class="nav-item"><a class="nav-link active" href="#">Sécurité</a></li>
 				</ul>
 			</div>
-			<div class="card-body">
-				<p>Vous pouvez modifier l'identifant et le mot de passe pour le
-					compte administrateur. Attention à ne pas perdre ces informations.
-					Il sera à nouveau possible de modifier ces paramètres
-					ultérieurement</p>
-				<p>
-					<strong>Attention :</strong> Cela supprime les anciens paramètres.
-					Vous ne pourrez donc seulement vous connecter avec les nouveaux
-					paramètres.
-				</p>
-				<form method="post" action="/admin/config/admin-credetials">
-					<table class="mb-3">
-						<tr>
-							<td>Nouvel Identifiant</td>
-							<td><input type="text" name="username" value=""></td>
-						</tr>
-						<tr>
-							<td>Nouveau Mot de passe</td>
-							<td><input type="password" name="password" /></td>
-						</tr>
-					</table>
-					<button class="btn btn-danger">Modifier</button>
-				</form>
+			<div class="card">
+				<div class="card-body">
+					<h4>Compte administrateur</h4>
+					<p>Vous pouvez modifier l'identifant et le mot de passe pour le
+						compte administrateur. Attention à ne pas perdre ces informations.
+						Il sera à nouveau possible de modifier ces paramètres
+						ultérieurement</p>
+					<p>
+						<strong>Attention :</strong> Cela supprime les anciens paramètres.
+						Seuls les nouveaux paramètres vous permettront de vos connecter.
+					</p>
+					<form method="post" action="/admin/config/admin-credetials">
+						<table class="mb-3">
+							<tr>
+								<td>Nouvel Identifiant</td>
+								<td><input type="text" name="username" value=""></td>
+							</tr>
+							<tr>
+								<td>Nouveau Mot de passe</td>
+								<td><input type="password" name="password" /></td>
+							</tr>
+						</table>
+						<button class="btn btn-danger">Modifier</button>
+					</form>
 
-				<div th:if="${updateOk}" class="alert alert-success" role="alert">Configuration
-					mise à jour</div>
+					<div th:if="${updateAdminOk}" class="alert alert-success"
+						role="alert">Configuration mise à jour</div>
+					<div th:if="${updateAdminFailMessage}" class="alert alert-danger"
+						role="alert" th:text="${updateAdminFailMessage}">Erreur lors
+						de l'update</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-body">
+					<h4>API Sync user</h4>
+					<p>Le programme de synchronisation doit utiliser ces
+						identifiants pour se connecter au serveur et envoyer les données.</p>
+					<form method="post" action="/admin/config/api-sync-credetials">
+						<table class="mb-3">
+							<tr>
+								<td>Nouvel Identifiant</td>
+								<td><input type="text" name="username" value=""></td>
+							</tr>
+							<tr>
+								<td>Nouveau Mot de passe</td>
+								<td><input type="password" name="password" /></td>
+							</tr>
+						</table>
+						<button class="btn btn-danger">Modifier</button>
+					</form>
+
+					<div th:if="${updateApiSyncOk}" class="alert alert-success"
+						role="alert">Configuration mise à jour</div>
+					<div th:if="${updateApiSyncFailMessage}" class="alert alert-danger"
+						role="alert" th:text="${updateApiSyncFailMessage}">Erreur
+						lors de l'update</div>
+				</div>
 			</div>
 		</div>
 
