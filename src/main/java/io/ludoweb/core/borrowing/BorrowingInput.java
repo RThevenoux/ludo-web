@@ -1,6 +1,9 @@
 package io.ludoweb.core.borrowing;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -13,8 +16,8 @@ public class BorrowingInput {
 	@NotBlank
 	String gameExternalId;
 
-	@NotBlank
-	String startDate;
+	@NotNull
+	LocalDate startDate;
 
 	@NotBlank
 	String memberExternalId;

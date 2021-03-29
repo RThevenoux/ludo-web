@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.types.Predicate;
+
 import io.ludoweb.core.user.SecurityTool;
 
 @Service
@@ -82,15 +84,18 @@ public class MemberService implements UserDetailsService {
 		return repo.findByExternalId(externalId);
 	}
 
-	public MemberStats getMemberStats(boolean subscriptionPaid) {
-		List<MemberEntity> subscriptions = repo.findBySubscriptionPaid(subscriptionPaid);
+	public MemberStats getMemberStats(Predicate predicate) {
+		Iterable<MemberEntity> subscriptions = repo.findAll(predicate);
 
 		int totalMemberCount = 0;
+		int subscriptionCount = 0;
+
 		for (MemberEntity subscription : subscriptions) {
 			totalMemberCount += (1 + subscription.getOtherMembers().size());
+			subscriptionCount++;
 		}
 
-		return new MemberStats(subscriptions.size(), totalMemberCount);
+		return new MemberStats(subscriptionCount, totalMemberCount);
 	}
 
 	public List<MemberView> list() {

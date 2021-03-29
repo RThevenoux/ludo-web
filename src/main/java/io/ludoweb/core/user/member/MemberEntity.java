@@ -2,6 +2,8 @@ package io.ludoweb.core.user.member;
 
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -21,6 +23,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@AttributeOverrides({ @AttributeOverride(name = "password", column = @Column(nullable = true)) })
 public class MemberEntity extends AbstractUserEntity {
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)

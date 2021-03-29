@@ -9,14 +9,14 @@
 		<div class="card-deck mb-5">
 			<div class="card">
 				<div class="card-body">
-					<h5>À jour de cotisation</h5>
+					<h5>Inscription en cours</h5>
 					<p>
 						<i class="far fa-address-card"></i> <span
-							th:text="${memberStats.subscriptionCount}">123 </span> inscriptions
+							th:text="${activeMemberStats.subscriptionCount}">123 </span> inscriptions
 					</p>
 					<p>
 						<i class="fas fa-user"></i> <span
-							th:text="${memberStats.totalMemberCount}">234 </span> membres
+							th:text="${activeMemberStats.totalMemberCount}">234 </span> membres
 					</p>
 				</div>
 			</div>
@@ -53,18 +53,6 @@
 				</div>
 				<div class="card-footer">
 					<a class="card-link" href="/admin/mail">Mailing list</a>
-				</div>
-			</div>
-
-			<div class="card">
-				<div class="card-header">
-					<i class="fas fa-poll-h"></i> Statistiques
-				</div>
-				<div class="card-body">
-					<p>Blabla</p>
-				</div>
-				<div class="card-footer">
-					<a class="card-link" href="/admin/stats">Statistiques</a>
 				</div>
 			</div>
 

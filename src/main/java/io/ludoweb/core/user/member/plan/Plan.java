@@ -1,5 +1,7 @@
 package io.ludoweb.core.user.member.plan;
 
+import java.time.LocalDate;
+
 import javax.persistence.Embeddable;
 
 import lombok.Data;
@@ -8,7 +10,7 @@ import lombok.Data;
 @Embeddable
 public class Plan {
 
-	String endDate;
+	LocalDate endDate;
 
 	int maxBorrowingCount;
 
@@ -16,7 +18,7 @@ public class Plan {
 
 	String name;
 
-	String startDate;
+	LocalDate startDate;
 
 	Boolean subscriptionPaid;
 }

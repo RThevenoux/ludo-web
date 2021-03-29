@@ -1,5 +1,7 @@
 package io.ludoweb.core.borrowing;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +27,7 @@ public class BorrowingEntity {
 	Long id;
 
 	@Column(nullable = false)
-	String startDate;
+	LocalDate startDate;
 
 	@ManyToOne(optional = false)
 	MemberEntity member;

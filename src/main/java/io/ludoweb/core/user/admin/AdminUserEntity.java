@@ -7,5 +7,4 @@ import io.ludoweb.core.user.AbstractUserEntity;
 @Entity
 public class AdminUserEntity extends AbstractUserEntity {
 
-	
 }

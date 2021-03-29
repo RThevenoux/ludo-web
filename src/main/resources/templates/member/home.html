@@ -49,6 +49,14 @@
 						</h5>
 					</div>
 					<p>
+						Début : <span th:text="${member.plan.startDate}"></span> - Fin : <span
+							th:text="${member.plan.endDate}"></span>
+					</p>
+					<p>
+						Cotisation à jour : <span th:if="${member.plan.subscriptionPaid}">Oui</span>
+						<span th:unless="${member.plan.subscriptionPaid}" class="xxx">Non</span>
+					</p>
+					<p>
 						Nombre d'emprunt max : <span
 							th:text="${member.plan.maxBorrowingCount}"></span>
 					</p>
@@ -56,10 +64,7 @@
 						Durée d'emprunt max : <span
 							th:text="${member.plan.maxBorrowingDuration}"></span>
 					</p>
-					<p>
-						Cotisation à jour : <span th:if="${member.plan.subscriptionPaid}">Oui</span>
-						<span th:unless="${member.plan.subscriptionPaid}" class="xxx">Non</span>
-					</p>
+
 				</div>
 			</div>
 		</div>

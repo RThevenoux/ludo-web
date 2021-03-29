@@ -1,5 +1,6 @@
 package io.ludoweb.web;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+
 import io.ludoweb.core.borrowing.BorrowingService;
 import io.ludoweb.core.config.ConfigService;
 import io.ludoweb.core.config.ConfigView;
 import io.ludoweb.core.user.admin.AdminUserService;
 import io.ludoweb.core.user.admin.CredentialsInput;
 import io.ludoweb.core.user.member.PasswordWrapper;
+import io.ludoweb.core.user.member.QMemberEntity;
 import io.ludoweb.core.user.member.MemberService;
 import io.ludoweb.core.user.member.MemberStats;
 import io.ludoweb.core.user.member.MemberView;
@@ -62,12 +66,13 @@ public class AdminController {
 
 	@RequestMapping("home")
 	public ModelAndView showHome() {
-		boolean subscriptionPaid = true;
-		MemberStats memberStats = memberService.getMemberStats(subscriptionPaid);
+		BooleanExpression predicate = QMemberEntity.memberEntity.plan.endDate.after(LocalDate.now());
+
+		MemberStats memberStats = memberService.getMemberStats(predicate);
 		long borrowingCount = borrowingService.getActiveBorrowingCount();
 
 		ModelAndView modelAndView = new ModelAndView("admin/home");
-		modelAndView.addObject("memberStats", memberStats);
+		modelAndView.addObject("activeMemberStats", memberStats);
 		modelAndView.addObject("borrowingCount", borrowingCount);
 
 		return modelAndView;

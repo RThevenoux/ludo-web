@@ -9,16 +9,17 @@ import lombok.Data;
 
 @MappedSuperclass
 @Data
+
 public class AbstractUserEntity {
 
 	@Id
 	@GeneratedValue
 	Long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	String password;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	String username;
 
 	@Column(nullable = false)

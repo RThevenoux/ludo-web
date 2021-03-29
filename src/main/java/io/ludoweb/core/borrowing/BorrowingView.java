@@ -1,5 +1,7 @@
 package io.ludoweb.core.borrowing;
 
+import java.time.LocalDate;
+
 import io.ludoweb.core.game.GameView;
 import lombok.Data;
 
@@ -10,7 +12,7 @@ public class BorrowingView {
 
 	GameView game;
 
-	String startDate;
+	LocalDate startDate;
 
 	String memberExternalId;
 
