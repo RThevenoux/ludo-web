@@ -81,14 +81,14 @@
 					<tr>
 						<th>Nom du jeu</th>
 						<th>Date de début</th>
-						<th>Date de Fin</th>
+						<th>Date de fin</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="borrowing : ${member.borrowings}">
 						<th th:text="${borrowing.game.name}">Puisance 4</th>
 						<th th:text="${borrowing.startDate}">02/03/89</th>
-						<th>---</th>
+						<th th:text="${borrowing.endDate}">22/03/90</th>
 					</tr>
 			</table>
 		</div>

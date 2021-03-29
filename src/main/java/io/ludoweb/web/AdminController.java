@@ -83,9 +83,11 @@ public class AdminController {
 		return showHome();
 	}
 
-	@RequestMapping("stats")
-	public ModelAndView showStatistics() {
-		return showHome();
+	@GetMapping("member/{externalId}/password")
+	public ModelAndView showMemberPasswordFrom(@PathVariable String externalId) {
+		return memberService.findByExternalId(externalId)//
+				.map(member -> new ModelAndView("admin/member-password", "member", member))//
+				.orElseGet(() -> new ModelAndView("redirect:/admin/members"));
 	}
 
 	@RequestMapping("member")
@@ -94,11 +96,9 @@ public class AdminController {
 		return new ModelAndView("admin/members", "members", members);
 	}
 
-	@GetMapping("member/{externalId}/password")
-	public ModelAndView showMemberPasswordFrom(@PathVariable String externalId) {
-		return memberService.findByExternalId(externalId)//
-				.map(member -> new ModelAndView("admin/member-password", "member", member))//
-				.orElseGet(() -> new ModelAndView("redirect:/admin/members"));
+	@RequestMapping("stats")
+	public ModelAndView showStatistics() {
+		return showHome();
 	}
 
 	@PostMapping("member/{externalId}/password")

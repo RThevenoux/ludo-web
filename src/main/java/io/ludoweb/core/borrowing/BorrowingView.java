@@ -8,12 +8,14 @@ import lombok.Data;
 @Data
 public class BorrowingView {
 
+	LocalDate endDate;
+
 	String externalId;
 
 	GameView game;
 
-	LocalDate startDate;
-
 	String memberExternalId;
+	
+	LocalDate startDate;
 
 }

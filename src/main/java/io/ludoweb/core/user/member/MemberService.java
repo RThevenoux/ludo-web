@@ -29,12 +29,13 @@ public class MemberService implements UserDetailsService {
 	@Autowired
 	MemberRepository repo;
 
-	// Implement UserDetailsService (Spring-Security)
-	@Override
-	public UserDetails loadUserByUsername(String username) {
-		return repo.findByUsername(username)//
-				.map(this::buildDetails)//
-				.orElseThrow(() -> new UsernameNotFoundException(username));
+	private MemberUserDetails buildDetails(MemberEntity entity) {
+		MemberUserDetails details = new MemberUserDetails();
+		details.setId(entity.getId());
+		details.setPassword(entity.getPassword());
+		details.setUsername(entity.getUsername());
+		details.setAuthorities(SecurityTool.roleAuthorityAsSet(entity.getRole()));
+		return details;
 	}
 
 	public MemberView createOrUpdate(MemberInput data) {
@@ -102,6 +103,14 @@ public class MemberService implements UserDetailsService {
 		return converter.convert(repo.findAll());
 	}
 
+	// Implement UserDetailsService (Spring-Security)
+	@Override
+	public UserDetails loadUserByUsername(String username) {
+		return repo.findByUsername(username)//
+				.map(this::buildDetails)//
+				.orElseThrow(() -> new UsernameNotFoundException(username));
+	}
+
 	public boolean updateMemberPassword(String externalId, String password) {
 		return findEntityByExternalId(externalId)//
 				.map(entity -> {
@@ -110,14 +119,5 @@ public class MemberService implements UserDetailsService {
 					return true;
 				})//
 				.orElse(false);
-	}
-
-	private MemberUserDetails buildDetails(MemberEntity entity) {
-		MemberUserDetails details = new MemberUserDetails();
-		details.setId(entity.getId());
-		details.setPassword(entity.getPassword());
-		details.setUsername(entity.getUsername());
-		details.setAuthorities(SecurityTool.roleAuthorityAsSet(entity.getRole()));
-		return details;
 	}
 }

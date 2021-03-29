@@ -20,6 +20,7 @@ public class BorrowingConverter implements Converter<BorrowingEntity, BorrowingV
 
 		BorrowingView view = new BorrowingView();
 		view.setExternalId(entity.getExternalId());
+		view.setEndDate(entity.getEndDate());
 		view.setGame(gameConverter.apply(entity.getGame()));
 		view.setStartDate(entity.getStartDate());
 		view.setMemberExternalId(entity.getMember().getExternalId());

@@ -10,15 +10,18 @@ import lombok.Data;
 @Data
 public class BorrowingInput {
 
+	@NotNull
+	LocalDate endDate;
+
 	@NotBlank
 	String externalId;
 
 	@NotBlank
 	String gameExternalId;
 
-	@NotNull
-	LocalDate startDate;
-
 	@NotBlank
 	String memberExternalId;
+	
+	@NotNull
+	LocalDate startDate;
 }

@@ -18,16 +18,16 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 
-	@RequestMapping("home")
-	public ModelAndView home() {
-		MemberView member = getMemberView();
-		return new ModelAndView("member/home", "member", member);
-	}
-
 	private MemberView getMemberView() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		MemberUserDetails principal = (MemberUserDetails) auth.getPrincipal();
 		return memberService.findById(principal.getId()).orElse(null);
+	}
+
+	@RequestMapping("home")
+	public ModelAndView home() {
+		MemberView member = getMemberView();
+		return new ModelAndView("member/home", "member", member);
 	}
 
 }

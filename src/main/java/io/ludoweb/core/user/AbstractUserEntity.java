@@ -19,9 +19,9 @@ public class AbstractUserEntity {
 	@Column(nullable = false)
 	String password;
 
-	@Column(nullable = false, unique = true)
-	String username;
-
 	@Column(nullable = false)
 	String role;
+
+	@Column(nullable = false, unique = true)
+	String username;
 }

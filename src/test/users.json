@@ -12,8 +12,8 @@
 		],
 		"plan": {
 			"name": "Famille Complète",
-			"startDate": "hier",
-			"endDate": "dans un an",
+			"startDate": "2020-12-05",
+			"endDate": "2021-12-04",
 			"subscriptionPaid": true,
 			"maxBorrowingCount": 4,
 			"maxBorrowingDuration": 21
@@ -30,8 +30,8 @@
 		"otherMembers": [],
 		"plan": {
 			"name": "Individuel",
-			"startDate": "hier",
-			"endDate": "dans un an",
+			"startDate": "2019-12-20",
+			"endDate": "2020-12-19",
 			"subscriptionPaid": true,
 			"maxBorrowingCount": 2,
 			"maxBorrowingDuration": 21

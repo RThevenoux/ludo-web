@@ -24,10 +24,10 @@ public class BorrowingService {
 	GameService gameService;
 
 	@Autowired
-	BorrowingRepository repo;
+	MemberService memberService;
 
 	@Autowired
-	MemberService memberService;
+	BorrowingRepository repo;
 
 	public SaveBorrowingResult createOrUpdate(BorrowingInput input) {
 		Optional<GameEntity> optGame = gameService.findEntityByExternalId(input.getGameExternalId());
@@ -66,9 +66,10 @@ public class BorrowingService {
 	}
 
 	private void fill(BorrowingEntity entity, BorrowingInput input, GameEntity game, MemberEntity member) {
+		entity.setEndDate(input.getEndDate());
 		entity.setGame(game);
-		entity.setStartDate(input.getStartDate());
 		entity.setMember(member);
+		entity.setStartDate(input.getStartDate());
 	}
 
 	public long getActiveBorrowingCount() {

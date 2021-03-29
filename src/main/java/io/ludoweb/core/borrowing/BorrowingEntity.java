@@ -16,6 +16,9 @@ import lombok.Data;
 @Data
 public class BorrowingEntity {
 
+	@Column(nullable = false)
+	LocalDate endDate;
+
 	@Column(nullable = false, unique = true)
 	String externalId;
 
@@ -25,10 +28,10 @@ public class BorrowingEntity {
 	@Id
 	@GeneratedValue
 	Long id;
+	
+	@ManyToOne(optional = false)
+	MemberEntity member;
 
 	@Column(nullable = false)
 	LocalDate startDate;
-
-	@ManyToOne(optional = false)
-	MemberEntity member;
 }

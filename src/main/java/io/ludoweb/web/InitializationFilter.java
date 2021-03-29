@@ -19,10 +19,10 @@ import io.ludoweb.core.initialization.InitializationService;
 @Order(0)
 public class InitializationFilter extends OncePerRequestFilter {
 
+	AntPathMatcher pathMatcher = new AntPathMatcher();
+
 	@Autowired
 	InitializationService service;
-
-	AntPathMatcher pathMatcher = new AntPathMatcher();
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

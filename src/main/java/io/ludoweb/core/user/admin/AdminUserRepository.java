@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AdminUserRepository extends JpaRepository<AdminUserEntity, Long> {
 
-	Optional<AdminUserEntity> findByUsername(String username);
+	long countByRole(String role);
 	
 	List<AdminUserEntity> findByRole(String role);
 
-	long countByRole(String role);
+	Optional<AdminUserEntity> findByUsername(String username);
 }

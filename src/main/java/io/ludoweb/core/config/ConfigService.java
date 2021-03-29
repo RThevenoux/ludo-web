@@ -16,13 +16,13 @@ public class ConfigService {
 
 	@Autowired
 	ServletContext context;
-	@Autowired
-	ConfigRepository repo;
-
 	@Value("${io.ludoweb.default-config.mainLogo}")
 	String defaultMainLogo;
+
 	@Value("${io.ludoweb.default-config.title}")
 	String defaultTitle;
+	@Autowired
+	ConfigRepository repo;
 
 	private ConfigView convert(ConfigEntity entity) {
 		ConfigView view = new ConfigView();

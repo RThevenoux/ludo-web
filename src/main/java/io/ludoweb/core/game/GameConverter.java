@@ -7,10 +7,10 @@ import io.ludoweb.core.util.Converter;
 @Component
 public class GameConverter implements Converter<GameEntity, GameView> {
 
-	private static final String UNAVAILABLE = "Indisponible";
-	private static final String ON_SITE = "Sur place";
-	private static final String BORROWED = "Prété";
 	private static final String AVAILABLE = "Disponible";
+	private static final String BORROWED = "Prété";
+	private static final String ON_SITE = "Sur place";
+	private static final String UNAVAILABLE = "Indisponible";
 
 	@Override
 	public GameView apply(GameEntity entity) {

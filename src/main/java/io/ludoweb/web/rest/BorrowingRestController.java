@@ -27,7 +27,7 @@ public class BorrowingRestController {
 	BorrowingService service;
 
 	@PostMapping("batch")
-	public void batchCreateOrUpdate(@RequestBody  List<@Valid BorrowingInput> inputs) {
+	public void batchCreateOrUpdate(@RequestBody List<@Valid BorrowingInput> inputs) {
 		for (BorrowingInput input : inputs) {
 			service.createOrUpdate(input);
 		}

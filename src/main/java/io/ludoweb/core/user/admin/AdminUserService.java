@@ -25,14 +25,12 @@ public class AdminUserService implements UserDetailsService {
 	@Autowired
 	AdminUserRepository repo;
 
-	@Transactional
-	public boolean createOrUpdateAdminUser(CredentialsInput input) {
-		return createOrUpdate(input, ROLE_ADMIN);
-	}
-
-	@Transactional
-	public boolean createOrUpdateApiSyncUser(CredentialsInput input) {
-		return createOrUpdate(input, ROLE_SYNC_API);
+	private UserDetails buildDetails(AdminUserEntity entity) {
+		MyUserDetails details = new MyUserDetails();
+		details.setPassword(entity.getPassword());
+		details.setUsername(entity.getUsername());
+		details.setAuthorities(SecurityTool.roleAuthorityAsSet(entity.getRole()));
+		return details;
 	}
 
 	/**
@@ -78,6 +76,16 @@ public class AdminUserService implements UserDetailsService {
 		}
 	}
 
+	@Transactional
+	public boolean createOrUpdateAdminUser(CredentialsInput input) {
+		return createOrUpdate(input, ROLE_ADMIN);
+	}
+
+	@Transactional
+	public boolean createOrUpdateApiSyncUser(CredentialsInput input) {
+		return createOrUpdate(input, ROLE_SYNC_API);
+	}
+
 	private void fill(AdminUserEntity entity, CredentialsInput input, String role) {
 		entity.setPassword(passwordEncoder.encode(input.getPassword()));
 		entity.setUsername(input.getUsername());
@@ -98,13 +106,5 @@ public class AdminUserService implements UserDetailsService {
 		return repo.findByUsername(username)//
 				.map(this::buildDetails)//
 				.orElseThrow(() -> new UsernameNotFoundException(username));
-	}
-
-	private UserDetails buildDetails(AdminUserEntity entity) {
-		MyUserDetails details = new MyUserDetails();
-		details.setPassword(entity.getPassword());
-		details.setUsername(entity.getUsername());
-		details.setAuthorities(SecurityTool.roleAuthorityAsSet(entity.getRole()));
-		return details;
 	}
 }
