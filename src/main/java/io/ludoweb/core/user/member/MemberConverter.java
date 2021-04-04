@@ -24,9 +24,10 @@ public class MemberConverter implements Converter<MemberEntity, MemberView> {
 		MemberView data = new MemberView();
 		data.setBorrowings(borrowingConverter.convert(entity.getBorrowings()));
 		data.setExternalId(entity.getExternalId());
+		data.setEmail(entity.getEmail());
+		data.setEmailValid(entity.isEmailValid());
 		data.setFirstName(entity.getFirstName());
 		data.setLastName(entity.getLastName());
-		data.setMail(entity.getMail());
 		data.setOtherMembers(entity.getOtherMembers());
 		data.setPassword(isPassword);
 		data.setPhone(entity.getPhone());
@@ -35,4 +36,6 @@ public class MemberConverter implements Converter<MemberEntity, MemberView> {
 		data.setUsername(entity.getUsername());
 		return data;
 	}
+
+
 }

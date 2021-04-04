@@ -2,9 +2,12 @@ package io.ludoweb.core.user.member;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,6 +31,10 @@ public class MemberService implements UserDetailsService {
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	MemberRepository repo;
+	@Autowired
+	PredicateBuilder predicateBuilder;
+
+	EmailValidator emailValidator = EmailValidator.getInstance();
 
 	private MemberUserDetails buildDetails(MemberEntity entity) {
 		MemberUserDetails details = new MemberUserDetails();
@@ -62,9 +69,10 @@ public class MemberService implements UserDetailsService {
 	}
 
 	private MemberEntity fill(MemberEntity entity, MemberInput input) {
+		entity.setEmail(input.getEmail());
+		entity.setEmailValid(isValidMail(input.getEmail()));
 		entity.setFirstName(input.getFirstName());
 		entity.setLastName(input.getLastName());
-		entity.setMail(input.getMail());
 		entity.setOtherMembers(input.getOtherMembers());
 		entity.setPhone(input.getPhone());
 		entity.setPlan(input.getPlan());
@@ -85,7 +93,9 @@ public class MemberService implements UserDetailsService {
 		return repo.findByExternalId(externalId);
 	}
 
-	public MemberStats getMemberStats(Predicate predicate) {
+	public MemberStats getMemberStats(MemberRequest request) {
+		Predicate predicate = predicateBuilder.buildPredicate(request);
+
 		Iterable<MemberEntity> subscriptions = repo.findAll(predicate);
 
 		int totalMemberCount = 0;
@@ -99,8 +109,28 @@ public class MemberService implements UserDetailsService {
 		return new MemberStats(subscriptionCount, totalMemberCount);
 	}
 
+	public List<String> getEmails(MemberRequest request) {
+		Predicate predicate = predicateBuilder.buildPredicate(request);
+		return StreamSupport.stream(repo.findAll(predicate).spliterator(), false)//
+				.map(MemberEntity::getEmail)//
+				.collect(Collectors.toList());
+	}
+
+	private boolean isValidMail(String mail) {
+		if (mail == null || mail.isEmpty()) {
+			return false;
+		}
+
+		return emailValidator.isValid(mail);
+	}
+
 	public List<MemberView> list() {
 		return converter.convert(repo.findAll());
+	}
+
+	public List<MemberView> search(MemberRequest request) {
+		Predicate predicate = predicateBuilder.buildPredicate(request);
+		return converter.convert(repo.findAll(predicate));
 	}
 
 	// Implement UserDetailsService (Spring-Security)

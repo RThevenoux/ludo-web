@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public interface Converter<T, R> extends Function<T, R> {
 
@@ -13,6 +15,22 @@ public interface Converter<T, R> extends Function<T, R> {
 			return Collections.emptyList();
 		}
 
-		return entities.stream().map(this).collect(Collectors.toList());
+		return convert(entities.stream());
+	}
+
+	public default List<R> convert(Iterable<T> entities) {
+		if (entities == null) {
+			return Collections.emptyList();
+		}
+
+		return convert(StreamSupport.stream(entities.spliterator(), false));
+	}
+
+	public default List<R> convert(Stream<T> stream) {
+		if (stream == null) {
+			return Collections.emptyList();
+		}
+
+		return stream.map(this).collect(Collectors.toList());
 	}
 }

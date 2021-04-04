@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.ludoweb.core.user.member.PasswordWrapper;
 import io.ludoweb.core.user.member.MemberInput;
+import io.ludoweb.core.user.member.MemberRequest;
 import io.ludoweb.core.user.member.MemberService;
 import io.ludoweb.core.user.member.MemberView;
 
@@ -36,6 +37,16 @@ public class MemberRestController {
 	@PostMapping
 	public MemberView createOrUpdate(@RequestBody @Valid MemberInput input) {
 		return service.createOrUpdate(input);
+	}
+
+	@PostMapping("search")
+	public List<MemberView> search(@RequestBody MemberRequest request) {
+		return service.search(request);
+	}
+
+	@PostMapping("email")
+	public List<String> searchEmails(@RequestBody MemberRequest request) {
+		return service.getEmails(request);
 	}
 
 	@DeleteMapping("{externalId}")

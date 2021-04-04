@@ -63,6 +63,14 @@
 			<artifactId>querydsl-jpa</artifactId>
 		</dependency>
 
+		<!-- Apache Validators -->
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.7</version>
+		</dependency>
+
+
 		<!-- View rendering & dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

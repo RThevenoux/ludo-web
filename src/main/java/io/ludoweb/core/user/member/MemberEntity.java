@@ -32,11 +32,14 @@ public class MemberEntity extends AbstractUserEntity {
 	@Column(nullable = false, unique = true)
 	String externalId;
 
+	String email;
+	
+	boolean emailValid;
+
 	String firstName;
 
 	String lastName;
 
-	String mail;
 
 	@Convert(converter = ListConverter.class)
 	List<String> otherMembers;

@@ -1,10 +1,10 @@
 [
 	{
-		"mail": "camille@te.st",
+		"email": "camille@te.st",
 		"phone": "0611223344",
 		"username": "10024",
 		"firstName": "Camille",
-		"lastName": "Test",
+		"lastName": "Actif-EmailOK",
 		"externalId": 1,
 		"otherMembers": [
 			"Léa",
@@ -21,17 +21,53 @@
 		"type": "Membre"
 	},
 	{
-		"mail": "dominique@te.st",
+		"email": "dominique@te.st",
 		"phone": "0601020304",
 		"username": "10025",
 		"firstName": "Dominique",
-		"lastName": "Test",
+		"lastName": "Inactif-EmailOk",
 		"externalId": 2,
 		"otherMembers": [],
 		"plan": {
 			"name": "Individuel",
 			"startDate": "2019-12-20",
 			"endDate": "2020-12-19",
+			"subscriptionPaid": true,
+			"maxBorrowingCount": 2,
+			"maxBorrowingDuration": 21
+		},
+		"type": "Membre"
+	},
+	{
+		"email": null,
+		"phone": "0600112233",
+		"username": "10026",
+		"firstName": "Alix",
+		"lastName": "Actif-NoEmail",
+		"externalId": 3,
+		"otherMembers": [],
+		"plan": {
+			"name": "Individuel",
+			"startDate": "2021-01-20",
+			"endDate": "2022-01-19",
+			"subscriptionPaid": true,
+			"maxBorrowingCount": 2,
+			"maxBorrowingDuration": 21
+		},
+		"type": "Membre"
+	},
+	{
+		"email": "invalid-email",
+		"phone": "0600113355",
+		"username": "10027",
+		"firstName": "Georges",
+		"lastName": "Inactif-EmailKo",
+		"externalId": 4,
+		"otherMembers": [],
+		"plan": {
+			"name": "Individuel",
+			"startDate": "2018-02-20",
+			"endDate": "2019-02-19",
 			"subscriptionPaid": true,
 			"maxBorrowingCount": 2,
 			"maxBorrowingDuration": 21

@@ -15,11 +15,11 @@ public class MemberInput {
 	@NotBlank
 	String externalId;
 
+	String email;
+
 	String firstName;
 
 	String lastName;
-
-	String mail;
 
 	List<@NotEmpty String> otherMembers;
 

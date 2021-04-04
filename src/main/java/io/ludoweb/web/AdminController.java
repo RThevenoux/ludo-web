@@ -1,6 +1,5 @@
 package io.ludoweb.web;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
-
 import io.ludoweb.core.borrowing.BorrowingService;
 import io.ludoweb.core.config.ConfigService;
 import io.ludoweb.core.config.ConfigView;
 import io.ludoweb.core.user.admin.AdminUserService;
 import io.ludoweb.core.user.admin.CredentialsInput;
-import io.ludoweb.core.user.member.PasswordWrapper;
-import io.ludoweb.core.user.member.QMemberEntity;
+import io.ludoweb.core.user.member.MemberRequest;
 import io.ludoweb.core.user.member.MemberService;
 import io.ludoweb.core.user.member.MemberStats;
 import io.ludoweb.core.user.member.MemberView;
+import io.ludoweb.core.user.member.PasswordWrapper;
 
 @Controller
 @RequestMapping("admin")
@@ -66,9 +63,12 @@ public class AdminController {
 
 	@RequestMapping("home")
 	public ModelAndView showHome() {
-		BooleanExpression predicate = QMemberEntity.memberEntity.plan.endDate.after(LocalDate.now());
-
-		MemberStats memberStats = memberService.getMemberStats(predicate);
+		// Member stats
+		MemberRequest request = new MemberRequest();
+		request.setActive(true);
+		MemberStats memberStats = memberService.getMemberStats(request);
+		
+		// Game stats
 		long borrowingCount = borrowingService.getActiveBorrowingCount();
 
 		ModelAndView modelAndView = new ModelAndView("admin/home");

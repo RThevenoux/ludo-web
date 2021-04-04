@@ -13,11 +13,13 @@ public class MemberView {
 
 	String externalId;
 
+	String email;
+
+	boolean emailValid;
+	
 	String firstName;
 
 	String lastName;
-
-	String mail;
 
 	List<String> otherMembers;
 
