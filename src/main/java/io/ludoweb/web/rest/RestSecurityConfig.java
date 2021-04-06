@@ -7,7 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import io.ludoweb.core.user.admin.AdminUserService;
 
 @Configuration
 @EnableWebSecurity
@@ -15,17 +16,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	PasswordEncoder encoder;
+	AdminUserService service;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("sync").password(encoder.encode("password")).roles("SYNC_API");
+		auth.userDetailsService(service);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.antMatcher("/api/**")//
-				.authorizeRequests().anyRequest().authenticated()//
+				.authorizeRequests().anyRequest()//
+				.hasRole(AdminUserService.ROLE_SYNC_API)//
 				.and().httpBasic()//
 				.and().csrf().disable();
 	}

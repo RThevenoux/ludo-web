@@ -16,16 +16,6 @@ import io.ludoweb.core.user.member.plan.QPlan;
 @Component
 public class PredicateBuilder {
 
-	public Predicate buildPredicate(MemberRequest request) {
-		List<Predicate> conditions = buildConditions(request);
-
-		if (conditions.isEmpty()) {
-			return getAllPredicate();
-		}
-
-		return ExpressionUtils.allOf(conditions);
-	}
-
 	private List<Predicate> buildConditions(MemberRequest request) {
 		List<Predicate> conditions = new ArrayList<>();
 
@@ -51,6 +41,16 @@ public class PredicateBuilder {
 		}
 
 		return conditions;
+	}
+
+	public Predicate buildPredicate(MemberRequest request) {
+		List<Predicate> conditions = buildConditions(request);
+
+		if (conditions.isEmpty()) {
+			return getAllPredicate();
+		}
+
+		return ExpressionUtils.allOf(conditions);
 	}
 
 	private Predicate getAllPredicate() {

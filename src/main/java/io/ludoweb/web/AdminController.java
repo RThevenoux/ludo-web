@@ -37,6 +37,12 @@ public class AdminController {
 	@Autowired
 	MemberService memberService;
 
+	private ModelAndView configSecurity() {
+		ModelAndView modelAndView = new ModelAndView("admin/config/security");
+		modelAndView.addObject("info", adminUserService.getInfo());
+		return modelAndView;
+	}
+
 	@GetMapping("config")
 	public RedirectView showConfig() {
 		return new RedirectView("/admin/config/appearance");
@@ -55,10 +61,7 @@ public class AdminController {
 
 	@GetMapping("config/security")
 	public ModelAndView showConfigSecurity() {
-		ModelAndView modelAndView = new ModelAndView("admin/config/security");
-		modelAndView.addObject("updateOk", false);
-
-		return modelAndView;
+		return configSecurity();
 	}
 
 	@RequestMapping("home")
@@ -102,7 +105,7 @@ public class AdminController {
 	}
 
 	@PostMapping("member/{externalId}/password")
-	public ModelAndView submitMEmberPasswordForm(@PathVariable String externalId,
+	public ModelAndView submitMemberPasswordForm(@PathVariable String externalId,
 			@ModelAttribute PasswordWrapper password) {
 		if (password == null || StringUtils.isEmpty(password.getPassword())) {
 			return showMemberPasswordFrom(externalId);
@@ -122,35 +125,33 @@ public class AdminController {
 		boolean success = adminUserService.createOrUpdateAdminUser(input);
 
 		if (success) {
-			ModelAndView modelAndView = new ModelAndView("admin/config/security");
+			ModelAndView modelAndView = configSecurity();
 			modelAndView.addObject("updateAdminOk", true);
-
 			return modelAndView;
 		} else {
-			ModelAndView modelAndView = new ModelAndView("admin/config/security");
+			ModelAndView modelAndView = configSecurity();
 			modelAndView.addObject("updateAdminFailMessage", "Nom utilisateur déjà utilisé pour l'API");
-
 			return modelAndView;
 		}
 	}
-
+	
 	@PostMapping("config/api-sync-credetials")
 	public ModelAndView updateApiSyncCredential(@ModelAttribute CredentialsInput input) {
 		boolean success = adminUserService.createOrUpdateApiSyncUser(input);
 
 		if (success) {
-			ModelAndView modelAndView = new ModelAndView("admin/config/security");
+			ModelAndView modelAndView = configSecurity();
 			modelAndView.addObject("updateApiSyncOk", true);
 
 			return modelAndView;
 		} else {
-			ModelAndView modelAndView = new ModelAndView("admin/config/security");
+			ModelAndView modelAndView = configSecurity();
 			modelAndView.addObject("updateApiSyncFailMessage", "Nom utilisateur déjà utilisé pour l'administateur");
 
 			return modelAndView;
 		}
 	}
-
+	
 	@PostMapping("config/appearance")
 	public ModelAndView updateConfigAppearance(@ModelAttribute ConfigView input) {
 		ConfigView config = configService.updateConfig(input);

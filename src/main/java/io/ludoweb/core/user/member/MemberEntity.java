@@ -29,12 +29,12 @@ public class MemberEntity extends AbstractUserEntity {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	List<BorrowingEntity> borrowings;
 
+	String email;
+
+	boolean emailValid;
+	
 	@Column(nullable = false, unique = true)
 	String externalId;
-
-	String email;
-	
-	boolean emailValid;
 
 	String firstName;
 

@@ -34,13 +34,17 @@ public class AdminUserService implements UserDetailsService {
 	}
 
 	/**
-	 * If a user exists with same username and role : <strong>update</strong> password<br>
+	 * If a user exists with same username and role : <strong>update</strong>
+	 * password<br>
 	 * 
-	 * If a user exists with same role and different username : <strong>update</strong> username and password<br>
+	 * If a user exists with same role and different username :
+	 * <strong>update</strong> username and password<br>
 	 * 
-	 * If a user exists with same username and different role : <strong>fail</strong><br>
+	 * If a user exists with same username and different role :
+	 * <strong>fail</strong><br>
 	 * 
-	 * If no user exist with same username nor role : <strong>create</strong> a new user
+	 * If no user exist with same username nor role : <strong>create</strong> a new
+	 * user
 	 * 
 	 * @param input
 	 * @param role
@@ -90,6 +94,17 @@ public class AdminUserService implements UserDetailsService {
 		entity.setPassword(passwordEncoder.encode(input.getPassword()));
 		entity.setUsername(input.getUsername());
 		entity.setRole(role);
+	}
+
+	public AdminUserInfo getInfo() {
+		Optional<AdminUserEntity> admin = repo.findByRole(ROLE_ADMIN).stream().findFirst();
+		Optional<AdminUserEntity> apiSync = repo.findByRole(ROLE_SYNC_API).stream().findFirst();
+
+		AdminUserInfo info = new AdminUserInfo();
+		admin.map(AdminUserEntity::getUsername).ifPresent(info::setAdminUsername);
+		apiSync.map(AdminUserEntity::getUsername).ifPresent(info::setApiSyncUsername);
+
+		return info;
 	}
 
 	public boolean isAdminUser() {

@@ -12,10 +12,10 @@ import lombok.Data;
 @Data
 public class MemberInput {
 
+	String email;
+
 	@NotBlank
 	String externalId;
-
-	String email;
 
 	String firstName;
 

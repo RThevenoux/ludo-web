@@ -39,16 +39,6 @@ public class MemberRestController {
 		return service.createOrUpdate(input);
 	}
 
-	@PostMapping("search")
-	public List<MemberView> search(@RequestBody MemberRequest request) {
-		return service.search(request);
-	}
-
-	@PostMapping("email")
-	public List<String> searchEmails(@RequestBody MemberRequest request) {
-		return service.getEmails(request);
-	}
-
 	@DeleteMapping("{externalId}")
 	public void delete(@PathVariable String externalId) {
 		service.delete(externalId);
@@ -57,6 +47,16 @@ public class MemberRestController {
 	@GetMapping
 	public List<MemberView> getUsers() {
 		return service.list();
+	}
+
+	@PostMapping("search")
+	public List<MemberView> search(@RequestBody MemberRequest request) {
+		return service.search(request);
+	}
+
+	@PostMapping("email")
+	public List<String> searchEmails(@RequestBody MemberRequest request) {
+		return service.getEmails(request);
 	}
 
 	@PutMapping("{externalId}/password")

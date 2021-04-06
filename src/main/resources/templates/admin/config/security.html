@@ -31,11 +31,11 @@
 						<table class="mb-3">
 							<tr>
 								<td>Nouvel Identifiant</td>
-								<td><input type="text" name="username" value=""></td>
+								<td><input type="text" name="username" th:value="${info.adminUsername}" required></td>
 							</tr>
 							<tr>
 								<td>Nouveau Mot de passe</td>
-								<td><input type="password" name="password" /></td>
+								<td><input type="password" name="password" required/></td>
 							</tr>
 						</table>
 						<button class="btn btn-danger">Modifier</button>
@@ -57,11 +57,11 @@
 						<table class="mb-3">
 							<tr>
 								<td>Nouvel Identifiant</td>
-								<td><input type="text" name="username" value=""></td>
+								<td><input type="text" name="username" th:value="${info.apiSyncUsername}" required></td>
 							</tr>
 							<tr>
 								<td>Nouveau Mot de passe</td>
-								<td><input type="password" name="password" /></td>
+								<td><input type="password" name="password" required/></td>
 							</tr>
 						</table>
 						<button class="btn btn-danger">Modifier</button>

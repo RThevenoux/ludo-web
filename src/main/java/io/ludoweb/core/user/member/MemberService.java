@@ -27,14 +27,14 @@ public class MemberService implements UserDetailsService {
 
 	@Autowired
 	MemberConverter converter;
+	EmailValidator emailValidator = EmailValidator.getInstance();
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired
-	MemberRepository repo;
-	@Autowired
 	PredicateBuilder predicateBuilder;
 
-	EmailValidator emailValidator = EmailValidator.getInstance();
+	@Autowired
+	MemberRepository repo;
 
 	private MemberUserDetails buildDetails(MemberEntity entity) {
 		MemberUserDetails details = new MemberUserDetails();
@@ -93,6 +93,13 @@ public class MemberService implements UserDetailsService {
 		return repo.findByExternalId(externalId);
 	}
 
+	public List<String> getEmails(MemberRequest request) {
+		Predicate predicate = predicateBuilder.buildPredicate(request);
+		return StreamSupport.stream(repo.findAll(predicate).spliterator(), false)//
+				.map(MemberEntity::getEmail)//
+				.collect(Collectors.toList());
+	}
+
 	public MemberStats getMemberStats(MemberRequest request) {
 		Predicate predicate = predicateBuilder.buildPredicate(request);
 
@@ -109,13 +116,6 @@ public class MemberService implements UserDetailsService {
 		return new MemberStats(subscriptionCount, totalMemberCount);
 	}
 
-	public List<String> getEmails(MemberRequest request) {
-		Predicate predicate = predicateBuilder.buildPredicate(request);
-		return StreamSupport.stream(repo.findAll(predicate).spliterator(), false)//
-				.map(MemberEntity::getEmail)//
-				.collect(Collectors.toList());
-	}
-
 	private boolean isValidMail(String mail) {
 		if (mail == null || mail.isEmpty()) {
 			return false;
@@ -128,17 +128,17 @@ public class MemberService implements UserDetailsService {
 		return converter.convert(repo.findAll());
 	}
 
-	public List<MemberView> search(MemberRequest request) {
-		Predicate predicate = predicateBuilder.buildPredicate(request);
-		return converter.convert(repo.findAll(predicate));
-	}
-
 	// Implement UserDetailsService (Spring-Security)
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		return repo.findByUsername(username)//
 				.map(this::buildDetails)//
 				.orElseThrow(() -> new UsernameNotFoundException(username));
+	}
+
+	public List<MemberView> search(MemberRequest request) {
+		Predicate predicate = predicateBuilder.buildPredicate(request);
+		return converter.convert(repo.findAll(predicate));
 	}
 
 	public boolean updateMemberPassword(String externalId, String password) {

@@ -11,11 +11,11 @@ public class MemberView {
 
 	List<BorrowingView> borrowings;
 
-	String externalId;
-
 	String email;
 
 	boolean emailValid;
+
+	String externalId;
 	
 	String firstName;
 
