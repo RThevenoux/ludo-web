@@ -2,12 +2,9 @@ package io.ludoweb.core.user.member;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +15,9 @@ import org.springframework.stereotype.Service;
 import com.querydsl.core.types.Predicate;
 
 import io.ludoweb.core.user.SecurityTool;
+import io.ludoweb.core.user.member.email.EmailResult;
+import io.ludoweb.core.user.member.email.EmailResultFactory;
+import io.ludoweb.core.user.member.email.EmailValidatorService;
 
 @Service
 @Transactional
@@ -27,12 +27,14 @@ public class MemberService implements UserDetailsService {
 
 	@Autowired
 	MemberConverter converter;
-	EmailValidator emailValidator = EmailValidator.getInstance();
+	@Autowired
+	EmailResultFactory emailResultFactory;
+	@Autowired
+	EmailValidatorService emailValidator;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	PredicateBuilder predicateBuilder;
-
 	@Autowired
 	MemberRepository repo;
 
@@ -70,7 +72,7 @@ public class MemberService implements UserDetailsService {
 
 	private MemberEntity fill(MemberEntity entity, MemberInput input) {
 		entity.setEmail(input.getEmail());
-		entity.setEmailValid(isValidMail(input.getEmail()));
+		entity.setEmailValid(emailValidator.isValid(input.getEmail()));
 		entity.setFirstName(input.getFirstName());
 		entity.setLastName(input.getLastName());
 		entity.setOtherMembers(input.getOtherMembers());
@@ -93,11 +95,9 @@ public class MemberService implements UserDetailsService {
 		return repo.findByExternalId(externalId);
 	}
 
-	public List<String> getEmails(MemberRequest request) {
+	public EmailResult getEmails(MemberRequest request) {
 		Predicate predicate = predicateBuilder.buildPredicate(request);
-		return StreamSupport.stream(repo.findAll(predicate).spliterator(), false)//
-				.map(MemberEntity::getEmail)//
-				.collect(Collectors.toList());
+		return emailResultFactory.build(repo.findAll(predicate));
 	}
 
 	public MemberStats getMemberStats(MemberRequest request) {
@@ -114,14 +114,6 @@ public class MemberService implements UserDetailsService {
 		}
 
 		return new MemberStats(subscriptionCount, totalMemberCount);
-	}
-
-	private boolean isValidMail(String mail) {
-		if (mail == null || mail.isEmpty()) {
-			return false;
-		}
-
-		return emailValidator.isValid(mail);
 	}
 
 	public List<MemberView> list() {

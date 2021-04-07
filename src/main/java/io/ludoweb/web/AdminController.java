@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -23,6 +24,7 @@ import io.ludoweb.core.user.member.MemberService;
 import io.ludoweb.core.user.member.MemberStats;
 import io.ludoweb.core.user.member.MemberView;
 import io.ludoweb.core.user.member.PasswordWrapper;
+import io.ludoweb.core.user.member.email.EmailResult;
 
 @Controller
 @RequestMapping("admin")
@@ -70,7 +72,7 @@ public class AdminController {
 		MemberRequest request = new MemberRequest();
 		request.setActive(true);
 		MemberStats memberStats = memberService.getMemberStats(request);
-		
+
 		// Game stats
 		long borrowingCount = borrowingService.getActiveBorrowingCount();
 
@@ -81,22 +83,45 @@ public class AdminController {
 		return modelAndView;
 	}
 
-	@RequestMapping("mail")
-	public ModelAndView showMailingList() {
-		return showHome();
+	@GetMapping("email")
+	public ModelAndView defaultMailingList() {
+		MemberRequest request = new MemberRequest();
+		request.setActive(null);
+		request.setEmailValid(null);
+
+		return mailingList(request);
+	}
+
+	@PostMapping("email")
+	public ModelAndView customMailingList(@RequestParam("active") Boolean active) {
+		MemberRequest request = new MemberRequest();
+		request.setActive(active);
+		request.setEmailValid(null);
+
+		return mailingList(request);
+	}
+
+	private ModelAndView mailingList(MemberRequest request) {
+		EmailResult result = memberService.getEmails(request);
+
+		ModelAndView modelAndView = new ModelAndView("admin/email/search");
+		modelAndView.addObject("result", result);
+		modelAndView.addObject("request", request);
+
+		return modelAndView;
 	}
 
 	@GetMapping("member/{externalId}/password")
 	public ModelAndView showMemberPasswordFrom(@PathVariable String externalId) {
 		return memberService.findByExternalId(externalId)//
-				.map(member -> new ModelAndView("admin/member-password", "member", member))//
+				.map(member -> new ModelAndView("admin/member/password", "member", member))//
 				.orElseGet(() -> new ModelAndView("redirect:/admin/members"));
 	}
 
 	@RequestMapping("member")
 	public ModelAndView showMembers() {
 		List<MemberView> members = memberService.list();
-		return new ModelAndView("admin/members", "members", members);
+		return new ModelAndView("admin/member/listing", "members", members);
 	}
 
 	@RequestMapping("stats")
@@ -114,7 +139,7 @@ public class AdminController {
 		boolean memberFound = memberService.updateMemberPassword(externalId, password.getPassword());
 
 		if (memberFound) {
-			return new ModelAndView("admin/member-password-ok");
+			return new ModelAndView("admin/member/password-ok");
 		} else {
 			return new ModelAndView("error", "message", "Utilisateur non trouvé: " + externalId);
 		}
@@ -134,7 +159,7 @@ public class AdminController {
 			return modelAndView;
 		}
 	}
-	
+
 	@PostMapping("config/api-sync-credetials")
 	public ModelAndView updateApiSyncCredential(@ModelAttribute CredentialsInput input) {
 		boolean success = adminUserService.createOrUpdateApiSyncUser(input);
@@ -151,7 +176,7 @@ public class AdminController {
 			return modelAndView;
 		}
 	}
-	
+
 	@PostMapping("config/appearance")
 	public ModelAndView updateConfigAppearance(@ModelAttribute ConfigView input) {
 		ConfigView config = configService.updateConfig(input);

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{admin/layout :: layout (~{::body},'index')}">
+
+<body>
+
+	<div class="container">
+		<h1 class="my-4">Liste d'emails</h1>
+		<div class="card mb-3">
+			<h3 class="card-title">Nouvelle recherche</h3>
+			<form action="/admin/email" method="POST">
+				<label>Membres actif</label>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="active"
+						id="activeTrue" value="true" th:checked="${request.active}">
+					<label class="form-check-label" for="activeTrue">Actifs</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="active"
+						id="activeFalse" value="false"
+						th:checked="${request.active !=null && !request.active}">
+					<label class="form-check-label" for="activeFalse">Inactifs</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="active"
+						id="activeNull" value="" th:checked="${request.active == null}">
+					<label class="form-check-label" for="activeNull">Les deux</label>
+				</div>
+
+				<button>Rechercher</button>
+			</form>
+		</div>
+
+		<div class="card">
+			<h3 class="card-title">Résultat de la recherche</h3>
+
+			<div class="m-3">
+				<code th:text="${result.joinValidEmail()}"></code>
+			</div>
+
+			<h5>Critères de recherche</h5>
+			<p th:text="${request}"></p>
+
+			<div th:if="${not #lists.isEmpty(result.invalidEmailMembers)}">
+				<h5>
+					Membres avec email invalide (<span
+						th:text="${result.invalidEmailMembers.size()}"></span>)
+				</h5>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Prénom</th>
+							<th>Nom</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="member : ${result.invalidEmailMembers}">
+							<td th:text="${member.username}">1026</td>
+							<td th:text="${member.firstName}">Jean</td>
+							<td th:text="${member.lastName}">Dupond</td>
+						</tr>
+					</tbody>
+				</table>
+
+
+			</div>
+			<div th:if="${not #lists.isEmpty(result.noEmailMembers)}">
+				<h5>
+					Membres sans email (<span th:text="${result.noEmailMembers.size()}"></span>)
+				</h5>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Prénom</th>
+							<th>Nom</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="member : ${result.noEmailMembers}">
+							<td th:text="${member.username}">1026</td>
+							<td th:text="${member.firstName}">Jean</td>
+							<td th:text="${member.lastName}">Dupond</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+</body>
+</html>

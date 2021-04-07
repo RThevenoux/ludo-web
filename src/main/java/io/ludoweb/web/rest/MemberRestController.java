@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.ludoweb.core.user.member.PasswordWrapper;
 import io.ludoweb.core.user.member.MemberInput;
 import io.ludoweb.core.user.member.MemberRequest;
 import io.ludoweb.core.user.member.MemberService;
 import io.ludoweb.core.user.member.MemberView;
+import io.ludoweb.core.user.member.PasswordWrapper;
+import io.ludoweb.core.user.member.email.EmailResult;
 
 @RestController
 @RequestMapping("api/member")
@@ -55,7 +56,7 @@ public class MemberRestController {
 	}
 
 	@PostMapping("email")
-	public List<String> searchEmails(@RequestBody MemberRequest request) {
+	public EmailResult searchEmails(@RequestBody MemberRequest request) {
 		return service.getEmails(request);
 	}
 
