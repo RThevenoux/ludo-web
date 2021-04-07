@@ -39,7 +39,7 @@ public class AdminController {
 
 	private ModelAndView configSecurity() {
 		ModelAndView modelAndView = new ModelAndView("admin/config/security");
-		modelAndView.addObject("info", adminUserService.getInfo());
+		modelAndView.addObject("users", adminUserService.getListing());
 		return modelAndView;
 	}
 

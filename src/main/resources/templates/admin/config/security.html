@@ -31,11 +31,12 @@
 						<table class="mb-3">
 							<tr>
 								<td>Nouvel Identifiant</td>
-								<td><input type="text" name="username" th:value="${info.adminUsername}" required></td>
+								<td><input type="text" name="username"
+									th:value="${users.admin.username}" required></td>
 							</tr>
 							<tr>
 								<td>Nouveau Mot de passe</td>
-								<td><input type="password" name="password" required/></td>
+								<td><input type="password" name="password" required /></td>
 							</tr>
 						</table>
 						<button class="btn btn-danger">Modifier</button>
@@ -51,27 +52,48 @@
 			<div class="card">
 				<div class="card-body">
 					<h4>API Sync user</h4>
-					<p>Le programme de synchronisation doit utiliser ces
-						identifiants pour se connecter au serveur et envoyer les données.</p>
-					<form method="post" action="/admin/config/api-sync-credetials">
-						<table class="mb-3">
-							<tr>
-								<td>Nouvel Identifiant</td>
-								<td><input type="text" name="username" th:value="${info.apiSyncUsername}" required></td>
-							</tr>
-							<tr>
-								<td>Nouveau Mot de passe</td>
-								<td><input type="password" name="password" required/></td>
-							</tr>
-						</table>
-						<button class="btn btn-danger">Modifier</button>
-					</form>
+					<p>Le programme de synchronisation doit utiliser les
+						identifiants ci-dessous pour se connecter au serveur et envoyer
+						les données.</p>
+
+					<th:block th:switch="${users.apiSync != null}">
+						<form th:case="true" method="post"
+							action="/admin/config/api-sync-credetials">
+							<table class="mb-3">
+								<tr>
+									<td>Nouvel Identifiant</td>
+									<td><input type="text" name="username"
+										th:value="${users.apiSync.username}" required></td>
+								</tr>
+								<tr>
+									<td>Nouveau Mot de passe</td>
+									<td><input type="password" name="password" required /></td>
+								</tr>
+							</table>
+							<button class="btn btn-danger">Modifier</button>
+						</form>
+						<form th:case="*" method="post"
+							action="/admin/config/api-sync-credetials">
+							<table class="mb-3">
+								<tr>
+									<td>Identifiant</td>
+									<td><input type="text" name="username" required></td>
+								</tr>
+								<tr>
+									<td>Mot de passe</td>
+									<td><input type="password" name="password" required /></td>
+								</tr>
+							</table>
+							<button class="btn btn-primary">Créer</button>
+						</form>
+					</th:block>
 
 					<div th:if="${updateApiSyncOk}" class="alert alert-success"
 						role="alert">Configuration mise à jour</div>
 					<div th:if="${updateApiSyncFailMessage}" class="alert alert-danger"
 						role="alert" th:text="${updateApiSyncFailMessage}">Erreur
 						lors de l'update</div>
+
 				</div>
 			</div>
 		</div>

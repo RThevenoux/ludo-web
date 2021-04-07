@@ -21,10 +21,12 @@ public class AdminUserService implements UserDetailsService {
 	public static final String ROLE_SYNC_API = "SYNC_API";
 
 	@Autowired
+	AdminUserConverter converter;
+	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	AdminUserRepository repo;
-
+	
 	private UserDetails buildDetails(AdminUserEntity entity) {
 		MyUserDetails details = new MyUserDetails();
 		details.setPassword(entity.getPassword());
@@ -96,13 +98,13 @@ public class AdminUserService implements UserDetailsService {
 		entity.setRole(role);
 	}
 
-	public AdminUserInfo getInfo() {
+	public AdminUserListing getListing() {
 		Optional<AdminUserEntity> admin = repo.findByRole(ROLE_ADMIN).stream().findFirst();
 		Optional<AdminUserEntity> apiSync = repo.findByRole(ROLE_SYNC_API).stream().findFirst();
 
-		AdminUserInfo info = new AdminUserInfo();
-		admin.map(AdminUserEntity::getUsername).ifPresent(info::setAdminUsername);
-		apiSync.map(AdminUserEntity::getUsername).ifPresent(info::setApiSyncUsername);
+		AdminUserListing info = new AdminUserListing();
+		admin.map(converter).ifPresent(info::setAdmin);
+		apiSync.map(converter).ifPresent(info::setApiSync);
 
 		return info;
 	}
