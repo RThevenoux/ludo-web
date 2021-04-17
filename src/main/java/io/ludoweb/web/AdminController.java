@@ -45,6 +45,41 @@ public class AdminController {
 		return modelAndView;
 	}
 
+	@PostMapping("email")
+	public ModelAndView customMailingList(@RequestParam(required = false) Boolean active,
+			@RequestParam(required = false) List<String> plan, @RequestParam(required = false) List<String> type) {
+		MemberRequest request = new MemberRequest();
+		request.setActive(active);
+		request.setEmailValid(null);
+		request.setPlans(plan);
+		request.setTypes(type);
+
+		return mailingList(request);
+	}
+
+	@GetMapping("email")
+	public ModelAndView defaultMailingList() {
+		MemberRequest request = new MemberRequest();
+		request.setActive(null);
+		request.setEmailValid(null);
+
+		return mailingList(request);
+	}
+
+	private ModelAndView mailingList(MemberRequest request) {
+		EmailResult result = memberService.getEmails(request);
+		List<String> plans = memberService.listPlanNames();
+		List<String> types = memberService.listTypes();
+
+		ModelAndView modelAndView = new ModelAndView("admin/email/search");
+		modelAndView.addObject("result", result);
+		modelAndView.addObject("request", request);
+		modelAndView.addObject("plans", plans);
+		modelAndView.addObject("types", types);
+
+		return modelAndView;
+	}
+
 	@GetMapping("config")
 	public RedirectView showConfig() {
 		return new RedirectView("/admin/config/appearance");
@@ -79,34 +114,6 @@ public class AdminController {
 		ModelAndView modelAndView = new ModelAndView("admin/home");
 		modelAndView.addObject("activeMemberStats", memberStats);
 		modelAndView.addObject("borrowingCount", borrowingCount);
-
-		return modelAndView;
-	}
-
-	@GetMapping("email")
-	public ModelAndView defaultMailingList() {
-		MemberRequest request = new MemberRequest();
-		request.setActive(null);
-		request.setEmailValid(null);
-
-		return mailingList(request);
-	}
-
-	@PostMapping("email")
-	public ModelAndView customMailingList(@RequestParam("active") Boolean active) {
-		MemberRequest request = new MemberRequest();
-		request.setActive(active);
-		request.setEmailValid(null);
-
-		return mailingList(request);
-	}
-
-	private ModelAndView mailingList(MemberRequest request) {
-		EmailResult result = memberService.getEmails(request);
-
-		ModelAndView modelAndView = new ModelAndView("admin/email/search");
-		modelAndView.addObject("result", result);
-		modelAndView.addObject("request", request);
 
 		return modelAndView;
 	}

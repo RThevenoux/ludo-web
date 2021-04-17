@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +24,9 @@ import io.ludoweb.core.user.member.email.EmailValidatorService;
 @Service
 @Transactional
 public class MemberService implements UserDetailsService {
+
+	private static final String CACHE_MEMBER_PLANS = "member.plans";
+	private static final String CACHE_MEMBER_TYPES = "member.types";
 
 	public static final String ROLE_MEMBER = "MEMBER";
 
@@ -47,6 +52,7 @@ public class MemberService implements UserDetailsService {
 		return details;
 	}
 
+	@CacheEvict(value = { CACHE_MEMBER_PLANS, CACHE_MEMBER_TYPES }, allEntries = true)
 	public MemberView createOrUpdate(MemberInput data) {
 		Optional<MemberEntity> optUser = findEntityByExternalId(data.getExternalId());
 
@@ -66,6 +72,7 @@ public class MemberService implements UserDetailsService {
 		}
 	}
 
+	@CacheEvict(value = { CACHE_MEMBER_PLANS, CACHE_MEMBER_TYPES }, allEntries = true)
 	public void delete(String externalId) {
 		repo.deleteByExternalId(externalId);
 	}
@@ -118,6 +125,16 @@ public class MemberService implements UserDetailsService {
 
 	public List<MemberView> list() {
 		return converter.convert(repo.findAll());
+	}
+
+	@Cacheable(CACHE_MEMBER_PLANS)
+	public List<String> listPlanNames() {
+		return repo.listPlanNames();
+	}
+
+	@Cacheable(CACHE_MEMBER_TYPES)
+	public List<String> listTypes() {
+		return repo.listTypes();
 	}
 
 	// Implement UserDetailsService (Spring-Security)

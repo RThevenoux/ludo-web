@@ -6,7 +6,7 @@ import lombok.Data;
 public class AdminUserListing {
 
 	AdminUserView admin;
-	
+
 	AdminUserView apiSync;
-	
+
 }

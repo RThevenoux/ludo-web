@@ -21,7 +21,7 @@ public class BorrowingInput {
 
 	@NotBlank
 	String memberExternalId;
-	
+
 	@NotNull
 	LocalDate startDate;
 }

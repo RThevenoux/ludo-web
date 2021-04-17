@@ -15,7 +15,7 @@ public class BorrowingView {
 	GameView game;
 
 	String memberExternalId;
-	
+
 	LocalDate startDate;
 
 }

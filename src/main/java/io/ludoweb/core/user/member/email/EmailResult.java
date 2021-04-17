@@ -10,16 +10,16 @@ import lombok.Data;
 public class EmailResult {
 
 	List<String> emails;
-	
+
 	List<MemberView> invalidEmailMembers;
-	
+
 	List<MemberView> noEmailMembers;
-	
+
 	public String joinValidEmail() {
-		if(emails==null) {
+		if (emails == null) {
 			return "";
 		}
-		
+
 		return emails.stream().collect(Collectors.joining(" ; "));
 	}
 }

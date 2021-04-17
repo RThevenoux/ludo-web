@@ -37,5 +37,4 @@ public class MemberConverter implements Converter<MemberEntity, MemberView> {
 		return data;
 	}
 
-
 }

@@ -30,8 +30,7 @@ public class InitializationFilter extends OncePerRequestFilter {
 		if (service.isInitialized()) {
 			filterChain.doFilter(request, response);
 		} else {
-			HttpServletResponse httpResponse = (HttpServletResponse) response;
-			httpResponse.sendRedirect(InitializationController.INIT_PATH);
+			response.sendRedirect(InitializationController.INIT_PATH);
 		}
 	}
 

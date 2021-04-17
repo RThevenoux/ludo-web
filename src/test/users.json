@@ -7,18 +7,18 @@
 		"lastName": "Actif-EmailOK",
 		"externalId": 1,
 		"otherMembers": [
-			"LÈa",
-			"LÈo"
+			"L√©a",
+			"L√©o"
 		],
 		"plan": {
-			"name": "Famille ComplËte",
+			"name": "Famille Compl√®te",
 			"startDate": "2020-12-05",
 			"endDate": "2021-12-04",
 			"subscriptionPaid": true,
 			"maxBorrowingCount": 4,
 			"maxBorrowingDuration": 21
 		},
-		"type": "Membre"
+		"type": "Famille"
 	},
 	{
 		"email": "dominique@te.st",
@@ -29,14 +29,14 @@
 		"externalId": 2,
 		"otherMembers": [],
 		"plan": {
-			"name": "Individuel",
+			"name": "Individuel Compl√®te",
 			"startDate": "2019-12-20",
 			"endDate": "2020-12-19",
 			"subscriptionPaid": true,
 			"maxBorrowingCount": 2,
 			"maxBorrowingDuration": 21
 		},
-		"type": "Membre"
+		"type": "Individuel"
 	},
 	{
 		"email": null,
@@ -47,14 +47,14 @@
 		"externalId": 3,
 		"otherMembers": [],
 		"plan": {
-			"name": "Individuel",
+			"name": "Individuel Simple",
 			"startDate": "2021-01-20",
 			"endDate": "2022-01-19",
 			"subscriptionPaid": true,
 			"maxBorrowingCount": 2,
 			"maxBorrowingDuration": 21
 		},
-		"type": "Membre"
+		"type": "Individuel"
 	},
 	{
 		"email": "invalid-email",
@@ -63,15 +63,53 @@
 		"firstName": "Georges",
 		"lastName": "Inactif-EmailKo",
 		"externalId": 4,
-		"otherMembers": [],
+		"otherMembers": ["Tim"],
 		"plan": {
-			"name": "Individuel",
+			"name": "Famille Simple",
 			"startDate": "2018-02-20",
 			"endDate": "2019-02-19",
 			"subscriptionPaid": true,
 			"maxBorrowingCount": 2,
 			"maxBorrowingDuration": 21
 		},
-		"type": "Membre"
+		"type": "Famille"
+	},
+	{
+		"email": "creche@mairie.fr",
+		"phone": "0611223344",
+		"username": "10028",
+		"firstName": "-",
+		"lastName": "Ptiboutchou",
+		"externalId": 5,
+		"otherMembers": [
+		],
+		"plan": {
+			"name": "Structure",
+			"startDate": "2020-12-05",
+			"endDate": "2021-12-04",
+			"subscriptionPaid": true,
+			"maxBorrowingCount": 0,
+			"maxBorrowingDuration": 0
+		},
+		"type": "Structure"
+	},
+	{
+		"email": "maternelle@mairie.fr",
+		"phone": "0611223344",
+		"username": "10029",
+		"firstName": "-",
+		"lastName": "Groboutchou",
+		"externalId": 6,
+		"otherMembers": [
+		],
+		"plan": {
+			"name": "Structure",
+			"startDate": "2020-12-15",
+			"endDate": "2021-12-14",
+			"subscriptionPaid": true,
+			"maxBorrowingCount": 0,
+			"maxBorrowingDuration": 0
+		},
+		"type": "Structure"
 	}
 ]

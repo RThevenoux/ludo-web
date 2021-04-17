@@ -14,9 +14,9 @@ import io.ludoweb.core.user.member.MemberView;
 public class EmailResultFactory {
 
 	@Autowired
-	EmailValidatorService validator;
-	@Autowired
 	MemberConverter converter;
+	@Autowired
+	EmailValidatorService validator;
 
 	public EmailResult build(Iterable<MemberEntity> members) {
 

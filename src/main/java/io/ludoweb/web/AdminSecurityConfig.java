@@ -15,7 +15,6 @@ import io.ludoweb.core.user.admin.AdminUserService;
 @Order(1)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	
 	@Autowired
 	AdminUserService service;
 

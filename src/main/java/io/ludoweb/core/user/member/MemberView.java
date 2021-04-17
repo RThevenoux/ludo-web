@@ -16,7 +16,7 @@ public class MemberView {
 	boolean emailValid;
 
 	String externalId;
-	
+
 	String firstName;
 
 	String lastName;

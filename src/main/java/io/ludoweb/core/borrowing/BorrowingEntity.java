@@ -28,7 +28,7 @@ public class BorrowingEntity {
 	@Id
 	@GeneratedValue
 	Long id;
-	
+
 	@ManyToOne(optional = false)
 	MemberEntity member;
 

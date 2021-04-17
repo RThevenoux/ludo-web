@@ -26,7 +26,7 @@ public class AdminUserService implements UserDetailsService {
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	AdminUserRepository repo;
-	
+
 	private UserDetails buildDetails(AdminUserEntity entity) {
 		MyUserDetails details = new MyUserDetails();
 		details.setPassword(entity.getPassword());

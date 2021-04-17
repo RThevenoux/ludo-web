@@ -9,24 +9,39 @@
 		<div class="card mb-3">
 			<h3 class="card-title">Nouvelle recherche</h3>
 			<form action="/admin/email" method="POST">
-				<label>Membres actif</label>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="active"
-						id="activeTrue" value="true" th:checked="${request.active}">
-					<label class="form-check-label" for="activeTrue">Actifs</label>
+				<div>
+					<label>Membres actif</label>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="active"
+							id="activeTrue" value="true" th:checked="${request.active}">
+						<label class="form-check-label" for="activeTrue">Actifs</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="active"
+							id="activeFalse" value="false"
+							th:checked="${request.active !=null && !request.active}">
+						<label class="form-check-label" for="activeFalse">Inactifs</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="active"
+							id="activeNull" value="" th:checked="${request.active == null}">
+						<label class="form-check-label" for="activeNull">Les deux</label>
+					</div>
 				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="active"
-						id="activeFalse" value="false"
-						th:checked="${request.active !=null && !request.active}">
-					<label class="form-check-label" for="activeFalse">Inactifs</label>
+				<div>
+					<label>Type de Membre</label>
+					<div class="form-check form-check-inline" th:each="type : ${types}" th:with="checkId=${#strings.randomAlphanumeric(10)}">
+						<input class="form-check-input" type="checkbox" name="type" th:id="${checkId}" th:value="${type}" th:checked="${request.types !=null && request.types.contains(type)}">
+						<label class="form-check-label" th:text="${type}" th:for="${checkId}"></label>
+					</div>
 				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="active"
-						id="activeNull" value="" th:checked="${request.active == null}">
-					<label class="form-check-label" for="activeNull">Les deux</label>
+				<div >
+					<label>Type d'Adhésion</label>
+					<div class="form-check form-check-inline" th:each="plan : ${plans}" th:with="checkId=${#strings.randomAlphanumeric(10)}">
+						<input class="form-check-input" type="checkbox" name="plan" id="${checkId}" th:value="${plan}" th:checked="${request.plans !=null && request.plans.contains(plan)}">
+						<label class="form-check-label" th:text="${plan}" th:for="${checkId}"></label>
+					</div>
 				</div>
-
 				<button>Rechercher</button>
 			</form>
 		</div>
@@ -87,5 +102,6 @@
 				</table>
 			</div>
 		</div>
+	</div>
 </body>
 </html>

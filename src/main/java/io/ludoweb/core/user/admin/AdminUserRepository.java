@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AdminUserRepository extends JpaRepository<AdminUserEntity, Long> {
 
 	long countByRole(String role);
-	
+
 	List<AdminUserEntity> findByRole(String role);
 
 	Optional<AdminUserEntity> findByUsername(String username);

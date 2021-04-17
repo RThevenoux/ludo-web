@@ -50,6 +50,16 @@ public class MemberRestController {
 		return service.list();
 	}
 
+	@GetMapping("plan")
+	public List<String> listPlanNames() {
+		return service.listPlanNames();
+	}
+
+	@GetMapping("type")
+	public List<String> listTypes() {
+		return service.listTypes();
+	}
+
 	@PostMapping("search")
 	public List<MemberView> search(@RequestBody MemberRequest request) {
 		return service.search(request);
