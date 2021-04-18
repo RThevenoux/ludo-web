@@ -15,7 +15,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import io.ludoweb.core.user.member.plan.QPlan;
 
 @Component
-public class PredicateBuilder {
+public class PredicateFactory {
 
 	private static QMemberEntity member = QMemberEntity.memberEntity;
 

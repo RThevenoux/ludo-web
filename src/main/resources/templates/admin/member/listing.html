@@ -15,6 +15,7 @@
 					<th>Email</th>
 					<th>Type</th>
 					<th>Forfait</th>
+					<th>Actif</th>
 					<th>Cotisation</th>
 					<th>Membres</th>
 					<th>Mot de passe</th>
@@ -28,6 +29,7 @@
 					<td th:text="${member.email}">mail@mail.com</td>
 					<td th:text="${member.type}">Ass. Mat.</td>
 					<td th:text="${member.plan.name}">Famille</td>
+					<td th:text="${member.active} ? 'Oui' : 'Non'"></td>
 					<td><th:block th:if=${member.plan.subscriptionPaid}>À jour</th:block></td>
 					<td th:text="${member.otherMembers.size()}+1">7</td>
 					<td><a

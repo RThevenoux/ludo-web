@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class MemberView {
 
+	boolean active;
+	
 	List<BorrowingView> borrowings;
 
 	String email;

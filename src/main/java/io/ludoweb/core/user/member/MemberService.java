@@ -39,7 +39,7 @@ public class MemberService implements UserDetailsService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired
-	PredicateBuilder predicateBuilder;
+	PredicateFactory predicateBuilder;
 	@Autowired
 	MemberRepository repo;
 
